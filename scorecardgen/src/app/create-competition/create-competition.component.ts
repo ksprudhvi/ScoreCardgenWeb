@@ -13,6 +13,9 @@ import { JsonPipe, NgFor } from '@angular/common';
 export class CreateCompetitionComponent {
   competitionName: string = '';
   generalinfo!: FormGroup;
+  generalinfodiv: boolean = true;
+  teamdiv: boolean = false;
+  judgediv: boolean = false;
   teaminfo!: FormGroup;
   judgesinfo!: FormGroup;
   selectedStep: string = 'competitionDetails';
@@ -27,16 +30,36 @@ export class CreateCompetitionComponent {
     this.generalinfo = this.formBuilder.group({
       // Define your form controls for general info
     });
-
+    this.generalinfo.disable();
     this.teaminfo = this.formBuilder.group({
       // Define your form controls for team info
     });
-
+    this.teaminfo.disable();
     this.judgesinfo = this.formBuilder.group({
       // Define your form controls for judges info
     });
+    this.judgesinfo.disable();
   }
 
+
+  // Function to show form 1
+  showForm2() {
+    this.generalinfodiv = false;
+    this.teamdiv= true;
+    this.judgediv= false;
+  }
+  // Function to show form 1
+  showForm3() {
+    this.generalinfodiv = false;
+    this.teamdiv= false;
+    this.judgediv= true;
+  }
+  // Function to show form 1
+  showForm1() {
+    this.generalinfodiv = true;
+    this.teamdiv= false;
+    this.judgediv= false;
+  }
   addTeam(): void {
     this.teams.push({ teamName: { id: '', name: '' }, coachName: { id: '', name: '' }, teamMembers: [] });
   }
