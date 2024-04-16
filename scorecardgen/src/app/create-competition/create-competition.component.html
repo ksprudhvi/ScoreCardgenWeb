@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <div style="overflow: auto; height: 100vh;">
+        <div class="ui text container" style="padding-bottom: 110px;">
+            <div class="ui center aligned middle aligned grid" style="height: 100%; padding-top: 8px;">
+                <div class="row">
+                    <div class="column">
+                        <div class="ui center aligned header">Configure Competition<div class="sub header">Enter the
+                                event Details</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui small fluid ordered three steps">
+                <a class="active pending step">
+                    <div class="content">
+                        <div class="title">Competition Details</div>
+                        <div class="description">Enter all Details of Competition
+                        </div>
+                    </div>
+                </a>
+                <a nextbrandstatus="basic_details_saved" class="active pending step">
+                    <div class="content">
+                        <div class="title">Add Team Details</div>
+                        <div class="description">Add Team, Coaches, Performance Type</div>
+                    </div>
+                </a>
+                <a nextbrandstatus="document_upload_complete" class="active incompleted step">
+                    <div class="content">
+                        <div class="title">Add Judges</div>
+                        <div class="description">Add Judges for the Competition</div>
+                    </div>
+                </a>
+            </div>
+            <form class="ui form" [formGroup]="generalinfo" (submit)="submitGeneralForm()">
+                <div class="ui basic segment ui grid">
+                    <div class="row">
+                        <div class="column">
+                            <h2 class="ui left aligned header">General Information</h2>
+                            <div class="ui segment ui stackable grid">
+                                <div class="row">
+                                    <div class="column">
+                                        <div><label>Registered Company Name/Organiser’s
+                                                name</label>
+                                            <div class="required field">
+                                                <div class="ui input"><input maxlength="50" name="registeredName"
+                                                        placeholder="Your Company Name Pvt. Ltd. or Your Company Name LLP"
+                                                        required="" type="text" value="Prudhvi Competitions"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="column">
+                                        <div><label>Registered Address</label>
+                                            <div class="field">
+                                                <div class="ui input"><input maxlength="200" name="registeredAddress"
+                                                        placeholder="Address" type="text" value="1-11 haripalem"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="column">
+                                        <div><label>State/UT</label>
+                                            <div name="state" role="combobox" aria-expanded="false"
+                                                class="ui fluid search selection dropdown"><input
+                                                    aria-autocomplete="list" autocomplete="on" class="search"
+                                                    tabindex="0" type="text" value="">
+                                                <div aria-atomic="true" aria-live="polite" role="alert"
+                                                    class="divider text">Andhra Pradesh</div><i aria-hidden="true"
+                                                    class="dropdown icon"></i>
+
+                                            </div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="two column row">
+                                    <div class="column">
+                                        <div><label>Contact Number</label>
+                                            <div>
+                                                <div class="ui disabled input" style="opacity: 1.2;"><input
+                                                        name="contactNumber" placeholder="Contact Number" disabled=""
+                                                        type="text" tabindex="-1" value="+917760923050"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div><label>Email</label>
+                                            <div class="field">
+                                                <div class="ui input"><input name="email" placeholder="Email"
+                                                        type="text" value="kprudhvi25  gmail.com"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <h2 class="ui left aligned header">Competition Information</h2>
+                            <div class="row">
+                                <div class="column">
+                                    <div>
+                                        <label>Competition Name:</label>
+                                        <div class="field">
+                                            <div class="ui input">
+                                                <input type="text" id="competition-name" name="competition-name"
+                                                    class="form-control" [(ngModel)]="competitionName">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <div>
+                                        <label>Venue Location:</label>
+                                        <div class="field">
+                                            <div class="ui input">
+                                                <input type="text" id="venue-location" name="venue-location"
+                                                    class="form-control" [(ngModel)]="venueLocation">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <div>
+                                        <label>Date and Time:</label>
+                                        <div class="field">
+                                            <div class="ui input">
+                                                <input type="datetime-local" id="date-time" name="date-time"
+                                                    class="form-control" [(ngModel)]="dateTime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <div class="field">
+                                <button nextbrandstatus="basic_details_saved" class="ui blue fluid button">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form class="ui form" [formGroup]="teaminfo" (submit)="submitTeamForm()">
+                <div class="ui basic segment ui grid">
+                    <div class="row">
+                        <div class="column">
+                            <h2 class="ui left aligned header">Team Information</h2>
+                            <div class="ui segment ui stackable grid">
+                                <div class="row">
+                                    <div class="column">
+                                        <div><label>Registered Company Name/Organiser’s
+                                                name</label>
+                                            <div class="required field">
+                                                <div class="ui input"><input maxlength="50" name="registeredName"
+                                                        placeholder="Your Company Name Pvt. Ltd. or Your Company Name LLP"
+                                                        required="" type="text" value="Prudhvi Competitions"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="column">
+                                        <div><label>Registered Address</label>
+                                            <div class="field">
+                                                <div class="ui input"><input maxlength="200" name="registeredAddress"
+                                                        placeholder="Address" type="text" value="1-11 haripalem"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="column">
+                                        <div><label>State/UT</label>
+                                            <div name="state" role="combobox" aria-expanded="false"
+                                                class="ui fluid search selection dropdown"><input
+                                                    aria-autocomplete="list" autocomplete="on" class="search"
+                                                    tabindex="0" type="text" value="">
+                                                <div aria-atomic="true" aria-live="polite" role="alert"
+                                                    class="divider text">Andhra Pradesh</div><i aria-hidden="true"
+                                                    class="dropdown icon"></i>
+
+                                            </div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="two column row">
+                                    <div class="column">
+                                        <div><label>Contact Number</label>
+                                            <div>
+                                                <div class="ui disabled input" style="opacity: 1.2;"><input
+                                                        name="contactNumber" placeholder="Contact Number" disabled=""
+                                                        type="text" tabindex="-1" value="+917760923050"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div><label>Email</label>
+                                            <div class="field">
+                                                <div class="ui input"><input name="email" placeholder="Email"
+                                                        type="text" value="kprudhvi25  gmail.com"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <h2 class="ui left aligned header">Competition Information</h2>
+                            <div class="row">
+                                <div class="column">
+                                    <div>
+                                        <label>Competition Name:</label>
+                                        <div class="field">
+                                            <div class="ui input">
+                                                <input type="text" id="competition-name" name="competition-name"
+                                                    class="form-control" [(ngModel)]="competitionName">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <div>
+                                        <label>Venue Location:</label>
+                                        <div class="field">
+                                            <div class="ui input">
+                                                <input type="text" id="venue-location" name="venue-location"
+                                                    class="form-control" [(ngModel)]="venueLocation">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <div>
+                                        <label>Date and Time:</label>
+                                        <div class="field">
+                                            <div class="ui input">
+                                                <input type="datetime-local" id="date-time" name="date-time"
+                                                    class="form-control" [(ngModel)]="dateTime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <div class="field">
+                                <button nextbrandstatus="basic_details_saved" class="ui blue fluid button">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form class="ui form" [formGroup]="judgesinfo" (submit)="submitJudgeForm()">
+                <div class="ui basic segment ui grid">
+                    <div class="row">
+                        <div class="column">
+                            <h2 class="ui left aligned header">Team Information</h2>
+                            <div class="ui segment ui stackable grid">
+                                <div class="row">
+                                    <div class="column">
+                                        <div><label>Registered Company Name/Organiser’s
+                                                name</label>
+                                            <div class="required field">
+                                                <div class="ui input"><input maxlength="50" name="registeredName"
+                                                        placeholder="Your Company Name Pvt. Ltd. or Your Company Name LLP"
+                                                        required="" type="text" value="Prudhvi Competitions"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="column">
+                                        <div><label>Registered Address</label>
+                                            <div class="field">
+                                                <div class="ui input"><input maxlength="200" name="registeredAddress"
+                                                        placeholder="Address" type="text" value="1-11 haripalem"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="column">
+                                        <div><label>State/UT</label>
+                                            <div name="state" role="combobox" aria-expanded="false"
+                                                class="ui fluid search selection dropdown"><input
+                                                    aria-autocomplete="list" autocomplete="on" class="search"
+                                                    tabindex="0" type="text" value="">
+                                                <div aria-atomic="true" aria-live="polite" role="alert"
+                                                    class="divider text">Andhra Pradesh</div><i aria-hidden="true"
+                                                    class="dropdown icon"></i>
+
+                                            </div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="two column row">
+                                    <div class="column">
+                                        <div><label>Contact Number</label>
+                                            <div>
+                                                <div class="ui disabled input" style="opacity: 1.2;"><input
+                                                        name="contactNumber" placeholder="Contact Number" disabled=""
+                                                        type="text" tabindex="-1" value="+917760923050"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div><label>Email</label>
+                                            <div class="field">
+                                                <div class="ui input"><input name="email" placeholder="Email"
+                                                        type="text" value="kprudhvi25  gmail.com"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <h2 class="ui left aligned header">Competition Information</h2>
+                            <div class="row">
+                                <div class="column">
+                                    <div>
+                                        <label>Competition Name:</label>
+                                        <div class="field">
+                                            <div class="ui input">
+                                                <input type="text" id="competition-name" name="competition-name"
+                                                    class="form-control" [(ngModel)]="competitionName">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <div>
+                                        <label>Venue Location:</label>
+                                        <div class="field">
+                                            <div class="ui input">
+                                                <input type="text" id="venue-location" name="venue-location"
+                                                    class="form-control" [(ngModel)]="venueLocation">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <div>
+                                        <label>Date and Time:</label>
+                                        <div class="field">
+                                            <div class="ui input">
+                                                <input type="datetime-local" id="date-time" name="date-time"
+                                                    class="form-control" [(ngModel)]="dateTime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <div class="field">
+                                <button nextbrandstatus="basic_details_saved" class="ui blue fluid button">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <div></div>
+            <h6 class="ui disabled header" style="opacity: 0.7;">Need help? Please contact <a
+                    href="mailto:business  insider.in" target="_blank" rel="noopener noreferrer">business  insider.in</a>
+            </h6>
+        </div>
+    </div>
+    
+</body>
+
+</html>

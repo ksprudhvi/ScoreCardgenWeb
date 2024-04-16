@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, NgModule } from '@angular/core';
 import saveAs from 'file-saver';
+import { FormBuilder,FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { JsonPipe, NgFor } from '@angular/common';
+
 
 @Component({
   selector: 'app-create-competition',
   templateUrl: './create-competition.component.html',
-  styleUrls: ['./create-competition.component.css']
+  styleUrls: ['./create-competition.component.css'],
+  standalone: true
 })
 export class CreateCompetitionComponent {
   competitionName: string = '';

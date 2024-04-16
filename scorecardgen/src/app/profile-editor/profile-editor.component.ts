@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, NgModule } from '@angular/core';
+import { JsonPipe, NgFor } from '@angular/common';
+import { FormBuilder,FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
@@ -19,3 +20,4 @@ export class ProfileEditorComponent {
   }
 
 }
+
