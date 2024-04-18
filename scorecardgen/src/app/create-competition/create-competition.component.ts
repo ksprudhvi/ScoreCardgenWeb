@@ -1,12 +1,14 @@
 import { Component, NgModule } from '@angular/core';
 import saveAs from 'file-saver';
 import { FormBuilder,FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { JsonPipe, NgFor } from '@angular/common';
-
+import { CommonModule, JsonPipe, NgFor } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { ImageUploaderComponent } from '../image-uploader/image-uploader.component';
 
 @Component({
   selector: 'app-create-competition',
   templateUrl: './create-competition.component.html',
+  imports: [CommonModule, RouterOutlet, ImageUploaderComponent],
   styleUrls: ['./create-competition.component.css'],
   standalone: true
 })
