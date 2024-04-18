@@ -11,7 +11,7 @@ import { CompetationDetailsComponent } from './competation-details/competation-d
 import { CommonModule, JsonPipe, NgFor } from '@angular/common';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
 import { CompetationDeatilsUpdaterComponent } from './competation-deatils-updater/competation-deatils-updater.component';
-
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 
 @NgModule({
@@ -29,6 +29,7 @@ import { CompetationDeatilsUpdaterComponent } from './competation-deatils-update
     HttpClientModule,
     ReactiveFormsModule,
     CommonModule,
+    ImageCropperModule,
     BrowserAnimationsModule,NgFor,NgModule, ReactiveFormsModule, JsonPipe,FormControl,FormGroup,FormBuilder,FormsModule
   ],
 
