@@ -1483,8 +1483,8 @@
                                                             stroke-linecap="square"></path>
                                                     </svg>
                                                 </div>
-                                                <select [(ngModel)]="selectedCategory"
-                                                    (change)="onCategoryChange($event.target.value)">
+                                                <select (ngModel)="selectedCategory"
+                                                    >
                                                     <option value="" disabled selected>Select category</option>
                                                     <option value="Ballet">Ballet</option>
                                                     <option value="Tap">Tap</option>
@@ -1557,8 +1557,8 @@
                                                 </div>
                                             </figure>
                                             <div>
-                                                <select [(ngModel)]="selectedAge"
-                                                    (change)="onAgeChange($event.target.value)">
+                                                <select (ngModel)="selectedAge"
+                                                    >
                                                     <option value="" disabled selected>Select age</option>
                                                     <option value="Adults Only">Adults Only</option>
                                                     <option value="Family">Family</option>
@@ -1573,8 +1573,8 @@
                                                 </div>
                                             </figure>
                                             <div>
-                                                <select [(ngModel)]="selectedLanguage"
-                                                    (change)="onLanguageChange($event.target.value)">
+                                                <select (ngModel)="selectedLanguage"
+                                                   >
                                                     <option value="" disabled selected>Select language</option>
                                                     <option value="English">English</option>
                                                     <option value="Spanish">Spanish</option>

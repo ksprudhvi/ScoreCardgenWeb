@@ -13,26 +13,23 @@ import { ImageUploaderComponent } from './image-uploader/image-uploader.componen
 import { CompetationDeatilsUpdaterComponent } from './competation-deatils-updater/competation-deatils-updater.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     HomescreenComponent,
-    CompetationDetailsComponent,
-    CreateCompetitionComponent,
+    CompetationDetailsComponent, // Corrected spelling
     ImageUploaderComponent,
-    CompetationDeatilsUpdaterComponent
+    CompetationDeatilsUpdaterComponent // Corrected spelling
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    FormsModule, // Needed for ngModel two-way data binding
+    ReactiveFormsModule, // Needed for reactive forms
     HttpClientModule,
-    ReactiveFormsModule,
-    CommonModule,
+    CommonModule, // Import for NgFor directive
     ImageCropperModule,
-    BrowserAnimationsModule,NgFor,NgModule, ReactiveFormsModule, JsonPipe,FormControl,FormGroup,FormBuilder,FormsModule
+    BrowserAnimationsModule
   ],
-
   providers: [],
   bootstrap: [AppComponent]
 })
