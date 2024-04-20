@@ -36,7 +36,7 @@
                 </a>
             </div>
             <div><app-image-uploader></app-image-uploader></div>
-            <form class="ui form" [formGroup]="generalinfo" [style.display]="generalinfodiv ? 'block' : 'none'">
+            <form class="ui form" formGroup="generalinfo" [style.display]="generalinfodiv ? 'block' : 'none'">
                 <div class="ui basic segment ui grid">
                     <div class="row">
                         <div class="column">
@@ -112,7 +112,7 @@
                                         <div class="field">
                                             <div class="ui input">
                                                 <input type="text" id="competition-name" name="competition-name"
-                                                    class="form-control" [(ngModel)]="competitionName">
+                                                    class="form-control" (ngModel)="competitionName">
                                             </div>
                                         </div>
                                     </div>
@@ -125,7 +125,7 @@
                                         <div class="field">
                                             <div class="ui input">
                                                 <input type="text" id="venue-location" name="venue-location"
-                                                    class="form-control" [(ngModel)]="venueLocation">
+                                                    class="form-control" (ngModel)="venueLocation">
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@
                                         <div class="field">
                                             <div class="ui input">
                                                 <input type="datetime-local" id="date-time" name="date-time"
-                                                    class="form-control" [(ngModel)]="dateTime">
+                                                    class="form-control" (ngModel)="dateTime">
                                             </div>
                                         </div>
                                     </div>
@@ -155,7 +155,7 @@
                     </div>
                 </div>
             </form>
-            <form class="ui form" [formGroup]="teaminfo" [style.display]="teamdiv ? 'block' : 'none'">
+            <form class="ui form" formGroup="teaminfo" [style.display]="teamdiv ? 'block' : 'none'">
                 <div class="ui basic segment ui grid">
                     <div class="row">
                         <div class="column">
@@ -231,7 +231,7 @@
                                         <div class="field">
                                             <div class="ui input">
                                                 <input type="text" id="competition-name" name="competition-name"
-                                                    class="form-control" [(ngModel)]="competitionName">
+                                                    class="form-control" (ngModel)="competitionName">
                                             </div>
                                         </div>
                                     </div>
@@ -244,7 +244,7 @@
                                         <div class="field">
                                             <div class="ui input">
                                                 <input type="text" id="venue-location" name="venue-location"
-                                                    class="form-control" [(ngModel)]="venueLocation">
+                                                    class="form-control" (ngModel)="venueLocation">
                                             </div>
                                         </div>
                                     </div>
@@ -257,7 +257,7 @@
                                         <div class="field">
                                             <div class="ui input">
                                                 <input type="datetime-local" id="date-time" name="date-time"
-                                                    class="form-control" [(ngModel)]="dateTime">
+                                                    class="form-control" (ngModel)="dateTime">
                                             </div>
                                         </div>
                                     </div>
@@ -274,7 +274,7 @@
                     </div>
                 </div>
             </form>
-            <form class="ui form" [formGroup]="judgesinfo" [style.display]="judgediv ? 'block' : 'none'">
+            <form class="ui form" formGroup="judgesinfo" [style.display]="judgediv ? 'block' : 'none'">
                 <div class="ui basic segment ui grid">
                     <div class="row">
                         <div class="column">
@@ -350,7 +350,7 @@
                                         <div class="field">
                                             <div class="ui input">
                                                 <input type="text" id="competition-name" name="competition-name"
-                                                    class="form-control" [(ngModel)]="competitionName">
+                                                    class="form-control" (ngModel)="competitionName">
                                             </div>
                                         </div>
                                     </div>
@@ -363,7 +363,7 @@
                                         <div class="field">
                                             <div class="ui input">
                                                 <input type="text" id="venue-location" name="venue-location"
-                                                    class="form-control" [(ngModel)]="venueLocation">
+                                                    class="form-control" (ngModel)="venueLocation">
                                             </div>
                                         </div>
                                     </div>
@@ -376,7 +376,7 @@
                                         <div class="field">
                                             <div class="ui input">
                                                 <input type="datetime-local" id="date-time" name="date-time"
-                                                    class="form-control" [(ngModel)]="dateTime">
+                                                    class="form-control" (ngModel)="dateTime">
                                             </div>
                                         </div>
                                     </div>
