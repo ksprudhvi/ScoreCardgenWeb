@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientXsrfModule } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HomescreenComponent } from './homescreen/homescreen.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,6 +13,8 @@ import { CommonModule, JsonPipe, NgFor } from '@angular/common';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
 import { CompetationDeatilsUpdaterComponent } from './competation-deatils-updater/competation-deatils-updater.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { AddTeaminfoComponent } from './add-teaminfo/add-teaminfo.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 
 @NgModule({
@@ -21,11 +24,14 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     CompetationDetailsComponent,
     CreateCompetitionComponent,
     ImageUploaderComponent,
-    CompetationDeatilsUpdaterComponent
+    CompetationDeatilsUpdaterComponent,
+    AddTeaminfoComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClient,
     HttpClientModule,
     ReactiveFormsModule,
     CommonModule,

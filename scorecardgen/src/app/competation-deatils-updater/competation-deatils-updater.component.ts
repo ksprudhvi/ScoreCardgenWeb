@@ -5,27 +5,29 @@ import { Observable } from 'rxjs';
 import { FileUploadService } from '../services/file-upload.service';
 import { CommonModule } from '@angular/common';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { AddTeaminfoComponent } from '../add-teaminfo/add-teaminfo.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-competation-deatils-updater',
   standalone: true,
-  imports: [ CommonModule,ImageUploaderComponent,ImageCropperModule],
+  imports: [ CommonModule,AddTeaminfoComponent,ImageUploaderComponent,ImageCropperModule],
   templateUrl: './competation-deatils-updater.component.html',
   styleUrl: './competation-deatils-updater.component.css'
 })
 export class CompetationDeatilsUpdaterComponent  implements OnInit{
   selectedFiles?: FileList;
   currentFile?: File;
+  teamsInfo!:AddTeaminfoComponent;
   progress = 0;
   message = '';
   preview = '';
-
   imageInfos?: Observable<any>;
   imageUrl!: string | ArrayBuffer | null;
   selectedCategory: string = '';
   selectedAge: string = '';
     selectedLanguage: string = '';
 
-  constructor(private uploadService: FileUploadService) {}
+  constructor(private uploadService: FileUploadService,private router: Router) {}
   onCategoryChange(category: string): void {
     console.log('Selected category:', category);
     // You can perform any additional actions here based on the selected category
@@ -65,6 +67,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   addCompetitionHighlights() {
     this.CompetitionHighlights.push(' Add new Highlight');
   }
+  
   saveData(): void {
     const data = {
       eventTitle: (document.querySelector('[data-ref="edp_event_title_desktop"]') as HTMLElement).innerText.trim(),
@@ -72,14 +75,18 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
       eventDateString: (document.querySelector('[data-ref="edp_event_datestring_desktop"]') as HTMLElement).innerText.trim(),
       eventVenue: (document.querySelector('[data-ref="edp_event_venue_desktop"]') as HTMLElement).innerText.trim(),
       priceString: (document.querySelector('[data-ref="edp_price_string_desktop"]') as HTMLElement).innerText.trim(),
-      // Add other fields similarly
     };
+
+   
       
     // Convert data to JSON
     const jsonData = JSON.stringify(data);
 
     // Here, you can save jsonData using your preferred method (e.g., sending it to a server, storing it locally)
     console.log(jsonData);
+  } 
+  saveandNavifatetoTeamsInfo(): void {
+    this.router.navigate(['addTeam']); // Replace with your desired rout
   }
   ngOnInit(): void {
     this.imageInfos = this.uploadService.getFiles();
@@ -91,7 +98,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     this.previewStatus = true;
     this.imageUploder= false;
   }
-
+  
   showUploader() {
     this.previewStatus = false;
     this.imageUploder= true;
@@ -180,3 +187,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   }
 
 }
+function saveDataandNavigateToTeamsInfo() {
+  throw new Error('Function not implemented.');
+}
+

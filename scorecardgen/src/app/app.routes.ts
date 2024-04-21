@@ -5,6 +5,8 @@ import { CreateCompetitionComponent } from './create-competition/create-competit
 import { FileUploadService } from './services/file-upload.service';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
 import { CompetationDeatilsUpdaterComponent } from './competation-deatils-updater/competation-deatils-updater.component';
+import { AddTeaminfoComponent } from './add-teaminfo/add-teaminfo.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 
 
@@ -15,4 +17,7 @@ export const routes: Routes = [
     { path: 'add', component: CreateCompetitionComponent },
     { path: 'upload', component: ImageUploaderComponent },
     { path: 'update', component: CompetationDeatilsUpdaterComponent },
+    { path: 'addTeam', component: AddTeaminfoComponent },
+    { path: 'login', component: LoginPageComponent }
+    
 ];
