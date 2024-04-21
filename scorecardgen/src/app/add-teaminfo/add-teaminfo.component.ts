@@ -10,9 +10,9 @@ import { Component } from '@angular/core';
 })
 export class AddTeaminfoComponent {
   teamdiv: boolean = false;
-  teams: { teamName: { id: string, name: string }, coachName: { id: string, name: string }, teamMembers: { id: string, name: string }[], }[] = [];
+  teams: { teamName: { id: string, name: string },teamRepresentativeEmail:{name:string,email:string} ,DirectorName: { id: string, name: string ,email:string}, coachName: { id: string, name: string ,email:string}, teamMembers: { id: string, name: string }[], }[] = [];
   addTeam(): void {
-    this.teams.push({ teamName: { id: '', name: '' }, coachName: { id: '', name: '' }, teamMembers: [] });
+    this.teams.push({ teamName: { id: '', name: '' },teamRepresentativeEmail:{name:'',email:''},DirectorName: { id: '', name: '',email:'' }, coachName: { id: '', name: '' ,email:''}, teamMembers: [] });
   }
   addTeamMember(teamIndex: number): void {
     this.teams[teamIndex].teamMembers.push({ id: '', name: '' });
