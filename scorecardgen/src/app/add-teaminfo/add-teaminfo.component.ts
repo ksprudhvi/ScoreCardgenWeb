@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-teaminfo',
@@ -9,6 +10,7 @@ import { Component } from '@angular/core';
   styleUrl: './add-teaminfo.component.css'
 })
 export class AddTeaminfoComponent {
+  constructor(private router: Router) {}
   teamdiv: boolean = false;
   teams: { teamName: { id: string, name: string },teamRepresentativeEmail:{name:string,email:string} ,DirectorName: { id: string, name: string ,email:string}, coachName: { id: string, name: string ,email:string}, teamMembers: { id: string, name: string }[], }[] = [];
   addTeam(): void {
@@ -30,5 +32,22 @@ export class AddTeaminfoComponent {
     // This would require additional logic for sending the data to your backend API.
     console.log(jsonData); // Optional: Log the saved data
   }
+  isTeamFormValid(): boolean {
+    if (this.teams.length === 0) {
+      return true; // Empty form is considered valid
+    }
+    for (const team of this.teams) {
+      if ((team.teamName.name ==='') || (team.teamRepresentativeEmail.name==='') || (team.teamRepresentativeEmail.email==='')) {
+        return false; // Early return if any team has missing data
+      }
+    }
+    return true; // All teams have required fields filled
+  }
+
+  saveandNextJudges():void {
+    this.router.navigate(['confJudges']); // Replace with your desired rout
+}
   
+  
+
 }

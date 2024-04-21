@@ -15,6 +15,7 @@ import { CompetationDeatilsUpdaterComponent } from './competation-deatils-update
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AddTeaminfoComponent } from './add-teaminfo/add-teaminfo.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { JudgesInfoComponent } from './judges-info/judges-info.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { LoginPageComponent } from './login-page/login-page.component';
     ImageUploaderComponent,
     CompetationDeatilsUpdaterComponent,
     AddTeaminfoComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    JudgesInfoComponent
   ],
   imports: [
     BrowserModule,

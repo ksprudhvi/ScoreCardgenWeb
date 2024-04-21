@@ -39,11 +39,11 @@
                                                     name="team-name-{{i}}" class="form-control" required="" type="text"
                                                     (ngModel)="team.teamName.name">
                                             </div>
-                                            <div class="field">
+                                            <div class="field required">
                                                 <label for="teamRepresentativeEmail-name-{{i}}">Team Representative Name
                                                     : </label>
                                                 <input type="text" id="teamRepresentativeEmail-name-{{i}}"
-                                                    name="teamRepresentativeEmail-name-{{i}}" class="form-control"
+                                                    name="teamRepresentativeEmail-name-{{i}}" required="" class="form-control"
                                                     (ngModel)="team.teamRepresentativeEmail.name">
                                                 <label for="teamRepresentativeEmail-email-{{i}}">Team Representative
                                                     Email : </label>
@@ -107,11 +107,12 @@
             </form>
             <!-- Button to add new team -->
             <div class="btn-success">
-                <button type="button" class="btn btn-success" (click)="addTeam()">Add Team</button>
+                <button type="button" class="ui grey button" (click)="addTeam()">Add Team</button>
             </div>
-            <div class="btn-success">
-                <button type="button" class="btn btn-success" (click)="saveTeamsData()">save</button>
-            </div>
+            <div class="btn-ConfigurJuges"
+            >
+            <button type="button" class="ui grey button" [class.disabled]="isTeamFormValid()" (click)="saveandNextJudges()">Next Configur Jubges</button>
+          </div>
             <div></div>
         </div>
     </div>

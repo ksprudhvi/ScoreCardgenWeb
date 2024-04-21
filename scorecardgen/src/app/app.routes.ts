@@ -7,6 +7,7 @@ import { ImageUploaderComponent } from './image-uploader/image-uploader.componen
 import { CompetationDeatilsUpdaterComponent } from './competation-deatils-updater/competation-deatils-updater.component';
 import { AddTeaminfoComponent } from './add-teaminfo/add-teaminfo.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { JudgesInfoComponent } from './judges-info/judges-info.component';
 
 
 
@@ -18,6 +19,7 @@ export const routes: Routes = [
     { path: 'upload', component: ImageUploaderComponent },
     { path: 'update', component: CompetationDeatilsUpdaterComponent },
     { path: 'addTeam', component: AddTeaminfoComponent },
-    { path: 'login', component: LoginPageComponent }
+    { path: 'login', component: LoginPageComponent },
+    { path: 'confJudges', component: JudgesInfoComponent },
     
 ];
