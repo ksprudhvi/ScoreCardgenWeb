@@ -16,6 +16,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { AddTeaminfoComponent } from './add-teaminfo/add-teaminfo.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { JudgesInfoComponent } from './judges-info/judges-info.component';
+import { SpeechtotextComponent } from './speechtotext/speechtotext.component';
+import { TextMainComponent } from './text-main/text-main.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { JudgesInfoComponent } from './judges-info/judges-info.component';
     CompetationDeatilsUpdaterComponent,
     AddTeaminfoComponent,
     LoginPageComponent,
-    JudgesInfoComponent
+    JudgesInfoComponent,
+    SpeechtotextComponent,
+    TextMainComponent
   ],
   imports: [
     BrowserModule,

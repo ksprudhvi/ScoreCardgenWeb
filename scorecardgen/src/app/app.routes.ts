@@ -8,6 +8,9 @@ import { CompetationDeatilsUpdaterComponent } from './competation-deatils-update
 import { AddTeaminfoComponent } from './add-teaminfo/add-teaminfo.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { JudgesInfoComponent } from './judges-info/judges-info.component';
+import { SpeechtotextComponent } from './speechtotext/speechtotext.component';
+import { TextMainComponent } from './text-main/text-main.component';
+import { ScorecardConfigComponent } from './scorecard-config/scorecard-config.component';
 
 
 
@@ -21,5 +24,6 @@ export const routes: Routes = [
     { path: 'addTeam', component: AddTeaminfoComponent },
     { path: 'login', component: LoginPageComponent },
     { path: 'confJudges', component: JudgesInfoComponent },
-    
+    { path: 'speak', component: TextMainComponent },
+    { path: 'score', component: ScorecardConfigComponent },
 ];

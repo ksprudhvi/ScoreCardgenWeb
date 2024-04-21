@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <div style="overflow: auto; height: 100vh;">
+        <div class="ui text container" style="padding-bottom: 110px;">
+            <div class="ui center aligned middle aligned grid" style="height: 100%; padding-top: 8px;">
+                <div class="row">
+                    <div class="column">
+                        <div class="ui center aligned header">Score Card<div class="sub header">Enter the
+                                event Judegs Details</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui small fluid ordered one steps">
+                <a class="active pending step">
+                    <div class="content">
+                        <div class="title">Scoring Elements</div>
+                        <div class="description">Enter score in respective elements
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div></div>
+            <form class="ui form">
+                <div class="ui segment">
+                    <div class="ui basic segment ui grid">
+                        <div class="row">
+                            <div class="column">
+                                <div class="ui segment ui stackable grid">
+                                    <div class="two column two row">
+                                        <div class="column">
+                                            <div class="field required">
+                                                <label><strong>Creativity :</strong> </label>
+                                                <p>Creativity and Variety </p>
+                                                <p></p>
+                                            </div>
+                                            <div class="field required">
+                                                <label><strong>Formation :</strong> </label>
+                                                <p>Variety ,Spacing and Transition </p>
+                                                <p> </p>
+                                                <p> </p>
+                                                <p> </p>
+
+                                            </div>
+                                            <div class="field required">
+                                                <label><strong>Technique :</strong> </label>
+                                                <p>Incoperation of Lyrical/Jazz Technique/Performance Skills . Execution
+                                                    of lyrical/Jazz Technique </p>
+
+                                            </div>
+                                            <div class="field required">
+                                                <label><strong>Difficulty :</strong> </label>
+                                                <p> </p>
+                                                <p> </p>
+                                            </div>
+                                            <div class="field required">
+                                                <label><strong>Synchronization :</strong> </label>
+                                                <p> Team Uniformity</p>
+
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="field required">
+                                                <input maxlength="50" placeholder="Max Score :20" id="creativity"
+                                                    name="creativity" class="form-control" required="" type="text"
+                                                    (ngModel)="ScoreCard.creativity">
+                                            </div>
+                                            <div class="field required">
+                                                <input type="text" placeholder="Max Score :20" id="formation"
+                                                    name="formation" class="form-control"
+                                                    (ngModel)="ScoreCard.formation">
+                                            </div>
+                                            <div class="field required">
+                                                <input type="text" placeholder="Max Score :20" id="technique"
+                                                    name="technique" class="form-control"
+                                                    (ngModel)="ScoreCard.technique">
+                                            </div>
+                                            <div class="field required">
+                                                <input type="text" placeholder="Max Score :20" id="difficulty"
+                                                    name="difficulty" class="form-control"
+                                                    (ngModel)="ScoreCard.difficulty">
+                                            </div>
+                                            <div class="field required">
+                                                <input type="text" placeholder="Max Score :20" id="difficulty"
+                                                    name="difficulty" class="form-control"
+                                                    (ngModel)="ScoreCard.difficulty">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ui segment">
+                    <div class="ui basic segment ui grid">
+                        <div class="row">
+                            <div class="column">
+                                <div class="ui segment ui stackable grid">
+                                    <div class="three column  row">
+                                        <div class="column">
+                                            <div class="field required">
+                                                <textarea type="text" placeholder="Enter Your Comments " id="comments"
+                                                    name="comments" class="comments"
+                                                    (ngModel)="ScoreCard.comments">{{ScoreCard.comments}}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <button id="speechButton" (click)="startListening()">
+                                                Start Speaking
+                                              </button>
+                                            </div>
+                                            <div class="column">
+                                                <button id="stopButton">Stop Speaking </button>
+                                                </div>      
+                                    </div>
+                                     
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Button to add new team -->
+            <div class="btn-success">
+                <button type="button" class="ui grey button">Submit Score</button>
+            </div>
+
+            <div></div>
+        </div>
+    </div>
+</body>
+
+</html>
