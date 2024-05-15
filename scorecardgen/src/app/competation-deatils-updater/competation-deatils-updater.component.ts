@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AddTeaminfoComponent } from '../add-teaminfo/add-teaminfo.component';
 import { Router } from '@angular/router';
+import { NavigationExtras } from '@angular/router';
+
 @Component({
   selector: 'app-competation-deatils-updater',
   standalone: true,
@@ -25,13 +27,20 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   imageUrl!: string | ArrayBuffer | null;
   selectedCategory: string = '';
   selectedAge: string = '';
-    selectedLanguage: string = '';
+  selectedLanguage: string = '';
+  eventImageUrl: string ='';
+  directionUrl: string ='replace with  Direction Url'
+  eventTitle: string="Enter Your Event Title"
+  eventTitleVenue: string="Enter Title Venue"
+  eventDateString!: string ;
+  eventPriceString :string="Enter Price Info"
+  eventId:string='cjvsdjc'
 
   constructor(private uploadService: FileUploadService,private router: Router) {}
   onCategoryChange(category: string): void {
     console.log('Selected category:', category);
-    // You can perform any additional actions here based on the selected category
-  }
+    this.selectedCategory=category 
+   }
   conditions: string[] = [
     'Children below 5 years can enter for free.',
     'Outside food and beverages are not allowed.',
@@ -49,7 +58,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
      'Personal food, beverages, and bottled water are not allowed - except for diabetics and infants.' ,
     'The parking ticket is valid for one day; the vehicle parked is at the owner’s risk.'
   ];
-  directionUrl: string ='replace with  Direction Url'
+ 
   updateDirectionUrl(event: any) {
     // Update directionUrl with the new value from the input event
     this.directionUrl = event.target.innerText.trim(); // Trim to remove leading/trailing whitespace
@@ -69,24 +78,63 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   }
   
   saveData(): void {
+    interface EventElement extends HTMLElement {
+      innerText: string;
+    }
+    
+    const eventTitleList: EventElement[] = [
+      document.querySelector('[data-ref="edp_event_title_desktop"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_title_mobile"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_title_tablet"]') as EventElement,
+    ];
+    const eventCategoryList: EventElement[] = [
+      document.querySelector('[data-ref="edp_event_category_mobile"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_category_tablet"]') as EventElement,
+    ];
+    const eventDateStringList: EventElement[] = [
+      document.querySelector('[data-ref="edp_event_datestring_desktop"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_datestring_mobile"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_datestring_tablet"]') as EventElement,
+    ];
+    const eventVenueList: EventElement[] = [
+      document.querySelector('[data-ref="edp_event_venue_desktop"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_venue_mobile"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_venue_tablet"]') as EventElement,
+    ];
+    const eventPriceList: EventElement[] = [
+      document.querySelector('[data-ref="edp_price_string_desktop"]') as EventElement
+    ];
     const data = {
-      eventTitle: (document.querySelector('[data-ref="edp_event_title_desktop"]') as HTMLElement).innerText.trim(),
-      eventCategory: (document.querySelector('[data-ref="edp_event_category_desktop"]') as HTMLElement).innerText.trim(),
-      eventDateString: (document.querySelector('[data-ref="edp_event_datestring_desktop"]') as HTMLElement).innerText.trim(),
-      eventVenue: (document.querySelector('[data-ref="edp_event_venue_desktop"]') as HTMLElement).innerText.trim(),
-      priceString: (document.querySelector('[data-ref="edp_price_string_desktop"]') as HTMLElement).innerText.trim(),
+      eventImageUrl:this.eventImageUrl,
+      eventTitle: eventTitleList.find(
+        (element) => element.innerText.trim() !== 'Enter Your Event Title'
+      )?.innerText.trim(),
+      eventCategory: eventCategoryList.find(
+        (element) => element.innerText.trim() !== ''
+      )?.innerText.trim(),
+      eventDateString: eventDateStringList.find(
+        (element) => element.innerText.trim() !== 'Enter Date and Time'
+      )?.innerText.trim(),
+      eventVenue:eventVenueList.find(
+        (element) => element.innerText.trim() !== 'Enter Title Venue'
+      )?.innerText.trim() ,
+      eventPriceString: eventPriceList.find(
+        (element) => element.innerText.trim()!== 'Enter Price Info'
+      )?.innerText.trim() ,
     };
-
-   
-      
     // Convert data to JSON
     const jsonData = JSON.stringify(data);
-
     // Here, you can save jsonData using your preferred method (e.g., sending it to a server, storing it locally)
     console.log(jsonData);
   } 
+
   saveandNavifatetoTeamsInfo(): void {
-    this.router.navigate(['addTeam']); // Replace with your desired rout
+    const navigationExtras: NavigationExtras = {
+      queryParams: { eventId:this.eventId },
+      state: { someOtherData: 'value' } // Optionally pass additional data
+    };
+    this.router.navigate(['addTeam'], navigationExtras);
+    //this.router.navigate(['addTeam']); // Replace with your desired rout
   }
   ngOnInit(): void {
     this.imageInfos = this.uploadService.getFiles();

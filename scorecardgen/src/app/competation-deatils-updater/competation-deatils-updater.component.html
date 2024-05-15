@@ -514,8 +514,7 @@
                                                             }
                                                         }
                                                     </style>
-                                                    <h1 class=" css-1mg2664" data-ref="edp_event_title_tablet">RAMOJI
-                                                        STAR EXPERIENCE</h1>
+                                                    <h1 class=" css-1mg2664" data-ref="edp_event_title_tablet">{{eventTitle}}</h1>
                                                     <style data-emotion-css="1yoi8sp">
                                                         .css-1yoi8sp {
                                                             display: -webkit-box;
@@ -604,7 +603,7 @@
                                                         }
                                                     </style>
                                                     <p data-ref="edp_event_datestring_tablet" class="css-1uf8g5w">
-                                                        29-01-2024 to 24-04-2024 (9:00 AM to 5:30 PM )</p>
+                                                        {{eventDateString}}</p>
                                                 </div>
                                                 <div class="css-ois8gk">
                                                     <div class="css-1jbz40t"><svg width="16" height="16"
@@ -623,8 +622,7 @@
                                                                 </clipPath>
                                                             </defs>
                                                         </svg></div>
-                                                    <p data-ref="edp_event_venue_tablet" class="css-1uf8g5w">Ramoji Film
-                                                        City<!-- -->, Hyderabad</p>
+                                                    <p data-ref="edp_event_venue_tablet" ngModel="eventTitleVenue" class="css-1uf8g5w">{{eventTitleVenue}}</p>
                                                 </div>
                                             </div>
                                             <style data-emotion-css="kccjyv">
@@ -733,21 +731,9 @@
                                                                     line-height: 22px;
                                                                 }
                                                             </style>
-                                                            <p data-ref="edp_price_string_desktop" class="css-1rgjqr3">
-                                                                <span>$</span>15 onwards
+                                                            <p data-ref="edp_price_string_tablet" class="css-1uf8g5w">
+                                                               {{eventPriceString}}
                                                             </p>
-                                                            <style data-emotion-css="9rutzm">
-                                                                .css-9rutzm {
-                                                                    font-size: 12px;
-                                                                    line-height: 1.17;
-                                                                    color: #7a7c82;
-                                                                }
-
-                                                                .css-9rutzm a {
-                                                                    color: #31c0f0;
-                                                                }
-                                                            </style>
-                                                            <p class="css-9rutzm"></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1107,7 +1093,7 @@
                                                 <div class="css-k008qs">
                                                     <div>
                                                         <h1 class=" css-1mg2664" data-ref="edp_event_title_mobile">
-                                                            Hip-Hop Heatwave</h1>
+                                                            {{eventTitle}}</h1>
                                                         <div class="css-1yoi8sp">
                                                             <div class="css-1jbz40t"><svg width="16" height="17"
                                                                     viewBox="0 0 16 17" fill="none"
@@ -1144,7 +1130,7 @@
                                                                 </path>
                                                             </svg></div>
                                                         <p data-ref="edp_event_datestring_mobile" class="css-1uf8g5w">
-                                                            29-01-2024 to 24-04-2024 (9:00 AM to 5:30 PM )</p>
+                                                            {{eventDateString}}</p>
                                                     </div>
                                                     <div class="css-ois8gk">
                                                         <div class="css-1jbz40t"><svg width="16" height="16"
@@ -1164,8 +1150,7 @@
                                                                     </clipPath>
                                                                 </defs>
                                                             </svg></div>
-                                                        <p data-ref="edp_event_venue_mobile" class="css-1uf8g5w">Ramoji
-                                                            Film City<!-- -->, Hyderabad</p>
+                                                        <p data-ref="edp_event_venue_mobile"  ngModel="eventTitleVenue" class="css-1uf8g5w">{{eventTitleVenue}}</p>
                                                     </div>
                                                 </div>
                                                 <div aria-label="BUY NOWbuttonDouble tap to activate" role="region"
@@ -1190,10 +1175,8 @@
                                                                         stroke-width="0.2"></path>
                                                                 </svg></div>
                                                             <div class="css-1s8djm3">
-                                                                <p data-ref="edp_price_string_desktop"
-                                                                    class="css-1rgjqr3"><span>₹</span>2772
-                                                                    onwards</p>
-                                                                <p class="css-9rutzm"></p>
+                                                                <p data-ref="edp_price_string_mobile"
+                                                                    class="css-1rgjqr3">{{eventPriceString}}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1469,7 +1452,7 @@
                                     <div class="css-k008qs">
                                         <div>
                                             <h1 class="css-1mg2664" data-ref="edp_event_title_desktop"
-                                                contenteditable="true">Hip-Hop Heatwave</h1>
+                                                contenteditable="true">{{eventTitle}}</h1>
                                             <div class="css-1yoi8sp">
                                                 <div class="css-1jbz40t">
                                                     <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
@@ -1505,8 +1488,7 @@
                                                 </svg>
                                             </div>
                                             <p data-ref="edp_event_datestring_desktop" class="css-1uf8g5w"
-                                                contenteditable="true">29-01-2024 to
-                                                24-04-2024 (9:00 AM to 5:30 PM )</p>
+                                                contenteditable="true">{{eventDateString}}</p>
                                         </div>
                                         <div class="css-ois8gk">
                                             <div class="css-1jbz40t">
@@ -1516,8 +1498,7 @@
                                                 </svg>
                                             </div>
                                             <p data-ref="edp_event_venue_desktop" class="css-1uf8g5w"
-                                                contenteditable="true">Dallas Stadium,
-                                                Texas</p>
+                                            contenteditable="true">{{eventTitleVenue}}</p>
                                         </div>
                                     </div>
                                     <div aria-label="BUY NOWbuttonDouble tap to activate" role="region"
@@ -1533,14 +1514,11 @@
                                                 <div class="css-1s8djm3">
                                                     <p data-ref="edp_price_string_desktop" class="css-1rgjqr3"
                                                         contenteditable="true">
-                                                        <span>$</span>15 onwards
+                                                       {{eventPriceString}}
                                                     </p>
-                                                    <p class="css-9rutzm" contenteditable="true"></p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="css-5m1des"><a data-ref="edp_buy_button_desktop"
-                                                class="css-10lu0qa">Intrested</a></div>
                                     </div>
                                 </div>
                                 <div class="css-qxlnel">

@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-add-teaminfo',
@@ -10,7 +12,23 @@ import { Router } from '@angular/router';
   styleUrl: './add-teaminfo.component.css'
 })
 export class AddTeaminfoComponent {
-  constructor(private router: Router) {}
+
+  constructor(private router: Router,private activatedRoute: ActivatedRoute) {}
+  eventId:string=''
+  ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(params => {
+       this.eventId = params['eventId'];
+      if (this.eventId) {
+        // Use the eventId here, e.g., for data fetching or processing
+        console.log('Retrieved eventId:', this.eventId);
+        // Call a service to fetch data based on eventId (optional)
+      } else {
+        // Handle the case where 'eventId' is not present
+        console.error('eventId parameter not found in query string.');
+      }
+    });
+  }
+  
   teamdiv: boolean = false;
   teams: { teamName: { id: string, name: string },teamRepresentativeEmail:{name:string,email:string} ,DirectorName: { id: string, name: string ,email:string}, coachName: { id: string, name: string ,email:string}, teamMembers: { id: string, name: string }[], }[] = [];
   addTeam(): void {
