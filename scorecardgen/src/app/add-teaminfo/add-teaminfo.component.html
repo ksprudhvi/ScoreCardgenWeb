@@ -37,35 +37,35 @@
                                                 <label for="team-name-{{i}}">Team Name : </label>
                                                 <input maxlength="50" placeholder="Your Team Name " id="team-name-{{i}}"
                                                     name="team-name-{{i}}" class="form-control" required="" type="text"
-                                                    (ngModel)="team.teamName.name">
+                                                    [(ngModel)]="team.teamName.name">
                                             </div>
                                             <div class="field required">
                                                 <label for="teamRepresentativeEmail-name-{{i}}">Team Representative Name
                                                     : </label>
                                                 <input type="text" id="teamRepresentativeEmail-name-{{i}}"
                                                     name="teamRepresentativeEmail-name-{{i}}" required="" class="form-control"
-                                                    (ngModel)="team.teamRepresentativeEmail.name">
+                                                    [(ngModel)]="team.teamRepresentativeEmail.name">
                                                 <label for="teamRepresentativeEmail-email-{{i}}">Team Representative
                                                     Email : </label>
                                                 <input type="text" id="teamRepresentativeEmail-email-{{i}}"
                                                     name="teamRepresentativeEmail-email-{{i}}" class="form-control"
-                                                    (ngModel)="team.teamRepresentativeEmail.email">
+                                                    [(ngModel)]="team.teamRepresentativeEmail.email">
                                             </div>
                                             <div class="field">
                                                 <label for="coach-name-{{i}}">Coach Name : </label>
                                                 <input type="text" id="coach-name-{{i}}" name="coach-name-{{i}}"
-                                                    class="form-control" (ngModel)="team.coachName.name">
+                                                    class="form-control" [(ngModel)]="team.coachName.name">
                                                 <label for="coach-email-{{i}}">Coach Email : </label>
                                                 <input type="text" id="coach-email-{{i}}" name="coach-email-{{i}}"
-                                                    class="form-control" (ngModel)="team.coachName.email">
+                                                    class="form-control" [(ngModel)]="team.coachName.email">
                                             </div>
                                             <div class="field">
                                                 <label for="director-name-{{i}}">Director Name : </label>
                                                 <input type="text" id="director-name-{{i}}" name="director-name-{{i}}"
-                                                    class="form-control" (ngModel)="team.DirectorName.name">
+                                                    class="form-control" [(ngModel)]="team.DirectorName.name">
                                                 <label for="director-email-{{i}}">Director Email : </label>
                                                 <input type="text" id="director-email-{{i}}" name="director-email-{{i}}"
-                                                    class="form-control" (ngModel)="team.DirectorName.email">
+                                                    class="form-control" [(ngModel)]="team.DirectorName.email">
                                             </div>
                                         </div>
                                         <div class="column">
@@ -82,7 +82,7 @@
                                                                 <input type="text" id="team-member-name-{{i}}-{{j}}"
                                                                     name="team-member-name-{{i}}-{{j}}"
                                                                     class="form-control"
-                                                                    (ngModel)="team.teamMembers[j].name">
+                                                                    [(ngModel)]="team.teamMembers[j].name">
                                                                 <span class="close-icon"
                                                                     (click)="removeTeamMember(i, j)">&times;</span>
                                                             </div>
@@ -111,7 +111,7 @@
             </div>
             <div class="btn-ConfigurJuges"
             >
-            <button type="button" class="ui grey button" [class.disabled]="isTeamFormValid()" (click)="saveandNextJudges()">Next Configur Jubges</button>
+            <button type="button" class="ui grey button" [class.disabled]="isTeamFormValid()" (click)="saveTeamsData()"> Save and Next Configur Judges</button>
           </div>
             <div></div>
         </div>

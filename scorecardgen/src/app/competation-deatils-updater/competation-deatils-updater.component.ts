@@ -1,6 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { ImageUploaderComponent } from '../image-uploader/image-uploader.component';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpEventType, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FileUploadService } from '../services/file-upload.service';
 import { CommonModule } from '@angular/common';
@@ -8,18 +8,25 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { AddTeaminfoComponent } from '../add-teaminfo/add-teaminfo.component';
 import { Router } from '@angular/router';
 import { NavigationExtras } from '@angular/router';
+import { v4 as uuidv4 } from 'uuid';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+
 
 @Component({
   selector: 'app-competation-deatils-updater',
   standalone: true,
-  imports: [ CommonModule,AddTeaminfoComponent,ImageUploaderComponent,ImageCropperModule],
+  imports: [ CommonModule,ImageUploaderComponent,ImageCropperModule],
   templateUrl: './competation-deatils-updater.component.html',
   styleUrl: './competation-deatils-updater.component.css'
 })
 export class CompetationDeatilsUpdaterComponent  implements OnInit{
   selectedFiles?: FileList;
   currentFile?: File;
-  teamsInfo!:AddTeaminfoComponent;
   progress = 0;
   message = '';
   preview = '';
@@ -35,8 +42,14 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   eventDateString!: string ;
   eventPriceString :string="Enter Price Info"
   eventId:string='cjvsdjc'
+  responseData!: any;
+  error: any;
 
-  constructor(private uploadService: FileUploadService,private router: Router) {}
+  constructor(private uploadService: FileUploadService,private router: Router,private http: HttpClient) {
+
+    this.eventId = uuidv4();
+        console.log(this.eventId);
+  }
   onCategoryChange(category: string): void {
     console.log('Selected category:', category);
     this.selectedCategory=category 
@@ -105,6 +118,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
       document.querySelector('[data-ref="edp_price_string_desktop"]') as EventElement
     ];
     const data = {
+      EventId:this.eventId,
       eventImageUrl:this.eventImageUrl,
       eventTitle: eventTitleList.find(
         (element) => element.innerText.trim() !== 'Enter Your Event Title'
@@ -125,7 +139,27 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     // Convert data to JSON
     const jsonData = JSON.stringify(data);
     // Here, you can save jsonData using your preferred method (e.g., sending it to a server, storing it locally)
-    console.log(jsonData);
+    const url = 'https://competationhoster.azurewebsites.net/competition';
+
+    // Define the HTTP headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    // Make the POST request with the provided data
+    this.http.post(url, jsonData, { headers }).subscribe(
+      (response) => {
+        console.log('POST request successful:', response);
+        this.responseData = response; // Assign response to a variable to use in template
+      },
+      (error) => {
+        console.info('Error making POST request:', error);
+        this.error = error.message || 'An error occurred'; // Set error message
+      }
+    );
+   
+
+    console.log(this.responseData);
   } 
 
   saveandNavifatetoTeamsInfo(): void {

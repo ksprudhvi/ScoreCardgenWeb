@@ -37,7 +37,7 @@
                                                 <label for="judge-name-{{i}}">Judge Name : </label>
                                                 <input maxlength="50" placeholder="Enter Judge  Name " id="judge-name-{{i}}"
                                                     name="judge-name-{{i}}" class="form-control" required="" type="text"
-                                                    (ngModel)="judge.name">
+                                                    [(ngModel)]="judge.name">
                                             </div>
                                             <div class="field">
                                                 <label for="judge-guest-{{i}}">Guest Judge : </label>
@@ -47,7 +47,7 @@
                                               <div class="field" [class.disabled]="judges[i].guestJugde">
                                                 <label for="judeg-email-{{i}}">Judge Email : </label>
                                                 <input type="text" id="judeg-email-{{i}}" name="jude-email-{{i}}" class="form-control"
-                                                       (ngModel)="judges[i].email">
+                                                       [(ngModel)]="judges[i].email">
                                               </div>        
                                         </div>
                                     </div>

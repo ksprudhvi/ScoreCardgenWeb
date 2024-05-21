@@ -13,7 +13,6 @@ import { CommonModule, JsonPipe, NgFor } from '@angular/common';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
 import { CompetationDeatilsUpdaterComponent } from './competation-deatils-updater/competation-deatils-updater.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { AddTeaminfoComponent } from './add-teaminfo/add-teaminfo.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { JudgesInfoComponent } from './judges-info/judges-info.component';
 import { SpeechtotextComponent } from './speechtotext/speechtotext.component';
@@ -28,11 +27,10 @@ import { TextMainComponent } from './text-main/text-main.component';
     CreateCompetitionComponent,
     ImageUploaderComponent,
     CompetationDeatilsUpdaterComponent,
-    AddTeaminfoComponent,
     LoginPageComponent,
     JudgesInfoComponent,
     SpeechtotextComponent,
-    TextMainComponent
+    TextMainComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +40,7 @@ import { TextMainComponent } from './text-main/text-main.component';
     ReactiveFormsModule,
     CommonModule,
     ImageCropperModule,
-    BrowserAnimationsModule,NgFor,NgModule, ReactiveFormsModule, JsonPipe,FormControl,FormGroup,FormBuilder,FormsModule
+    BrowserAnimationsModule,NgFor,NgModule, JsonPipe,FormControl,FormGroup,FormBuilder,FormsModule
   ],
 
   providers: [],

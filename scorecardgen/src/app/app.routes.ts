@@ -11,6 +11,7 @@ import { JudgesInfoComponent } from './judges-info/judges-info.component';
 import { SpeechtotextComponent } from './speechtotext/speechtotext.component';
 import { TextMainComponent } from './text-main/text-main.component';
 import { ScorecardConfigComponent } from './scorecard-config/scorecard-config.component';
+import { LoadEventTitleCardComponent } from './load-event-title-card/load-event-title-card.component';
 
 
 
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'upload', component: ImageUploaderComponent },
     { path: 'update', component: CompetationDeatilsUpdaterComponent },
     { path: 'addTeam', component: AddTeaminfoComponent },
+    { path: 'loadEvent', component: LoadEventTitleCardComponent },
     { path: 'login', component: LoginPageComponent },
     { path: 'confJudges', component: JudgesInfoComponent },
     { path: 'speak', component: TextMainComponent },
