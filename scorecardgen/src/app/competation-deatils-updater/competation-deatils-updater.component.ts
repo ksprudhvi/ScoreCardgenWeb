@@ -1,6 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { ImageUploaderComponent } from '../image-uploader/image-uploader.component';
-import { HttpEventType, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpEventType, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FileUploadService } from '../services/file-upload.service';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,7 @@ import { NavigationExtras } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -198,6 +199,45 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
       reader.readAsDataURL(file);
     }
     this.showPreview()
+    this.currentFile = event.target.files[0];
+    this.uploadFileLatest(file)
+  }
+
+
+  uploadFileLatest(file: File) {
+    
+
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    this.http.post('https://competationhoster.azurewebsites.net/upload', formData, {
+      reportProgress: true,
+      observe: 'events',
+      responseType: 'json'
+    }).subscribe(
+      (event: any) => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            if (event.total) {
+              this.progress = Math.round((100 * event.loaded) / event.total);
+            }
+            break;
+          case HttpEventType.Response:
+            this.progress = 100; // Set progress to 100%
+            if (event instanceof HttpResponse) {
+              console.log('Response:', event.body);
+              const response=event.body
+              this.eventImageUrl=response.ImageUrl;
+              this.message = 'File uploaded successfully';
+            }
+            break;
+        }
+      },
+      (error) => {
+        console.error('Error uploading file:', error);
+        this.message = 'Failed to upload file.';
+      }
+    );
   }
 
   imageCropped(event: any): void {
@@ -229,44 +269,41 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
         reader.readAsDataURL(this.currentFile);
       }
     }
+   
   }
-
-  upload(): void {
+  upload(file: File | undefined): void {
     this.progress = 0;
-
-    if (this.selectedFiles) {
-      const file: File | null = this.selectedFiles.item(0);
-
-      if (file) {
-        this.currentFile = file;
-
-        this.uploadService.upload(this.currentFile).subscribe({
-          next: (event: any) => {
-            if (event.type === HttpEventType.UploadProgress) {
-              this.progress = Math.round((100 * event.loaded) / event.total);
-            } else if (event instanceof HttpResponse) {
-              this.message = event.body.message;
-              this.imageInfos = this.uploadService.getFiles();
-            }
-          },
-          error: (err: any) => {
-            console.log(err);
-            this.progress = 0;
-
-            if (err.error && err.error.message) {
-              this.message = err.error.message;
-            } else {
-              this.message = 'Could not upload the image!';
-            }
-
-            this.currentFile = undefined;
-          },
-        });
+  
+    if (file) {
+      this.currentFile = file;
+  
+      this.uploadService.upload(this.currentFile).subscribe( (response) => {
+        console.log('POST request successful:', response);
+        this.responseData = response; // Assign response to a variable to use in template
+      },
+      (error) => {
+        console.info('Error making POST request:', error);
+        this.error = error.message || 'An error occurred'; // Set error message
       }
-
-      this.selectedFiles = undefined;
+    );
+    } else {
+      console.error('No file selected');
     }
   }
+  uploadFile(file: File) {
+    this.progress = 0;
+    this.uploadService.upload(file).subscribe(
+      (response) => {
+        console.log('POST request successful:', response);
+        this.responseData = response; // Assign response to a variable to use in template
+      },
+      (error) => {
+        console.info('Error making POST request:', error);
+        this.error = error.message || 'An error occurred'; // Set error message
+      }
+    );
+  }
+  
 
 }
 function saveDataandNavigateToTeamsInfo() {
