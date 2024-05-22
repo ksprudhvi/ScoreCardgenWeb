@@ -1,0 +1,11 @@
+.disabled {
+    pointer-events: none;
+    opacity: 0.0; /* Optionally, you can adjust opacity to visually indicate it's disabled */
+    /* Add any other styles for the disabled state */
+}
+
+.css-1oqavfg {
+    margin-bottom: 10px; /* Adjust the margin as needed */
+    /* or */
+    padding-bottom: 10px; /* Adjust the padding as needed */
+}

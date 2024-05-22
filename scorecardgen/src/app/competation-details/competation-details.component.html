@@ -195,18 +195,9 @@
                                 <div class="css-79elbk">
                                     <figure class=" css-0">
                                         <picture>
-                                            <source media="(max-width: 560px)"
-                                                srcset="https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_560/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1713452309%2Fpilvzikh0lvoaezm04ne.jpg">
-                                            <source media="(max-width: 600px)"
-                                                srcset="https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_600/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1713452309%2Fpilvzikh0lvoaezm04ne.jpg">
-                                            <source media="(max-width: 750px)"
-                                                srcset="https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_750/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1713452309%2Fpilvzikh0lvoaezm04ne.jpg">
-                                            <source media="(max-width: 800px)"
-                                                srcset="https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_800/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1713452309%2Fpilvzikh0lvoaezm04ne.jpg">
-                                            <img data-testid="ad-banner-image" data-ref="edp_event_banner_image"
-                                                src="https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_1316/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1713452309%2Fpilvzikh0lvoaezm04ne.jpg"
+                                       <img data-testid="ad-banner-image" data-ref="edp_event_banner_image"
+                                       src={{EventData.eventImageUrl}} alt={{EventData.eventTitle}}+{{EventData.eventVenue}}
                                                 alt="antiSOCIAL presents Jackfruit Dance Party ft.Ankit Pandey, GST, Kartik Shekar &amp; Rishi Sippy || Hyderabad"
-                                                srcset="https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_560/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1713452309%2Fpilvzikh0lvoaezm04ne.jpg 560w, https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_600/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1713452309%2Fpilvzikh0lvoaezm04ne.jpg 600w, https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_750/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1713452309%2Fpilvzikh0lvoaezm04ne.jpg 750w, https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_800/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1713452309%2Fpilvzikh0lvoaezm04ne.jpg 800w, "
                                                 sizes="(max-width:35em) 560px, (max-width:48em) 600px, (max-width:64em) 750px, 800px"
                                                 width="1316">
                                         </picture>
@@ -518,8 +509,7 @@
                                                             }
                                                         }
                                                     </style>
-                                                    <h1 class=" css-1mg2664" data-ref="edp_event_title_tablet">RAMOJI
-                                                        STAR EXPERIENCE</h1>
+                                                    <h1 class=" css-1mg2664" data-ref="edp_event_title_tablet">{{EventData.eventTitle}}</h1>
                                                     <style data-emotion-css="1yoi8sp">
                                                         .css-1yoi8sp {
                                                             display: -webkit-box;
@@ -558,7 +548,7 @@
                                                                 font-weight: 500;
                                                             }
                                                         </style>
-                                                        <p data-ref="edp_event_category_tablet" class="css-15yjbxw">Tour
+                                                        <p data-ref="edp_event_category_tablet" class="css-15yjbxw">{{EventData.eventCategory}}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -608,7 +598,7 @@
                                                         }
                                                     </style>
                                                     <p data-ref="edp_event_datestring_tablet" class="css-1uf8g5w">
-                                                        29-01-2024 to 24-04-2024 (9:00 AM to 5:30 PM )</p>
+                                                        {{EventData.eventDateString}}</p>
                                                 </div>
                                                 <div class="css-ois8gk">
                                                     <div class="css-1jbz40t"><svg width="16" height="16"
@@ -627,8 +617,7 @@
                                                                 </clipPath>
                                                             </defs>
                                                         </svg></div>
-                                                    <p data-ref="edp_event_venue_tablet" class="css-1uf8g5w">Ramoji Film
-                                                        City<!-- -->, Hyderabad</p>
+                                                    <p data-ref="edp_event_venue_tablet" class="css-1uf8g5w">{{EventData.eventVenue}}</p>
                                                 </div>
                                             </div>
                                             <style data-emotion-css="kccjyv">
@@ -738,7 +727,7 @@
                                                                 }
                                                             </style>
                                                             <p data-ref="edp_price_string_desktop" class="css-1rgjqr3">
-                                                                <span>₹</span>2772 onwards
+                                                                <span>$</span>{{EventData.eventPriceString}}
                                                             </p>
                                                             <style data-emotion-css="9rutzm">
                                                                 .css-9rutzm {
@@ -1213,7 +1202,7 @@
                                                 <div class="css-k008qs">
                                                     <div>
                                                         <h1 class=" css-1mg2664" data-ref="edp_event_title_mobile">
-                                                            JACKFRUIT DANCE PARTY</h1>
+                                                            {{EventData.eventTitle}}</h1>
                                                         <div class="css-1yoi8sp">
                                                             <div class="css-1jbz40t"><svg width="16" height="17"
                                                                     viewBox="0 0 16 17" fill="none"
@@ -1226,7 +1215,7 @@
                                                                     </path>
                                                                 </svg></div>
                                                             <p data-ref="edp_event_category_mobile" class="css-15yjbxw">
-                                                                Tour</p>
+                                                                {{EventData.eventCategory}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1250,7 +1239,7 @@
                                                                 </path>
                                                             </svg></div>
                                                         <p data-ref="edp_event_datestring_mobile" class="css-1uf8g5w">
-                                                            29-01-2024 to 24-04-2024 (9:00 AM to 5:30 PM )</p>
+                                                            {{EventData.eventDateString}}</p>
                                                     </div>
                                                     <div class="css-ois8gk">
                                                         <div class="css-1jbz40t"><svg width="16" height="16"
@@ -1270,8 +1259,7 @@
                                                                     </clipPath>
                                                                 </defs>
                                                             </svg></div>
-                                                        <p data-ref="edp_event_venue_mobile" class="css-1uf8g5w">Ramoji
-                                                            AT & T Stadium ,Arlington <!-- -->, Hyderabad</p>
+                                                        <p data-ref="edp_event_venue_mobile" class="css-1uf8g5w">{{EventData.eventVenue}}/p>
                                                     </div>
                                                 </div>
                                                 <div aria-label="BUY NOWbuttonDouble tap to activate" role="region"
@@ -1297,8 +1285,7 @@
                                                                 </svg></div>
                                                             <div class="css-1s8djm3">
                                                                 <p data-ref="edp_price_string_desktop"
-                                                                    class="css-1rgjqr3"><span>$</span>27
-                                                                    onwards</p>
+                                                                    class="css-1rgjqr3"><span>$</span>{{EventData.eventPriceString}}</p>
                                                                 <p class="css-9rutzm"></p>
                                                             </div>
                                                         </div>
@@ -1583,7 +1570,7 @@
                                 <div class="css-b3qn21">
                                     <div class="css-k008qs">
                                         <div>
-                                            <h1 class=" css-1mg2664" data-ref="edp_event_title_desktop">JACKFRUIT DANCE PARTY</h1>
+                                            <h1 class=" css-1mg2664" data-ref="edp_event_title_desktop">{{EventData.eventTitle}}</h1>
                                             <div class="css-1yoi8sp">
                                                 <div class="css-1jbz40t"><svg width="16" height="17" viewBox="0 0 16 17"
                                                         fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1593,7 +1580,7 @@
                                                         <path d="M3.64453 5.59389H13.3588" stroke="#0C172F"
                                                             stroke-linecap="square"></path>
                                                     </svg></div>
-                                                <p data-ref="edp_event_category_desktop" class="css-15yjbxw">Tour</p>
+                                                <p data-ref="edp_event_category_desktop" class="css-15yjbxw">{{EventData.eventCategory}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -1611,8 +1598,7 @@
                                                     <path d="M15.0984 6.02344V7.15285H1.89844V6.02344H15.0984Z"
                                                         fill="#0C172F"></path>
                                                 </svg></div>
-                                            <p data-ref="edp_event_datestring_desktop" class="css-1uf8g5w">29-01-2024 to
-                                                24-04-2024 (9:00 AM to 5:30 PM )</p>
+                                            <p data-ref="edp_event_datestring_desktop" class="css-1uf8g5w">{{EventData.eventDateString}}</p>
                                         </div>
                                         <div class="css-ois8gk">
                                             <div class="css-1jbz40t"><svg width="16" height="16" viewBox="0 0 16 16"
@@ -1631,7 +1617,7 @@
                                                         </clipPath>
                                                     </defs>
                                                 </svg></div>
-                                            <p data-ref="edp_event_venue_desktop" class="css-1uf8g5w">AT & T Stadium , Arlington</p>
+                                            <p data-ref="edp_event_venue_desktop" class="css-1uf8g5w">{{EventData.eventVenue}}</p>
                                         </div>
                                     </div>
                                     <div aria-label="BUY NOWbuttonDouble tap to activate" role="region"
@@ -1655,7 +1641,7 @@
                                                     </svg></div>
                                                 <div class="css-1s8djm3">
                                                     <p data-ref="edp_price_string_desktop" class="css-1rgjqr3">
-                                                        <span>$</span>27 onwards
+                                                        <span>$</span>{{EventData.eventPriceString}}
                                                     </p>
                                                     <p class="css-9rutzm"></p>
                                                 </div>
@@ -1699,21 +1685,20 @@
                                     <div class="css-1qo6c03">
                                         <div class="css-1a9ozol">
                                             <div>
-                                                <p class="css-1oqavfg">Team 1</p>
-                                                <p class="css-1oqavfg">Team 2</p>
+                                                <p class="css-1oqavfg" *ngFor="let team of TeamsInfo; let i = index">{{team.teamName.name}}</p>
+                                                
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="css-qxlnel">
+                                <div class="css-qxlnel" >
                                     <div class="css-1qfo63q">Judges Information </div>
                                     <div class="css-12527f7"></div>
                                     <div class="css-1qo6c03">
                                         <div class="css-1a9ozol">
                                             <div>
-                                                <p class="css-1oqavfg">Judge 1</p>
-                                                <p class="css-1oqavfg">Judge 2</p>
+                                                <p class="css-1oqavfg" *ngFor="let judge of JudegsInfo; let i = index">{{judge.name}}</p>
                                             </div>
                                         </div>
                                     </div>

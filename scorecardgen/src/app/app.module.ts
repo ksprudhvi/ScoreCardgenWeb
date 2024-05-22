@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomescreenComponent } from './homescreen/homescreen.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateCompetitionComponent } from './create-competition/create-competition.component';
-import { CompetationDetailsComponent } from './competation-details/competation-details.component';
 import { CommonModule, JsonPipe, NgFor } from '@angular/common';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
 import { CompetationDeatilsUpdaterComponent } from './competation-deatils-updater/competation-deatils-updater.component';
@@ -23,7 +22,6 @@ import { TextMainComponent } from './text-main/text-main.component';
   declarations: [
     AppComponent,
     HomescreenComponent,
-    CompetationDetailsComponent,
     CreateCompetitionComponent,
     ImageUploaderComponent,
     CompetationDeatilsUpdaterComponent,
