@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { response } from 'express';
+import { FormsModule } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ import { response } from 'express';
 @Component({
   selector: 'app-competation-deatils-updater',
   standalone: true,
-  imports: [ CommonModule,ImageUploaderComponent,ImageCropperModule],
+  imports: [FormsModule, CommonModule,ImageUploaderComponent,ImageCropperModule],
   templateUrl: './competation-deatils-updater.component.html',
   styleUrl: './competation-deatils-updater.component.css'
 })
@@ -40,7 +41,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   directionUrl: string ='replace with  Direction Url'
   eventTitle: string="Enter Your Event Title"
   eventTitleVenue: string="Enter Title Venue"
-  eventDateString!: string ;
+  eventDateString: string="Enter Date and time Info" ;
   eventPriceString :string="Enter Price Info"
   eventId:string='cjvsdjc'
   responseData!: any;
@@ -120,13 +121,12 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     ];
     const data = {
       EventId:this.eventId,
+
       eventImageUrl:this.eventImageUrl,
       eventTitle: eventTitleList.find(
         (element) => element.innerText.trim() !== 'Enter Your Event Title'
       )?.innerText.trim(),
-      eventCategory: eventCategoryList.find(
-        (element) => element.innerText.trim() !== ''
-      )?.innerText.trim(),
+      eventCategory:this.selectedCategory,
       eventDateString: eventDateStringList.find(
         (element) => element.innerText.trim() !== 'Enter Date and Time'
       )?.innerText.trim(),
@@ -164,6 +164,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   } 
 
   saveandNavifatetoTeamsInfo(): void {
+    this.saveData();
     const navigationExtras: NavigationExtras = {
       queryParams: { eventId:this.eventId },
       state: { someOtherData: 'value' } // Optionally pass additional data
@@ -200,15 +201,16 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     }
     this.showPreview()
     this.currentFile = event.target.files[0];
-    this.uploadFileLatest(file)
+    this.uploadFileLatest(file,this.eventId)
   }
 
 
-  uploadFileLatest(file: File) {
+  uploadFileLatest(file: File, eventId: string) {
     
 
     const formData: FormData = new FormData();
     formData.append('file', file);
+    formData.append('EventId', eventId);
 
     this.http.post('https://competationhoster.azurewebsites.net/upload', formData, {
       reportProgress: true,

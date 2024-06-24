@@ -12,6 +12,9 @@ import { SpeechtotextComponent } from './speechtotext/speechtotext.component';
 import { TextMainComponent } from './text-main/text-main.component';
 import { ScorecardConfigComponent } from './scorecard-config/scorecard-config.component';
 import { LoadEventTitleCardComponent } from './load-event-title-card/load-event-title-card.component';
+import { GetAccessTokensComponent } from './get-access-tokens/get-access-tokens.component';
+import { ScorecardNavigatorComponent } from './scorecard-navigator/scorecard-navigator.component';
+import { LeadBordScreenComponent } from './lead-bord-screen/lead-bord-screen.component';
 
 
 
@@ -28,4 +31,8 @@ export const routes: Routes = [
     { path: 'confJudges', component: JudgesInfoComponent },
     { path: 'speak', component: TextMainComponent },
     { path: 'score', component: ScorecardConfigComponent },
+    { path: 'scoreCard', component: ScorecardNavigatorComponent },
+    { path: 'getAccessTokens', component: GetAccessTokensComponent },
+    { path: 'viewLeadBord', component: LeadBordScreenComponent },
+
 ];

@@ -1,0 +1,23 @@
+<!-- leaderboard.component.html -->
+<div class="ui container">
+    <div class="ui centered header">
+      <h2>Leaderboard</h2>
+    </div>
+    <table class="ui celled table">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Team NAme</th>
+          <th>Total Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of leaderboard; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ entry.teamId }}</td>
+          <td>{{ entry.total_score }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

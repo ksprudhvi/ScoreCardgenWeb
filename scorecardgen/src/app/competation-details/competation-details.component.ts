@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageUploaderComponent } from '../image-uploader/image-uploader.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -74,10 +74,52 @@ export class CompetationDetailsComponent implements OnInit {
 
   }
 
+  NavigateToAccessTokens():void{
+    const navigationExtras: NavigationExtras = {
+      queryParams: { eventId:this.eventId },
+      state: { someOtherData: 'value' } // Optionally pass additional data
+    };
+     // Construct the URL manually
+     const url = this.router.createUrlTree(['getAccessTokens'], navigationExtras).toString();
+     const baseUrl = window.location.origin; // Get the base URL of the application
+     const fullUrl = `${baseUrl}${url}`;
+ 
+     // Open the URL in a new tab
+     window.open(fullUrl, '_blank');
 
+  }
+
+  NavigateToLeadBord():void{
+    const navigationExtras: NavigationExtras = {
+      queryParams: { eventId:this.eventId },
+      state: { someOtherData: 'value' } // Optionally pass additional data
+    };
+     // Construct the URL manually
+     const url = this.router.createUrlTree(['viewLeadBord'], navigationExtras).toString();
+     const baseUrl = window.location.origin; // Get the base URL of the application
+     const fullUrl = `${baseUrl}${url}`;
+     // Open the URL in a new tab
+     window.open(fullUrl, '_blank');
+
+  }
+  isOpen = false;
+ 
+  openPopup() {
+    this.isOpen = true;
+  }
+
+  closePopup() {
+    this.isOpen = false;
+    // You can add logic to handle form submission or data processing here
+  }
 
   NavigateToScoreCard(): void {
-    this.router.navigate(['score']); // Replace with your desired rout
+    //this.openPopup()
+    const navigationExtras: NavigationExtras = {
+      queryParams: { eventId:this.eventId },
+      state: { someOtherData: 'value' } // Optionally pass additional data
+    };
+    this.router.navigate(['scoreCard'], navigationExtras);// Replace with your desired rout
   }
 
 }

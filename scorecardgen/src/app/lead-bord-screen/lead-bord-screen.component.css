@@ -1,0 +1,18 @@
+/* leaderboard.component.css */
+.ui.container {
+    margin-top: 50px;
+  }
+  
+  .ui.header {
+    text-align: center;
+  }
+  
+  .ui.table {
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  th, td {
+    text-align: center;
+  }
+  

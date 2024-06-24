@@ -1,0 +1,15 @@
+.large-dropdown {
+    font-size: 1.5em; /* Adjust the font size as needed */
+    padding: 10px; /* Adjust the padding as needed */
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding does not affect the width */
+}
+
+.input-margin {
+    margin-bottom: 20px; /* Add margin below the input field */
+}
+
+/* Optionally, you can style the options if necessary */
+.large-dropdown option {
+    font-size: 1.5em; /* Ensure options inherit the font size */
+}

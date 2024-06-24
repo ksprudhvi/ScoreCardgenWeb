@@ -284,6 +284,9 @@ export class HomescreenComponent implements OnInit {
   //     }
     
   // ]
+
+  
+
   navigateToDetails(eventId:string){
       const navigationExtras: NavigationExtras = {
         queryParams: { eventId:eventId },

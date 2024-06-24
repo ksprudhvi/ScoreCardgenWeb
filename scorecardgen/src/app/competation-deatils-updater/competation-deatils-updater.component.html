@@ -553,7 +553,7 @@
                                                                 font-weight: 500;
                                                             }
                                                         </style>
-                                                        <p data-ref="edp_event_category_tablet" class="css-15yjbxw">Tour
+                                                        <p data-ref="edp_event_category_tablet" class="css-15yjbxw">{{selectedCategory}}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -1106,7 +1106,7 @@
                                                                     </path>
                                                                 </svg></div>
                                                             <p data-ref="edp_event_category_mobile" class="css-15yjbxw">
-                                                                Tour</p>
+                                                                {{selectedCategory}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1180,10 +1180,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="css-5m1des"><a
-                                                            href="/event/ramoji-star-experience/buy-page"
-                                                            data-ref="edp_buy_button_desktop" class="css-10lu0qa">BUY
-                                                            NOW</a></div>
+                                                 
                                                 </div>
                                             </div>
                                             <div class="css-qxlnel">
@@ -1464,7 +1461,7 @@
                                                             stroke-linecap="square"></path>
                                                     </svg>
                                                 </div>
-                                                <select (ngModel)="selectedCategory"
+                                                <select [(ngModel)]="selectedCategory"
                                                    >
                                                     <option value="" disabled selected>Select category</option>
                                                     <option value="Ballet">Ballet</option>
@@ -1664,7 +1661,6 @@
                                     </div>
 
                                 </div>
-                                <div class="css-qxlnel"><button (click)="saveData()">Save</button></div>
                                 <div class="css-qxlnel"><button (click)="saveandNavifatetoTeamsInfo()">Enter Competition Team Information </button></div>
                             </div>
 
