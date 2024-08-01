@@ -29,6 +29,11 @@ export class ScorecardConfigComponent {
     total:0,
     comments :''
   };
+  loading!:Boolean ;
+  successMessage !:any;
+  errorMessage !:any;
+  options: string[] = ['Tap', 'Hip-Hop', 'Jazz'];
+  category: any;
   constructor(private activatedRoute: ActivatedRoute,private http: HttpClient) {}
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -62,7 +67,12 @@ export class ScorecardConfigComponent {
     }
   ); 
   }
-  
+  onChange():void {
+    if(this.TeamId!=null && this.category!=null)
+    {
+      this.onTeamChange();
+    }
+  }
   onTeamChange(): void {
     const url = 'https://competationhoster.azurewebsites.net/getScorecard';
     console.log('started Team Change get ')
@@ -73,19 +83,29 @@ export class ScorecardConfigComponent {
     const data ={
       EventId:this.eventId,
       judgeId:this.judgeId,
-      teamId:this.TeamId
+      teamId:this.TeamId,
+      category:this.category
     }
     console.log('data',data)
+    this.loading=true;
     const jsonData = JSON.stringify(data);
     // Make the POST request with the provided data
     this.http.post<any>(url, jsonData, { headers }).subscribe(
       (responseDta) => {
         console.log('POST request successful:', responseDta);
        this.ScoreCard = responseDta[0].scorecard; 
-       this.scoreCardId=responseDta[0].id// Assign response to a variable to use in template
+       this.scoreCardId=responseDta[0].id//
+       this.loading=false;
+       this.successMessage = 'Fetched Scorecard Info Succesfully '; 
+        setTimeout(() => this.successMessage=(null), 2000);
+         // Assign response to a variable to use in template
       },
       (error) => {
+        this.loading=false;
         console.info('Error making POST request:', error);
+        this.errorMessage = 'Error Occured  '; 
+        setTimeout(() => this.errorMessage=(null), 2000);
+
         this.error = error.message || 'An error occurred'; // Set error message
       }
     );
@@ -167,16 +187,25 @@ export class ScorecardConfigComponent {
     }
     console.log('data',data)
     const jsonData = JSON.stringify(data);
+    this.loading=true;
     // Make the POST request with the provided data
     this.http.post<any>(url, jsonData, { headers }).subscribe(
       (responseDta) => {
         console.log('POST request successful:', responseDta);
-       //this.ScoreCard = responseDta.scorecard; // Assign response to a variable to use in template
-      },
-      (error) => {
-        console.info('Error making POST request:', error);
-        this.error = error.message || 'An error occurred'; // Set error message
-      }
+       //this.ScoreCard = responseDta.scorecard;this.loading=false;
+       this.successMessage = 'Saved Scorecard Info Succesfully '; 
+       this.loading=false;
+       setTimeout(() => this.successMessage=(null), 2000);
+        // Assign response to a variable to use in template
+     },
+     (error) => {
+       this.loading=false;
+       console.info('Error making POST request:', error);
+       this.errorMessage = 'Error Occured  '; 
+       setTimeout(() => this.errorMessage=(null), 2000);
+
+       this.error = error.message || 'An error occurred'; // Set error message
+     }
     );
 
 

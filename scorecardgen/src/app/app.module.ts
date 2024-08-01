@@ -16,7 +16,8 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { JudgesInfoComponent } from './judges-info/judges-info.component';
 import { SpeechtotextComponent } from './speechtotext/speechtotext.component';
 import { TextMainComponent } from './text-main/text-main.component';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { TextMainComponent } from './text-main/text-main.component';
     ReactiveFormsModule,
     CommonModule,
     ImageCropperModule,
-    BrowserAnimationsModule,NgFor,NgModule, JsonPipe,FormControl,FormGroup,FormBuilder,FormsModule
+    BrowserAnimationsModule,NgFor,NgModule, JsonPipe,FormControl,FormGroup,FormBuilder,FormsModule,
   ],
 
   providers: [],

@@ -1,5 +1,20 @@
-.preview {
-    max-width: 200px;
+.category-list {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .performance-item {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    cursor: move;
+  }
+  
+  .performance-item p {
+    margin: 0;
   }
 
   /* your-component.component.css */

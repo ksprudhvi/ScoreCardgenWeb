@@ -18,6 +18,9 @@ export class JudgesInfoComponent {
   testName: any;
   responseData!: any;
   error: any;
+  loading!:Boolean ;
+  successMessage !:any;
+  errorMessage !:any;
   ngOnInit() {
 
     this.activatedRoute.queryParams.subscribe(params => {
@@ -46,6 +49,7 @@ export class JudgesInfoComponent {
       EventId:this.eventId,
       JudegsInfo:this.judges
   }
+  this.loading=true;
    const jsonData = JSON.stringify(judgesData);
   const url = 'https://competationhoster.azurewebsites.net/updateJudges';
 
@@ -58,17 +62,25 @@ export class JudgesInfoComponent {
     this.http.post(url, jsonData, { headers }).subscribe(
       (response) => {
         console.log('POST request successful:', response);
-        this.responseData = response; // Assign response to a variable to use in template
+        this.loading=false;
+        this.responseData = response;
+        this.successMessage = 'Saved Judges Info Succesfully '; 
+        setTimeout(() => this.successMessage=(null), 2000);
+         // Assign response to a variable to use in template
       },
       (error) => {
+        this.loading=false;
         console.info('Error making POST request:', error);
+        this.errorMessage = 'Saved Judges Info Succesfully '; 
+        setTimeout(() => this.errorMessage=(null), 2000);
+
         this.error = error.message || 'An error occurred'; // Set error message
       }
     );
        console.log(this.responseData);
   
       console.log(jsonData);
-      this.router.navigate(['score']); // Replace with your desired rout
+      this.router.navigate(['']); // Replace with your desired rout
 
   }
 }

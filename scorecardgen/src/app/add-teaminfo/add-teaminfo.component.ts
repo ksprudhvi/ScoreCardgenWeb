@@ -5,7 +5,7 @@ import { FormControl, FormsModule } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
-
+import { tap } from 'rxjs/operators';
 
 
 @Component({
@@ -18,7 +18,9 @@ import { v4 as uuidv4 } from 'uuid';
 export class AddTeaminfoComponent {
   error: any;
   responseData!: any;
-
+  loading!:Boolean ;
+  successMessage !:any;
+  errorMessage !:any;
   constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
   eventId:string=''
   testName: any;
@@ -50,6 +52,7 @@ export class AddTeaminfoComponent {
     this.teams[teamIndex].teamMembers.splice(memberIndex, 1);
   }
   saveTeamsData(): void {
+    this.loading=true;
     const teamData ={
         EventId:this.eventId,
         teamsInfo:this.teams
@@ -76,18 +79,21 @@ export class AddTeaminfoComponent {
     this.http.post(url, jsonData, { headers }).subscribe(
       (response) => {
         console.log('POST request successful:', response);
-        this.responseData = response; // Assign response to a variable to use in template
+        this.responseData = response;
+        // this.loadingService.hide();
+        this.loading=false
+        this.successMessage="Team Details Saved Succesfully";
+        this.saveandNextJudges()
+        setTimeout(() => this.successMessage=(null), 2000);
+        // Assign response to a variable to use in template
       },
       (error) => {
         console.info('Error making POST request:', error);
-        this.error = error.message || 'An error occurred'; // Set error message
+        this.errorMessage = 'An error occurred .Please Try again'; 
+        setTimeout(() => this.errorMessage=(null), 2000);// Set error message
       }
     );
-   
-
     console.log(this.responseData);
-
-    this.saveandNextJudges()
   }
   isTeamFormValid(): boolean {
     if (this.teams.length === 0) {

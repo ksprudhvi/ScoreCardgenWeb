@@ -3,6 +3,15 @@
 
 <body>
   <div style="overflow: auto; height: 100vh; display: flex; flex-direction: column; align-items: center;">
+    <div *ngIf="loading" class="loading-overlay">
+      <div class="loading-spinner"></div>
+    </div>
+    
+    <div *ngIf="successMessage" class="notification success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="notification error">{{ errorMessage }}</div>
+    
+    <!-- Your existing component content here -->
+    
 
     <h2 class="ui center aligned header">Judges Access Tokens</h2>
 

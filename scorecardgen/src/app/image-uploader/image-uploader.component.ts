@@ -17,6 +17,9 @@ export class ImageUploaderComponent implements OnInit {
   progress = 0;
   message = '';
   preview = '';
+  loading!:Boolean ;
+  successMessage !:any;
+  errorMessage !:any;
 
   imageInfos?: Observable<any>;
 

@@ -2,11 +2,21 @@
 <html lang="en">
     <body>
         <div id="there-you-go">
+
             <style data-emotion-css="1j5hrwi">
                 .css-1j5hrwi {
                     position: relative;
                 }
             </style>
+            <div *ngIf="loading" class="loading-overlay">
+                <div class="loading-spinner"></div>
+              </div>
+              
+              <div *ngIf="successMessage" class="notification success">{{ successMessage }}</div>
+              <div *ngIf="errorMessage" class="notification error">{{ errorMessage }}</div>
+              
+              <!-- Your existing component content here -->
+                       
             <div class="css-1j5hrwi">
                 <style data-emotion-css="1qq4ofc">
                     body {
@@ -305,104 +315,6 @@
                                                     }
                                                 }
                                             </style>
-                                            <ul class="css-fpodvv">
-                                                <style data-emotion-css="sqpnc3">
-                                                    .css-sqpnc3 {
-                                                        float: none;
-                                                        margin-right: calc(16px / 2);
-                                                        display: inline-block;
-                                                        width: auto;
-                                                        height: auto;
-                                                        list-style-type: none;
-                                                        font-size: 14px;
-                                                        color: #999999;
-                                                        margin-bottom: 0px;
-                                                        text-transform: uppercase;
-                                                    }
-
-                                                    @media screen and (min-width: 64em) {
-                                                        .css-sqpnc3 {
-                                                            margin-right:12px;
-                                                        }
-
-                                                        .css-sqpnc3:last-child {
-                                                            margin-right: 0;
-                                                        }
-                                                    }
-
-                                                    @media screen and (max-width: 34.9em) {
-                                                        .css-sqpnc3 {
-                                                            font-size:9px;
-                                                        }
-                                                    }
-                                                </style>
-                                                <li class="css-sqpnc3">genre:</li>
-                                                <style data-emotion-css="1xj2t90">
-                                                    .css-1xj2t90 {
-                                                        float: none;
-                                                        margin-right: calc(16px / 2);
-                                                        display: inline-block;
-                                                        width: auto;
-                                                        height: auto;
-                                                        list-style-type: none;
-                                                    }
-
-                                                    @media screen and (min-width: 64em) {
-                                                        .css-1xj2t90 {
-                                                            margin-right:12px;
-                                                        }
-
-                                                        .css-1xj2t90:last-child {
-                                                            margin-right: 0;
-                                                        }
-                                                    }
-                                                </style>
-                                                <li class="css-1xj2t90">
-                                                    <style data-emotion-css="fg9v7a">
-                                                        .css-fg9v7a {
-                                                            display: block;
-                                                            padding: calc(16px / 2) 12px;
-                                                            border: 1px solid #999;
-                                                            border-radius: 50px;
-                                                            font-weight: 400;
-                                                        }
-
-                                                        @media screen and (min-width: 64em) {
-                                                            .css-fg9v7a {
-                                                                padding:calc(12px - 2px) 16px;
-                                                            }
-                                                        }
-
-                                                        .css-fg9v7a.active {
-                                                            color: rgb(255,255,255);
-                                                            background: rgb(194,0,0);
-                                                            font-weight: 400;
-                                                            border-color: rgb(194,0,0);
-                                                        }
-                                                    </style>
-                                                   
-                                                </li>
-                                                <li class="css-1xj2t90">
-                                                    <a class="css-fg9v7a" href="/all-events-in-visakhapatnam/tour">
-                                                        <span class="css-1fv8emw">Ballet (2)</span>
-                                                    </a>
-                                                </li>
-                                                <li class="css-1xj2t90">
-                                                    <a class="css-fg9v7a" href="/all-events-in-visakhapatnam/adventure">
-                                                        <span class="css-1fv8emw">Hip Pop (1)</span>
-                                                    </a>
-                                                </li>
-                                                <li class="css-1xj2t90">
-                                                    <a class="css-fg9v7a" href="/all-events-in-visakhapatnam/courses">
-                                                        <span class="css-1fv8emw">Jazz (1)</span>
-                                                    </a>
-                                                </li>
-                                                <li class="css-1xj2t90">
-                                                    <a class="css-fg9v7a" href="/all-events-in-visakhapatnam/music">
-                                                        <span class="css-1fv8emw">Music (1)</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
                                         </div>
                                     </div>
                                     <style data-emotion-css="63xs48">
@@ -668,7 +580,7 @@
                                                     border: 1px solid #f0f1f2;
                                                     background: white;
                                                 }
-
+                                        
                                                 .css-clv2ol > a {
                                                     display: block;
                                                     width: 100%;
@@ -677,18 +589,45 @@
                                                     text-decoration: none;
                                                     color: inherit;
                                                 }
-
+                                        
                                                 .css-clv2ol a:hover {
                                                     color: initial;
                                                 }
-
+                                        
                                                 .css-clv2ol:hover {
                                                     border: 1px solid white;
                                                     box-shadow: rgba(0,0,0,0.1) 2px 2px 10px 0px;
                                                 }
+                                        
+                                                .status-indicator {
+                                                    font-size: 11px;
+                                                                position: absolute;
+                                                                top: calc(16px / 2);
+                                                                right: calc(16px / 2);
+                                                                color: #fff;
+                                                                text-transform: uppercase;
+                                                                border-radius: 6px;
+                                                                font-weight: 700;
+                                                                padding: calc(12px / 2) calc(16px / 2);
+                                                    background-color: green;
+                                                }
+                                        
+                                                .status-live {
+                                                    background-color: green;
+                                                }
+                                        
+                                                .status-scheduled {
+                                                    background-color: orange;
+                                                }
+                                        
+                                                .status-completed {
+                                                    background-color: red;
+                                                }
                                             </style>
                                             <div data-ref="event_card"  role="region" class="css-clv2ol">
+                                                
                                                 <a class="" (click)="navigateToDetails(event.EventId)" >
+                                                    
                                                     <style data-emotion-css="pb8e9y">
                                                         .css-pb8e9y {
                                                             display: block;
@@ -743,7 +682,7 @@
                                                                 font-size: 11px;
                                                                 position: absolute;
                                                                 top: calc(16px / 2);
-                                                                right: calc(16px / 2);
+                                                                left: calc(16px / 2);
                                                                 color: #fff;
                                                                 text-transform: uppercase;
                                                                 background-color: #c20000;
@@ -776,7 +715,14 @@
                                                                 }
                                                             }
                                                         </style>
+                                                        <span [ngClass]="{
+                                                            'status-indicator': true,
+                                                            'status-live': true,
+                                                            'status-scheduled': event.status === 'Scheduled',
+                                                            'status-completed': event.status === 'Completed'
+                                                        }"> {{ event.status }}</span>
                                                         <span class="card-genre css-mrmzh" style="background-color:#31c0f0">{{event.eventCategory}}</span>
+
                                                     </div>
                                                     <style data-emotion-css="1gd5o6a">
                                                         .css-1gd5o6a {

@@ -23,6 +23,9 @@ export class CreateCompetitionComponent {
   selectedStep: string = 'competitionDetails';
   venueLocation: string = '';
   dateTime: string = '';
+  loading!:Boolean ;
+  successMessage !:any;
+  errorMessage !:any;
   teams: { teamName: { id: string, name: string }, coachName: { id: string, name: string }, teamMembers: { id: string, name: string }[] }[] = [];
 
   constructor(private formBuilder: FormBuilder) {}

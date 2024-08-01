@@ -8,6 +8,15 @@
                 position: relative;
             }
         </style>
+        <div *ngIf="loading" class="loading-overlay">
+            <div class="loading-spinner"></div>
+          </div>
+          
+          <div *ngIf="successMessage" class="notification success">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="notification error">{{ errorMessage }}</div>
+          
+          <!-- Your existing component content here -->
+          
         <div class="css-1j5hrwi">
             <main>
                 <style data-emotion-css="5czy92">
@@ -553,8 +562,8 @@
                                                                 font-weight: 500;
                                                             }
                                                         </style>
-                                                        <p data-ref="edp_event_category_tablet" class="css-15yjbxw">{{selectedCategory}}
-                                                        </p>
+                                                        <!-- <p data-ref="edp_event_category_tablet" class="css-15yjbxw">{{selectedCategory}}
+                                                        </p> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -1105,8 +1114,8 @@
                                                                         stroke-linecap="square">
                                                                     </path>
                                                                 </svg></div>
-                                                            <p data-ref="edp_event_category_mobile" class="css-15yjbxw">
-                                                                {{selectedCategory}}</p>
+                                                            <!-- <p data-ref="edp_event_category_mobile" class="css-15yjbxw">
+                                                                {{selectedCategory}}</p> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1450,7 +1459,7 @@
                                         <div>
                                             <h1 class="css-1mg2664" data-ref="edp_event_title_desktop"
                                                 contenteditable="true">{{eventTitle}}</h1>
-                                            <div class="css-1yoi8sp">
+                                             <div class="css-1yoi8sp">
                                                 <div class="css-1jbz40t">
                                                     <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
                                                         xmlns="http://www.w3.org/2000/svg">
@@ -1461,7 +1470,17 @@
                                                             stroke-linecap="square"></path>
                                                     </svg>
                                                 </div>
-                                                <select [(ngModel)]="selectedCategory"
+                                                <div *ngFor="let option of options; let i = index">
+                                                    <input type="checkbox" [id]="'option' + i" [(ngModel)]="selectedOptions[i]" />
+                                                    <label [for]="'option' + i">{{ option }}</label>
+                                                  </div>
+                                                
+                                                  <div>
+                                                    <input type="checkbox" id="enterText" [(ngModel)]="isTextChecked" />
+                                                    <label for="enterText">Enter Text</label>
+                                                    <input type="text" *ngIf="isTextChecked" [(ngModel)]="enteredText" placeholder="Enter your text here" />
+                                                  </div>
+                                                <!--<select [(ngModel)]="selectedCategory"
                                                    >
                                                     <option value="" disabled selected>Select category</option>
                                                     <option value="Ballet">Ballet</option>
@@ -1472,8 +1491,8 @@
                                                     <option value="Hip hop">Hip hop</option>
                                                     <option value="Musical theater">Musical theater</option>
                                                 </select>
+                                             -->
                                             </div>
-
                                         </div>
                                     </div>
                                     <div>
@@ -1661,6 +1680,7 @@
                                     </div>
 
                                 </div>
+                                <div class="css-qxlnel"><button (click)="saveData()">Save Event</button></div>
                                 <div class="css-qxlnel"><button (click)="saveandNavifatetoTeamsInfo()">Enter Competition Team Information </button></div>
                             </div>
 

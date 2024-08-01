@@ -12,8 +12,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './lead-bord-screen.component.css'
 })
 export class LeadBordScreenComponent {
-  leaderboard !:any;
+  leaderboard: { [key: string]: Array<{ teamName: string; total_score: number }> } = {};
   eventId: any;
+  loading!:Boolean ;
+  successMessage !:any;
+  errorMessage !:any;
   constructor(private activatedRoute: ActivatedRoute,private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -35,10 +38,11 @@ export class LeadBordScreenComponent {
     });
 
     // Make the POST request with the provided data
-    this.http.post(url, jsonData, { headers }).subscribe(
+    this.http.post<any>(url, jsonData, { headers }).subscribe(
       (response) => {
         console.log('POST request successful:', response);
-        this.leaderboard = response; // Assign response to a variable to use in template
+        this.leaderboard = response.leaderboard;
+        // Assign response to a variable to use in template
       },
       (error) => {
         console.info('Error making POST request:', error);

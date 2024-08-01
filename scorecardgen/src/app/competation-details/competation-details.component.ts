@@ -21,6 +21,11 @@ export class CompetationDetailsComponent implements OnInit {
   error!: any;
   TeamsInfo!: any;
   JudegsInfo!: any;
+  loading!:Boolean ;
+  successMessage !:any;
+  errorMessage !:any;
+  isLive = false;
+  isCompleted = false;
   constructor(private router: Router ,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -50,7 +55,15 @@ export class CompetationDetailsComponent implements OnInit {
     this.http.post(url, jsonData, { headers }).subscribe(
       (response) => {
         console.log('POST request successful:', response);
-        this.EventData = response; // Assign response to a variable to use in template
+        this.EventData = response;
+        if(this.EventData['status']="Live"){
+          this.isLive=true;
+          this.isCompleted=false;
+        }
+        if(this.EventData['status']="Completed"){
+          this.isLive=false;
+          this.isCompleted=true;
+        } // Assign response to a variable to use in template
       },
       (error) => {
         console.info('Error making POST request:', error);
@@ -73,7 +86,97 @@ export class CompetationDetailsComponent implements OnInit {
     );
 
   }
+  
 
+  toggleLive() {
+    this.isLive = !this.isLive;
+    if(this.isLive==true){
+      this.EventData['status']="Live";
+      const url = 'https://competationhoster.azurewebsites.net/Updatecompetition';
+    // Define the HTTP headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    const data=this.EventData;
+    console.log('data',data)
+    const jsonData = JSON.stringify(data);
+    // Make the POST request with the provided data
+    this.http.post<any>(url, jsonData, { headers }).subscribe(
+      (responseDta) => {
+        console.log('POST request successful:', responseDta);
+       //this.ScoreCard = responseDta.scorecard;this.loading=false;
+       this.successMessage = 'Market Live Succesfully '; 
+       setTimeout(() => this.successMessage=(null), 2000);
+        // Assign response to a variable to use in template
+     },
+     (error) => {
+       console.info('Error making POST request:', error);
+       this.errorMessage = 'Error Occured  '; 
+       setTimeout(() => this.errorMessage=(null), 2000);
+     }
+    );
+  }
+}
+
+  toggleCompleted() {
+    this.isCompleted = !this.isCompleted;
+    if(this.isCompleted==true){
+      this.EventData['status']="Completed";
+      const url = 'https://competationhoster.azurewebsites.net/Updatecompetition';
+    // Define the HTTP headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    const data=this.EventData;
+    console.log('data',data)
+    const jsonData = JSON.stringify(data);
+    // Make the POST request with the provided data
+    this.http.post<any>(url, jsonData, { headers }).subscribe(
+      (responseDta) => {
+        console.log('POST request successful:', responseDta);
+       //this.ScoreCard = responseDta.scorecard;this.loading=false;
+       this.successMessage = 'Market Completed Succesfully '; 
+       setTimeout(() => this.successMessage=(null), 2000);
+        // Assign response to a variable to use in template
+     },
+     (error) => {
+       console.info('Error making POST request:', error);
+       this.errorMessage = 'Error Occured  '; 
+       setTimeout(() => this.errorMessage=(null), 2000);
+     }
+    );
+    this.emailScoreCards();
+    }
+  }
+  emailScoreCards() {
+    const url = 'https://competationhoster.azurewebsites.net/send-scorecard';
+    // Define the HTTP headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    const data={
+      EventId:this.eventId
+    }
+    console.log('data',data)
+    const jsonData = JSON.stringify(data);
+    // Make the POST request with the provided data
+    this.http.post<any>(url, jsonData, { headers }).subscribe(
+      (responseDta) => {
+        console.log('POST request successful:', responseDta);
+       //this.ScoreCard = responseDta.scorecard;this.loading=false;
+       this.successMessage = 'Sent Event Schedule Email  Succesfully '; 
+       setTimeout(() => this.successMessage=(null), 2000);
+        // Assign response to a variable to use in template
+     },
+     (error) => {
+       console.info('Error making POST request:', error);
+       this.errorMessage = 'Error Occured  '; 
+       setTimeout(() => this.errorMessage=(null), 2000);
+     }
+    );
+
+
+  }
   NavigateToAccessTokens():void{
     const navigationExtras: NavigationExtras = {
       queryParams: { eventId:this.eventId },
@@ -90,12 +193,28 @@ export class CompetationDetailsComponent implements OnInit {
   }
 
   NavigateToLeadBord():void{
+
     const navigationExtras: NavigationExtras = {
       queryParams: { eventId:this.eventId },
       state: { someOtherData: 'value' } // Optionally pass additional data
     };
      // Construct the URL manually
      const url = this.router.createUrlTree(['viewLeadBord'], navigationExtras).toString();
+     const baseUrl = window.location.origin; // Get the base URL of the application
+     const fullUrl = `${baseUrl}${url}`;
+     // Open the URL in a new tab
+     window.open(fullUrl, '_blank');
+
+  }
+
+  NavigateEventSchedule():void{
+
+    const navigationExtras: NavigationExtras = {
+      queryParams: { eventId:this.eventId },
+      state: { someOtherData: 'value' } // Optionally pass additional data
+    };
+     // Construct the URL manually
+     const url = this.router.createUrlTree(['eventOrderConfig'], navigationExtras).toString();
      const baseUrl = window.location.origin; // Get the base URL of the application
      const fullUrl = `${baseUrl}${url}`;
      // Open the URL in a new tab

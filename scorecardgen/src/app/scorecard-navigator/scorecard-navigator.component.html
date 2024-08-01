@@ -1,5 +1,14 @@
 <div>
     <div id="modalOverlay" class="page-overlay">
+        <div *ngIf="loading" class="loading-overlay">
+            <div class="loading-spinner"></div>
+          </div>
+          
+          <div *ngIf="successMessage" class="notification success">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="notification error">{{ errorMessage }}</div>
+          
+          <!-- Your existing component content here -->
+          
         <div class="standard-modal login-modal" id="modalUi" role="dialog">
             <div class="modal-content">
                 <div class="modal-head">

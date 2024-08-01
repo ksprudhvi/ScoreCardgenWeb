@@ -46,6 +46,13 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   eventId:string='cjvsdjc'
   responseData!: any;
   error: any;
+  options: string[] = ['Tap', 'Hip-Hop', 'Jazz'];
+  selectedOptions: boolean[] = [false, false, false];
+  isTextChecked: boolean = false;
+  enteredText: string = '';
+  loading!:Boolean ;
+  successMessage !:any;
+  errorMessage !:any;
 
   constructor(private uploadService: FileUploadService,private router: Router,private http: HttpClient) {
 
@@ -91,8 +98,16 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   addCompetitionHighlights() {
     this.CompetitionHighlights.push(' Add new Highlight');
   }
+  saveEventParentCreateChilds(): void{
+    const selectedCategories = this.options.filter((option, index) => this.selectedOptions[index]);
+    console.log('Selected Options:', selectedCategories);
+
+  }
   
   saveData(): void {
+    this.loading=true;
+    const selectedCategories = this.options.filter((option, index) => this.selectedOptions[index]);
+    console.log('Selected Options:', selectedCategories);
     interface EventElement extends HTMLElement {
       innerText: string;
     }
@@ -120,13 +135,13 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
       document.querySelector('[data-ref="edp_price_string_desktop"]') as EventElement
     ];
     const data = {
-      EventId:this.eventId,
 
+      EventId:this.eventId,
       eventImageUrl:this.eventImageUrl,
       eventTitle: eventTitleList.find(
         (element) => element.innerText.trim() !== 'Enter Your Event Title'
       )?.innerText.trim(),
-      eventCategory:this.selectedCategory,
+      eventCategory:selectedCategories,
       eventDateString: eventDateStringList.find(
         (element) => element.innerText.trim() !== 'Enter Date and Time'
       )?.innerText.trim(),
@@ -151,15 +166,18 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     this.http.post(url, jsonData, { headers }).subscribe(
       (response) => {
         console.log('POST request successful:', response);
-        this.responseData = response; // Assign response to a variable to use in template
+        this.responseData = response; 
+        this.loading=false
+        this.successMessage="Event Details Saved Succesfully";
+        setTimeout(() => this.successMessage=(null), 2000);
+        // Assign response to a variable to use in template
       },
       (error) => {
         console.info('Error making POST request:', error);
-        this.error = error.message || 'An error occurred'; // Set error message
+        this.errorMessage = 'An error occurred .Please Try again'; 
+        setTimeout(() => this.errorMessage=(null), 2000);// Set error message
       }
     );
-   
-
     console.log(this.responseData);
   } 
 

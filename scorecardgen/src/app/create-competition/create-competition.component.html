@@ -2,6 +2,15 @@
 <html lang="en">
 <body>
     <div style="overflow: auto; height: 100vh;">
+        <div *ngIf="loading" class="loading-overlay">
+            <div class="loading-spinner"></div>
+          </div>
+          
+          <div *ngIf="successMessage" class="notification success">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="notification error">{{ errorMessage }}</div>
+          
+          <!-- Your existing component content here -->
+          
         <div class="ui text container" style="padding-bottom: 110px;">
             <div class="ui center aligned middle aligned grid" style="height: 100%; padding-top: 8px;">
                 <div class="row">

@@ -8,6 +8,15 @@
                 position: relative;
             }
         </style>
+        <div *ngIf="loading" class="loading-overlay">
+            <div class="loading-spinner"></div>
+          </div>
+          
+          <div *ngIf="successMessage" class="notification success">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="notification error">{{ errorMessage }}</div>
+          
+          <!-- Your existing component content here -->
+          
         <div class="css-1j5hrwi">
             <main>
                 <style data-emotion-css="5czy92">
@@ -1567,6 +1576,20 @@
                     <div class="css-1cyi4oq">
                         <div class="css-1gxwuw0">
                             <div class=" css-1k23y97">
+                                <div class="css-b3qn21" *ngIf="!isCompleted && !isLive ">
+                                    <div class="css-k008qs">
+                                        <div class="toggle-container" >
+                                            <div class="toggle-switch" [class.active]="isLive" (click)="toggleLive()">
+                                              <div class="toggle-handle"></div>
+                                            </div>
+                                            <span>Live</span>
+                                            <div class="toggle-switch orange" [class.active]="isCompleted" (click)="toggleCompleted()">
+                                              <div class="toggle-handle"></div>
+                                            </div>
+                                            <span>Completed</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="css-b3qn21">
                                     <div class="css-k008qs">
                                         <div>
@@ -1704,7 +1727,10 @@
                                     </div>
                                 </div>
                                 <div class="css-qxlnel"><div class="css-5m1des"><a 
+                                    data-ref="edp_buy_button_desktop" (click)="NavigateEventSchedule()" class="css-10lu0qa">View and Update Event Schedule</a></div></div> 
+                                <div class="css-qxlnel" ><div class="css-5m1des"><a 
                                     data-ref="edp_buy_button_desktop" (click)="NavigateToAccessTokens()" class="css-10lu0qa">Get Access Tokens</a></div></div>
+
                                     <div class="css-qxlnel"><div class="css-5m1des"><a 
                                         data-ref="edp_buy_button_desktop" (click)="NavigateToLeadBord()" class="css-10lu0qa">View Lead Bord</a></div></div>    
                                 <div class="css-qxlnel"><div class="css-5m1des"><a 

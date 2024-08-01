@@ -21,6 +21,9 @@ export class GetAccessTokensComponent {
   error!: any;
   TeamsInfo!: any;
   JudegsInfo!: any;
+  loading!:Boolean ;
+  successMessage !:any;
+  errorMessage !:any;
   constructor(private router: Router ,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -34,7 +37,7 @@ export class GetAccessTokensComponent {
        console.error('eventId parameter not found in query string.');
      }
    });
-
+  this.loading=true;
    const url = 'https://competationhoster.azurewebsites.net/getAccessTokens';
 
     // Define the HTTP headers
@@ -49,11 +52,14 @@ export class GetAccessTokensComponent {
     this.http.post(url, jsonData, { headers }).subscribe(
       (response) => {
         console.log('POST request successful:', response);
-        this.TokenDetails = response; // Assign response to a variable to use in template
+        this.TokenDetails = response;
+        this.loading=false; // Assign response to a variable to use in template
       },
       (error) => {
         console.info('Error making POST request:', error);
-        this.error = error.message || 'An error occurred'; // Set error message
+        this.errorMessage = error.message || 'An error occurred.Please try Again';
+        setTimeout(() => this.errorMessage=(null), 2000);
+       // Set error message
       }
     );
     console.log(this.responseData);

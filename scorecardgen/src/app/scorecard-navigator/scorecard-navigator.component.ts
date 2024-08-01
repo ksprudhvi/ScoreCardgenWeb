@@ -25,7 +25,11 @@ export class ScorecardNavigatorComponent {
   hasValidated = false;
   dropdown1Options: string[] = ['Select Option 1', 'Option 1', 'Option 2'];
   dropdown2Options: string[] = ['Select Option 2', 'Option 3', 'Option 4'];
-
+  options: string[] = ['Tap', 'Hip-Hop', 'Jazz'];
+  loading!:Boolean ;
+  successMessage !:any;
+  errorMessage !:any;
+  category!: string;
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
       this.eventId = params['eventId'];
@@ -38,6 +42,7 @@ export class ScorecardNavigatorComponent {
        console.error('eventId parameter not found in query string.');
      }
    });
+
    const urlForteamsJudges = `https://competationhoster.azurewebsites.net/getTeamsJudges/${this.eventId}`;
    this.http.get<any>(urlForteamsJudges).subscribe(
      (data) => {
