@@ -16,6 +16,7 @@ import { GetAccessTokensComponent } from './get-access-tokens/get-access-tokens.
 import { ScorecardNavigatorComponent } from './scorecard-navigator/scorecard-navigator.component';
 import { LeadBordScreenComponent } from './lead-bord-screen/lead-bord-screen.component';
 import { EventOrderingComponent } from './event-ordering/event-ordering.component';
+import { AuthGuard } from './auth.guard';
 
 
 
@@ -35,7 +36,6 @@ export const routes: Routes = [
     { path: 'scoreCard', component: ScorecardNavigatorComponent },
     { path: 'getAccessTokens', component: GetAccessTokensComponent },
     { path: 'viewLeadBord', component: LeadBordScreenComponent },
-    { path: 'eventOrderConfig', component: EventOrderingComponent },
-
+    { path: 'eventOrderConfig', component: EventOrderingComponent},
 
 ];

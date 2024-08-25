@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageUploaderComponent } from '../image-uploader/image-uploader.component';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router, RouterStateSnapshot } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth.service';
+import { AuthGuard } from '../auth.guard';
 
 @Component({
   selector: 'app-competation-details',
@@ -24,9 +26,11 @@ export class CompetationDetailsComponent implements OnInit {
   loading!:Boolean ;
   successMessage !:any;
   errorMessage !:any;
-  isLive = false;
+  isLive = true;
   isCompleted = false;
-  constructor(private router: Router ,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
+  profileData: any ;
+  validation: any ;
+  constructor(private router: Router,private authService: AuthService ,private authGuard: AuthGuard,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -42,7 +46,8 @@ export class CompetationDetailsComponent implements OnInit {
    });
 
    const url = 'https://competationhoster.azurewebsites.net/getEvent/';
-
+   this.profileData=localStorage.getItem('UserProfile')
+   this.validation=localStorage.getItem('validation')
     // Define the HTTP headers
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -89,6 +94,7 @@ export class CompetationDetailsComponent implements OnInit {
   
 
   toggleLive() {
+    this.loading=true;
     this.isLive = !this.isLive;
     if(this.isLive==true){
       this.EventData['status']="Live";
@@ -104,12 +110,14 @@ export class CompetationDetailsComponent implements OnInit {
     this.http.post<any>(url, jsonData, { headers }).subscribe(
       (responseDta) => {
         console.log('POST request successful:', responseDta);
-       //this.ScoreCard = responseDta.scorecard;this.loading=false;
+       //this.ScoreCard = responseDta.scorecard;
+       this.loading=false;
        this.successMessage = 'Market Live Succesfully '; 
        setTimeout(() => this.successMessage=(null), 2000);
         // Assign response to a variable to use in template
      },
      (error) => {
+      this.loading=false;
        console.info('Error making POST request:', error);
        this.errorMessage = 'Error Occured  '; 
        setTimeout(() => this.errorMessage=(null), 2000);
@@ -119,6 +127,7 @@ export class CompetationDetailsComponent implements OnInit {
 }
 
   toggleCompleted() {
+    this.loading=true;
     this.isCompleted = !this.isCompleted;
     if(this.isCompleted==true){
       this.EventData['status']="Completed";
@@ -134,12 +143,14 @@ export class CompetationDetailsComponent implements OnInit {
     this.http.post<any>(url, jsonData, { headers }).subscribe(
       (responseDta) => {
         console.log('POST request successful:', responseDta);
-       //this.ScoreCard = responseDta.scorecard;this.loading=false;
+       //this.ScoreCard = responseDta.scorecard;
+       this.loading=false;
        this.successMessage = 'Market Completed Succesfully '; 
        setTimeout(() => this.successMessage=(null), 2000);
         // Assign response to a variable to use in template
      },
      (error) => {
+      this.loading=false;
        console.info('Error making POST request:', error);
        this.errorMessage = 'Error Occured  '; 
        setTimeout(() => this.errorMessage=(null), 2000);
@@ -178,7 +189,11 @@ export class CompetationDetailsComponent implements OnInit {
 
   }
   NavigateToAccessTokens():void{
-    const navigationExtras: NavigationExtras = {
+   
+    this.validation=localStorage.getItem('validation')
+    if (this.validation=="true") 
+    {
+       const navigationExtras: NavigationExtras = {
       queryParams: { eventId:this.eventId },
       state: { someOtherData: 'value' } // Optionally pass additional data
     };
@@ -186,9 +201,15 @@ export class CompetationDetailsComponent implements OnInit {
      const url = this.router.createUrlTree(['getAccessTokens'], navigationExtras).toString();
      const baseUrl = window.location.origin; // Get the base URL of the application
      const fullUrl = `${baseUrl}${url}`;
- 
      // Open the URL in a new tab
      window.open(fullUrl, '_blank');
+  }else{
+       const currentUrl = this.router.url;
+      this.router.navigate(['/login'], { queryParams: { returnUrl: currentUrl } });
+
+    //  this.NavigateToAccessTokens()
+
+  }
 
   }
 

@@ -83,6 +83,7 @@ export class AddTeaminfoComponent {
         // this.loadingService.hide();
         this.loading=false
         this.successMessage="Team Details Saved Succesfully";
+        this.confEventOrder()
         this.saveandNextJudges()
         setTimeout(() => this.successMessage=(null), 2000);
         // Assign response to a variable to use in template
@@ -94,6 +95,8 @@ export class AddTeaminfoComponent {
       }
     );
     console.log(this.responseData);
+     
+
   }
   isTeamFormValid(): boolean {
     if (this.teams.length === 0) {
@@ -106,6 +109,41 @@ export class AddTeaminfoComponent {
     }
     return false; // All teams have required fields filled
   }
+
+  confEventOrder():void{
+
+    const url = 'https://competationhoster.azurewebsites.net/confEventOrder';
+
+    // Define the HTTP headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    const teamData ={
+      EventId:this.eventId,
+     }
+
+  console.log(teamData);
+  // Convert teams data to a serializable format (JSON)
+  const jsonData = JSON.stringify(teamData);
+    // Make the POST request with the provided data
+    this.http.post(url, jsonData, { headers }).subscribe(
+      (response) => {
+        console.log('POST request successful:', response);
+        this.responseData = response;
+        // this.loadingService.hide();
+        setTimeout(() => this.successMessage=(null), 2000);
+        // Assign response to a variable to use in template
+      },
+      (error) => {
+        console.info('Error making POST request:', error);
+        this.errorMessage = 'An error occurred .Please Try again'; 
+        setTimeout(() => this.errorMessage=(null), 2000);// Set error message
+      }
+    );
+    console.log(this.responseData);
+  }
+
 
   saveandNextJudges():void {
     const navigationExtras: NavigationExtras = {

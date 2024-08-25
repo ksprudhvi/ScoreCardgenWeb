@@ -1,14 +1,169 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth.service'; // Import AuthService
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthGuard } from '../auth.guard';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.css'
+  styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-  loading!:Boolean ;
-  successMessage !:any;
-  errorMessage !:any;
+  loading: boolean = false;
+  successMessage: string = '';
+  errorMessage: string = '';
+  isModalOpen: boolean = true;
+  email: string = '';
+  password: string = '';
+  confirmPassword: string = '';
+  accessToken: string = '';
+  returnUrl: any;
+  isCreateAccount = false;
+  createPassword: string = '';
+  emailOtp: string = '';
+  sentOtp: string = '';
+  userName: any;
+  isAuthenticated:any;
+  profileData: any;
+  validation:any;
+
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    private http: HttpClient, // Inject HttpClient
+    private authGuard: AuthGuard 
+  ) {}
+
+  ngOnInit() {
+    console.log(localStorage.getItem('UserProfile'));
+    this.profileData=localStorage.getItem('UserProfile')
+    this.validation=localStorage.getItem('validation')
+    // Get the return URL from the query parameters or default to '/'
+    this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+    console.log(this.returnUrl);
+
+    if (this.validation=="true") {
+      this.isAuthenticated=true;
+      const userProfile = localStorage.getItem('UserName') || '{}';
+      this.userName = userProfile || 'User';
+
+    }
+  }
+  logout() {
+    localStorage.clear();
+    this.authGuard.logout(); // You might need to implement a logout method in AuthGuard
+    this.router.navigate(['/']); // Navigate to the home or login page
+  }
+  closeModal() {
+    this.isModalOpen = false;
+    this.router.navigate(['/']);
+  }
+
+  login() {
+    this.loading = true;
+    this.authService.login(this.email, this.password).subscribe(
+      success => {
+        this.loading = false;
+        if (success) {
+          this.successMessage = 'Login successful!';
+          this.router.navigateByUrl(this.returnUrl);
+        } else {
+          this.errorMessage = 'Login failed. Please check your credentials.';
+        }
+      },
+      error => {
+        this.loading = false;
+        this.errorMessage = 'An error occurred. Please try again.';
+      }
+    );
+  }
+
+  loginWithToken() {
+    console.log('Access Token:', this.accessToken);
+    // Implement token-based access logic here
+  }
+
+  toggleCreateAccount() {
+    this.isCreateAccount = !this.isCreateAccount;
+  }
+
+  generateCode(length: number = 6): string {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let code = '';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      code += characters[randomIndex];
+    }
+    return code;
+  }
+
+  sendOtp() {
+    this.loading = true;
+    this.sentOtp = this.generateCode();
+    const apiUrl = 'https://competationhoster.azurewebsites.net/otpv';
+
+    const data = {
+      Email: this.email,
+      OTP_CODE: this.sentOtp
+    };
+    const jsonData = JSON.stringify(data);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    this.http.post(apiUrl, jsonData, { headers }).subscribe(
+      (response: any) => {
+        this.loading = false;
+        this.successMessage = 'OTP Sent';
+        console.log('POST request successful:', response);
+      },
+      (error: { message: string }) => {
+        this.loading = false;
+        this.errorMessage = 'Error sending OTP. Please try again.';
+      }
+    );
+  }
+
+  validateAndCreateAccount() {
+    if (this.emailOtp !== this.sentOtp) {
+      this.errorMessage = 'Invalid OTP. Please try again.';
+      return;
+    }
+
+    if (this.password !== this.confirmPassword) {
+      this.errorMessage = 'Passwords do not match. Please try again.';
+      return;
+    }
+
+    // Create account
+    this.loading = true;
+    const apiUrl = 'https://competationhoster.azurewebsites.net/createLoginDetails';
+    const data = {
+      Email: this.email,
+      Password: this.password
+    };
+    const jsonData = JSON.stringify(data);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    this.http.post(apiUrl, jsonData, { headers }).subscribe(
+      (response: any) => {
+        this.loading = false;
+        this.successMessage = 'Successfully Created Account';
+        console.log('POST request successful:', response);
+      },
+      (error: { message: string }) => {
+        this.loading = false;
+        this.errorMessage = 'Error creating account. Please try again.';
+        console.error('Error making POST request:', error);
+      }
+    );
+  }
 }

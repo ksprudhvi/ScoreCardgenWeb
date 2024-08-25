@@ -4,6 +4,9 @@
     margin-bottom: 20px;
     background-color: #f9f9f9;
   }
+  body{
+    padding: 10px;
+  }
   
   .performance-item {
     padding: 10px;
@@ -62,4 +65,12 @@
 
 .error {
   background-color: #f44336; /* Red */
+}
+.there-you-go {
+  padding: 15px; /* Padding on all four sides */
+  margin-bottom: 15px; /* Space between items */
+  border: 2px solid #ddd; /* Optional: Add a border for better visual separation */
+  background-color: #f9f9f9; /* Optional: Add a background color */
+  border-radius: 4px; /* Optional: Add rounded corners */
+  position: relative;
 }

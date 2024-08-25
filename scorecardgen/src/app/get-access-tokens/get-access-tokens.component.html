@@ -6,15 +6,9 @@
     <div *ngIf="loading" class="loading-overlay">
       <div class="loading-spinner"></div>
     </div>
-    
     <div *ngIf="successMessage" class="notification success">{{ successMessage }}</div>
     <div *ngIf="errorMessage" class="notification error">{{ errorMessage }}</div>
-    
-    <!-- Your existing component content here -->
-    
-
     <h2 class="ui center aligned header">Judges Access Tokens</h2>
-
     <table class="ui celled table">
       <thead>
         <tr>
@@ -26,23 +20,6 @@
         <tr *ngFor="let token of TokenDetails; let i = index">
           <td *ngIf="token.JudgeAccess === true">{{ token.judgeName }}</td>
           <td *ngIf="token.JudgeAccess === true">{{ token.TokenId }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2 class="ui center aligned header">Coach Access Tokens</h2>
-
-    <table class="ui celled table">
-      <thead>
-        <tr>
-          <th>Coach Name</th>
-          <th>Token</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let token of TokenDetails; let i = index">
-          <td *ngIf="token.CoachAccess === true">{{ token.coachName }}</td>
-          <td *ngIf="token.CoachAccess === true">{{ token.TokenId }}</td>
         </tr>
       </tbody>
     </table>

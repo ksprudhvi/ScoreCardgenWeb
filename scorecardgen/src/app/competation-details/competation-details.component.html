@@ -1576,14 +1576,14 @@
                     <div class="css-1cyi4oq">
                         <div class="css-1gxwuw0">
                             <div class=" css-1k23y97">
-                                <div class="css-b3qn21" *ngIf="!isCompleted && !isLive ">
-                                    <div class="css-k008qs">
+                                <div class="css-b3qn21" >
+                                    <div class="css-k008qs" *ngIf="validation === 'true'">
                                         <div class="toggle-container" >
                                             <div class="toggle-switch" [class.active]="isLive" (click)="toggleLive()">
                                               <div class="toggle-handle"></div>
                                             </div>
                                             <span>Live</span>
-                                            <div class="toggle-switch orange" [class.active]="isCompleted" (click)="toggleCompleted()">
+                                            <div class="toggle-switch orange" [class.active]="!isCompleted" (click)="toggleCompleted()">
                                               <div class="toggle-handle"></div>
                                             </div>
                                             <span>Completed</span>

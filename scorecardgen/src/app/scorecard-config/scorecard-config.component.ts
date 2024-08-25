@@ -10,7 +10,7 @@ import { Router } from 'express';
   standalone: true,
   imports: [FormsModule,CommonModule],
   templateUrl: './scorecard-config.component.html',
-  styleUrl: './scorecard-config.component.css'
+  styleUrl: './scorecard-config.component.css',
 })
 export class ScorecardConfigComponent {
   isListening: boolean = false;
@@ -94,6 +94,7 @@ export class ScorecardConfigComponent {
       (responseDta) => {
         console.log('POST request successful:', responseDta);
        this.ScoreCard = responseDta[0].scorecard; 
+       this.ScoreCard.comments=responseDta[0].comments;
        this.scoreCardId=responseDta[0].id//
        this.loading=false;
        this.successMessage = 'Fetched Scorecard Info Succesfully '; 
@@ -177,13 +178,13 @@ export class ScorecardConfigComponent {
       technique: parseInt(this.ScoreCard.technique.toString(), 10),
       difficulty: parseInt(this.ScoreCard.difficulty.toString(), 10),
       sync: parseInt(this.ScoreCard.sync.toString(), 10),
-      total: 0,
+      total: parseInt(this.ScoreCard.creativity.toString(), 10)+parseInt(this.ScoreCard.formation.toString(), 10)+parseInt(this.ScoreCard.technique.toString(), 10)+parseInt(this.ScoreCard.difficulty.toString(), 10)+parseInt(this.ScoreCard.sync.toString(), 10),
     };
     const data ={
       EventId:this.eventId,
       id:this.scoreCardId,
-      scorecard:scorecard
-   //   TeamName:
+      scorecard:scorecard,
+      comment: this.ScoreCard.comments  //   TeamName:
     }
     console.log('data',data)
     const jsonData = JSON.stringify(data);
