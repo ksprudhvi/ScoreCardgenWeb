@@ -1,39 +1,7 @@
 <!doctype html>
 <html lang="en">
 <!-- banner-carousel.component.html -->
-<div class="carousel-container">
-    <section class="banner-carousel">
-        <div class="carousel">
-            <a href="#" class="carousel-prev" (click)="prevSlide()">
-                <span><svg width="12" height="14" viewBox="0 0 12 22" fill="#0c172f" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10.8995 2.51707C11.29 2.12655 11.29 1.49338 10.8995 1.10286C10.509 0.712334 9.8758 0.712334 9.48528 1.10286L0.292888 10.2952C-0.0976366 10.6858 -0.0976363 11.3189 0.292888 11.7095L9.48528 20.9018C9.8758 21.2924 10.509 21.2924 10.8995 20.9018C11.29 20.5113 11.29 19.8782 10.8995 19.4876L2.41421 11.0024L10.8995 2.51707Z" fill="#0c172f"></path>
-                </svg></span>
-            </a>
-            <ul class="card-list">
-                <li *ngFor="let item of items" class="carousel-item">
-                    <a [href]="item.link">
-                        <div class="image-container">
-                            <picture>
-                                <source [attr.srcset]="item.srcset">
-                                <img [attr.src]="item.src" [alt]="item.alt">
-                            </picture>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-            <a href="#" class="carousel-next" (click)="nextSlide()">
-                <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.1464 5.64645C10.3417 5.45118 10.6583 5.45118 10.8536 5.64645L16.1464 10.9393C16.7322 11.5251 16.7322 12.4749 16.1464 13.0607L10.8536 18.3536C10.6583 18.5488 10.3417 18.5488 10.1464 18.3536C9.95118 18.1583 9.95118 17.8417 10.1464 17.6464L15.4393 12.3536C15.6346 12.1583 15.6346 11.8417 15.4393 11.6464L10.1464 6.35355C9.95118 6.15829 9.95118 5.84171 10.1464 5.64645Z" fill="#0c172f" stroke="#0c172f" stroke-width="0"></path>
-                </svg></span>
-            </a>
-            <div class="carousel-dots">
-                <span *ngFor="let dot of items; let i = index" 
-                      [class.active]="currentIndex === i" 
-                      (click)="goToSlide(i)"></span>
-            </div>
-        </div>
-    </section>
-</div>
+<app-scrollbanner></app-scrollbanner>
 
 
 
@@ -66,7 +34,7 @@
                         <style data-emotion-css="1uoictj">
                             .css-1uoictj {
                                 margin-bottom: 2.5vw;
-                                margin-top: 2.5vw;
+
                                 display: -webkit-box;
                                 display: -webkit-flex;
                                 display: -ms-flexbox;

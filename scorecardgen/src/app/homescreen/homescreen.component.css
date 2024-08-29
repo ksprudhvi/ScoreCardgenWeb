@@ -72,12 +72,14 @@
 .carousel-container {
   position: relative;
   width: 100%;
+  padding-top: 43px;
   overflow: hidden;
 }
 
 .banner-carousel {
   position: relative;
   width: 100%;
+ 
 }
 
 .carousel {
@@ -103,6 +105,7 @@
 
 .image-container {
   width: 100%;
+  height:350px;
 }
 
 .carousel-prev, .carousel-next {
@@ -110,37 +113,46 @@
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  background: rgba(0,0,0,0.5);
   border: none;
   padding: 10px;
   z-index: 10;
+  background: none; /* Remove background */
 }
 
 .carousel-prev {
   left: 10px;
+  color: white; /* Make the arrow white */
 }
 
 .carousel-next {
   right: 10px;
+  color: white; /* Make the arrow white */
+}
+
+/* Additional styling to make sure the SVG icons are white */
+.carousel-prev svg path, .carousel-next svg path {
+  fill: white; /* Ensure the SVG paths are white */
 }
 
 .carousel-dots {
   position: absolute;
   bottom: 10px;
-  left: 50%;
+  left: 100%;
+  align-items: center;
   transform: translateX(-50%);
   display: flex;
 }
 
 .carousel-dots span {
-  background: rgba(0,0,0,0.5);
+  background: rgba(253, 253, 253, 0.5);
   border-radius: 50%;
   width: 10px;
   height: 10px;
   margin: 0 5px;
+  align-items: center;
   cursor: pointer;
 }
 
 .carousel-dots .active {
-  background: #0c172f;
+  background: #ffffff;
 }
