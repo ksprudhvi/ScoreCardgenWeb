@@ -1,11 +1,8 @@
-<!doctype html>
-<html lang="en">
-
-<body>
-    <div id="there-you-go">
+<div id="there-you-go">
         <style data-emotion-css="1j5hrwi">
             .css-1j5hrwi {
                 position: relative;
+                overflow-y: auto;
             }
         </style>
         <div *ngIf="loading" class="loading-overlay">
@@ -833,11 +830,21 @@
                                         <div class="css-qxlnel">
                                             <style data-emotion-css="1qfo63q">
                                                 .css-1qfo63q {
-                                                    font-size: 16px;
-                                                    margin-bottom: 18px;
-                                                    font-weight: bold;
+                                                  font-size: 16px;
+                                                  margin-bottom: 18px;
+                                                  font-weight: bold;
+                                                  display: flex; /* Enable Flexbox layout */
+                                                  justify-content: space-between; /* Distribute space between items */
+                                                  align-items: center; /* Center items vertically */
                                                 }
-                                            </style>
+                                              
+                                                .css-1pd9njl {
+                                                  width: 20px; /* Set a fixed width for the icon */
+                                                  height: auto; /* Maintain aspect ratio */
+                                                  cursor: pointer; /* Optional: Change cursor to pointer for better UX */
+                                                }
+                                              </style>
+                                              
                                             <div class="css-1qfo63q">Event Guide</div>
                                             <style data-emotion-css="12527f7">
                                                 .css-12527f7 {
@@ -1703,7 +1710,11 @@
                                     </div>
                                 </div>
                                 <div class="css-qxlnel">
-                                    <div class="css-1qfo63q">Teams Information </div>
+                                    <div class="css-1qfo63q">
+                                        Teams Information
+                                        <img src="/assets/icons/add-profile.svg" alt="+" srcset="" class="css-1pd9njl" (click)="updateTeam()">
+                                      </div>
+                                    
                                     <div class="css-12527f7"></div>
                                     <div class="css-1qo6c03">
                                         <div class="css-1a9ozol">
@@ -1716,7 +1727,10 @@
                                     </div>
                                 </div>
                                 <div class="css-qxlnel" >
-                                    <div class="css-1qfo63q">Judges Information    </div>
+                                    <div class="css-1qfo63q">
+                                        Judges Information
+                                        <img src="/assets/icons/add-profile.svg" alt="+" srcset="" class="css-1pd9njl" (click)="updateJudges()">
+                                      </div>
                                     <div class="css-12527f7"></div>
                                     <div class="css-1qo6c03">
                                         <div class="css-1a9ozol">
@@ -1741,7 +1755,4 @@
                 </div>
             </main>
         </div>
-    </div>
-</body>
-
-</html>
+</div>

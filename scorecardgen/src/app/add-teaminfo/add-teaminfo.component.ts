@@ -21,6 +21,7 @@ export class AddTeaminfoComponent {
   loading!:Boolean ;
   successMessage !:any;
   errorMessage !:any;
+  Judegs: any;
   constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
   eventId:string=''
   testName: any;
@@ -37,6 +38,25 @@ export class AddTeaminfoComponent {
         console.error('eventId parameter not found in query string.');
       }
     });
+        // Here, you can save jsonData using your preferred method (e.g., sending it to a server, storing it locally)
+        const urlForteamsJudges = `https://competationhoster.azurewebsites.net/getTeamsJudges/${this.eventId}`;
+    this.http.get<any>(urlForteamsJudges).subscribe(
+      (data) => {
+        // Assign the received data to eventMetaData
+        this.teams=data[0].teamsInfo;
+
+        this.Judegs= data[0].JudegsInfo;
+      
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+      }
+    );
+
+
+
+
+
   }
   
   teamdiv: boolean = false;
@@ -55,7 +75,8 @@ export class AddTeaminfoComponent {
     this.loading=true;
     const teamData ={
         EventId:this.eventId,
-        teamsInfo:this.teams
+        teamsInfo:this.teams,
+        JudegsInfo:this.Judegs
     }
 
     console.log(teamData);
@@ -83,8 +104,8 @@ export class AddTeaminfoComponent {
         // this.loadingService.hide();
         this.loading=false
         this.successMessage="Team Details Saved Succesfully";
-        this.confEventOrder()
         this.saveandNextJudges()
+
         setTimeout(() => this.successMessage=(null), 2000);
         // Assign response to a variable to use in template
       },
@@ -146,6 +167,7 @@ export class AddTeaminfoComponent {
 
 
   saveandNextJudges():void {
+
     const navigationExtras: NavigationExtras = {
       queryParams: { eventId:this.eventId },
       state: { someOtherData: 'value' } // Optionally pass additional data

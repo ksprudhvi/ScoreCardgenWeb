@@ -262,4 +262,22 @@ export class CompetationDetailsComponent implements OnInit {
     this.router.navigate(['scoreCard'], navigationExtras);// Replace with your desired rout
   }
 
+  updateTeam():void{
+    const navigationExtras: NavigationExtras = {
+      queryParams: { eventId:this.eventId },
+      state: { someOtherData: 'value' } // Optionally pass additional data
+    };
+    this.router.navigate(['addTeam'], navigationExtras);
+    //this.router.navigate(['addTeam']); // Replace with your desired rout
+  }
+
+  updateJudges():void {
+    const navigationExtras: NavigationExtras = {
+      queryParams: { eventId:this.eventId },
+      state: { someOtherData: 'value' } // Optionally pass additional data
+    };
+    this.router.navigate(['confJudges'], navigationExtras);
+    //this.router.navigate(['addTeam']); // Replace with your desired rout
+  }
+
 }

@@ -157,29 +157,22 @@
                                 <div class="ui segment ui stackable grid">
                                     <div class="three column row">
                                         <!-- Large Comments Input Field -->
-                                        <div class="column" style="flex: 2;">
+                                        <div class="column comments-column">
                                             <div class="field required">
                                                 <textarea placeholder="Enter Your Comments" id="comments" name="comments"
-                                                    class="form-control comments" [(ngModel)]="ScoreCard.comments" rows="5" 
+                                                    class="form-control comments" [(ngModel)]="ScoreCard.comments" rows="5"
                                                     style="width: 100%;"></textarea>
                                             </div>
                                         </div>
-                
-                                        <!-- Start Speaking Icon -->
-                                        <div class="column" style="flex: 0;">
-                                            <button id="speechButton" (click)="startListening()" class="ui icon button">
-                                                <img src="assets/icons/start-speaking.svg" alt="Start Speaking" style="width: 24px; height: 24px;">
-                                            </button>
-                                        </div>
-                
-                                        <!-- Stop Speaking Icon -->
-                                        <div class="column" style="flex: 0;">
-                                            <button id="stopButton" (click)="stopListening()" class="ui icon button">
-                                                <img src="assets/icons/stop-speaking.svg" alt="Stop Speaking" style="width: 24px; height: 24px;">
-                                            </button>
+                                
+                                        <!-- Icon Container -->
+                                        <div class="column icons-container">
+                                            <img src="/assets/icons/start-speaking.svg" alt="Start Speaking" (click)="startListening()">
+                                            <img src="/assets/icons/stop-speaking.svg" alt="Stop Speaking" (click)="stopListening()">
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

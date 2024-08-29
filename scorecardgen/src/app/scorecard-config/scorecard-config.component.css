@@ -48,3 +48,34 @@
   .error {
     background-color: #f44336; /* Red */
   }
+
+  .icon {
+    width: 20px; /* Set a fixed width for the icon */
+    height: auto; /* Maintain aspect ratio */
+    cursor: pointer; /* Optional: Change cursor to pointer for better UX */
+  }
+
+  .ui.segment {
+    padding: 1rem; /* Optional: Adjust padding as needed */
+}
+
+.icons-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icons-container img {
+    margin-left: 1rem; /* Space between icons */
+    cursor: pointer;
+    width: 24px; /* Adjust icon size */
+    height: 24px; /* Adjust icon size */
+}
+
+.comments-column {
+    flex: 2;
+}
+
+.comments {
+    resize: none; /* Optional: Prevent resizing if you want a fixed size */
+}

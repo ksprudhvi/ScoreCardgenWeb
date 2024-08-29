@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrl: './judges-info.component.css'
 })
 export class JudgesInfoComponent {
+  teams: any;
   constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
   eventId:string=''
   testName: any;
@@ -21,6 +22,8 @@ export class JudgesInfoComponent {
   loading!:Boolean ;
   successMessage !:any;
   errorMessage !:any;
+  judges: { id: string, name: string ,email : string,guestJugde :boolean }[] = [];
+
   ngOnInit() {
 
     this.activatedRoute.queryParams.subscribe(params => {
@@ -34,8 +37,22 @@ export class JudgesInfoComponent {
         console.error('eventId parameter not found in query string.');
       }
     });
+
+    const urlForteamsJudges = `https://competationhoster.azurewebsites.net/getTeamsJudges/${this.eventId}`;
+    this.http.get<any>(urlForteamsJudges).subscribe(
+      (data) => {
+        // Assign the received data to eventMetaData
+        if(data[0]['teamsInfo']!=null)
+        this.teams=data[0].teamsInfo;
+        if(data[0]['JudegsInfo']!=null)
+        this.judges= data[0].JudegsInfo;
+      
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+      }
+    );
   }
-  judges: { id: string, name: string ,email : string,guestJugde :boolean }[] = [];
 
   addJudge(): void {
     this.judges.push({ id: uuidv4(), name: '' ,email : '',guestJugde :false });
@@ -47,7 +64,8 @@ export class JudgesInfoComponent {
 
     const judgesData ={
       EventId:this.eventId,
-      JudegsInfo:this.judges
+      JudegsInfo:this.judges,
+      teamsInfo:this.teams
   }
   this.loading=true;
    const jsonData = JSON.stringify(judgesData);

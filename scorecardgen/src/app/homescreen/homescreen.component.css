@@ -67,18 +67,80 @@
     background-color: #dc3545; /* Red for completed status */
 }
 
-.event-image-container {
-  width: 300px; /* Set your desired width */
-  height: 200px; /* Set your desired height */
-  overflow: hidden; /* Ensure content outside the container is hidden */
+
+/* banner-carousel.component.css */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.banner-carousel {
+  position: relative;
+  width: 100%;
+}
+
+.carousel {
   display: flex;
-  justify-content: center;
   align-items: center;
+  width: 100%;
+  overflow: hidden;
 }
 
-.event-image {
-  width: 100%; /* Make the image take the full width of the container */
-  height: 100%; /* Make the image take the full height of the container */
-  object-fit: cover; /* Ensure the image covers the container without distorting */
+.card-list {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
+.carousel-item {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 100%;
+}
+
+.image-container {
+  width: 100%;
+}
+
+.carousel-prev, .carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background: rgba(0,0,0,0.5);
+  border: none;
+  padding: 10px;
+  z-index: 10;
+}
+
+.carousel-prev {
+  left: 10px;
+}
+
+.carousel-next {
+  right: 10px;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.carousel-dots span {
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.carousel-dots .active {
+  background: #0c172f;
+}

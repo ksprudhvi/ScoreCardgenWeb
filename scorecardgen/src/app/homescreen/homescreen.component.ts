@@ -26,6 +26,7 @@ export class HomescreenComponent implements OnInit {
   constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient,public loadingService: LoadingService) {}
 
   ngOnInit(): void {
+    this.startAutoScroll();
     this.loading=true;
     this.http.get<any>('https://competationhoster.azurewebsites.net/allcompe').subscribe(
       (data) => {
@@ -40,6 +41,43 @@ export class HomescreenComponent implements OnInit {
       }
     );
 
+  }
+  items = [
+    {
+      link: '/vijay-prakash-sep21-2024/event',
+      srcset: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_2000/c_crop%2Fg_custom%2Fv1722576066%2Fkoqrpml3gtaxnli4mj1l.jpg',
+      src: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_560/c_crop%2Fg_custom%2Fv1722576066%2Fkoqrpml3gtaxnli4mj1l.jpg',
+      alt: 'Event 1'
+    }
+   
+  ];
+  currentIndex = 0;
+  intervalId: any;
+
+
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  startAutoScroll(): void {
+    this.intervalId = setInterval(() => {
+      this.nextSlide();
+    }, 3000); // Change slide every 3 seconds
+  }
+
+  prevSlide(): void {
+    this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
+  }
+
+  nextSlide(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.items.length;
+  }
+
+  goToSlide(index: number): void {
+    this.currentIndex = index;
   }
   navigateToDetails(eventId:string){
       const navigationExtras: NavigationExtras = {
