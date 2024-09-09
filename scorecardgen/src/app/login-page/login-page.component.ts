@@ -31,6 +31,8 @@ export class LoginPageComponent {
   isAuthenticated:any;
   profileData: any;
   validation:any;
+  isHostRequestEnabled: boolean = false; // Tracks the checkbox state
+  hostRequest: string = 'false';
 
   constructor(
     private router: Router,
@@ -83,7 +85,10 @@ export class LoginPageComponent {
       }
     );
   }
-
+  toggleHostRequest(event: Event) {
+    this.hostRequest = this.isHostRequestEnabled ? 'true' : 'false';
+    console.log(`Host Request is now: ${this.hostRequest}`);
+  }
   loginWithToken() {
     console.log('Access Token:', this.accessToken);
     // Implement token-based access logic here
@@ -105,12 +110,10 @@ export class LoginPageComponent {
 
   sendOtp() {
     this.loading = true;
-    this.sentOtp = this.generateCode();
-    const apiUrl = 'https://competationhoster.azurewebsites.net/otpv';
+    const apiUrl = 'https://competationhoster.azurewebsites.net/SentOtp';
 
     const data = {
-      Email: this.email,
-      OTP_CODE: this.sentOtp
+      Email: this.email
     };
     const jsonData = JSON.stringify(data);
     const headers = new HttpHeaders({
@@ -131,11 +134,18 @@ export class LoginPageComponent {
   }
 
   validateAndCreateAccount() {
-    if (this.emailOtp !== this.sentOtp) {
-      this.errorMessage = 'Invalid OTP. Please try again.';
-      return;
-    }
-
+    const requestBody = {
+      Email: this.email,
+      OTP_CODE: this.emailOtp,
+    };
+    const validationUrl = 'https://competationhoster.azurewebsites.net/OtpVerification';
+    this.http.post<any>(validationUrl, requestBody).subscribe(
+      (response) => {
+        if (response?.validation === 'false') {
+          this.errorMessage = 'Invalid OTP. Please try again.';
+          return;
+        }
+      });
     if (this.password !== this.confirmPassword) {
       this.errorMessage = 'Passwords do not match. Please try again.';
       return;
@@ -146,7 +156,8 @@ export class LoginPageComponent {
     const apiUrl = 'https://competationhoster.azurewebsites.net/createLoginDetails';
     const data = {
       Email: this.email,
-      Password: this.password
+      Password: this.password,
+      HostAccessRequest:this.hostRequest
     };
     const jsonData = JSON.stringify(data);
     const headers = new HttpHeaders({
@@ -167,3 +178,4 @@ export class LoginPageComponent {
     );
   }
 }
+

@@ -32,6 +32,22 @@
               <input type="text" placeholder="Enter your email address" class="css-1536zln email-input"
                 [(ngModel)]="email">
               <button (click)="sendOtp()" class="css-1536zln">Send OTP</button>
+              <input
+              type="text"
+              placeholder="Enter OTP"
+              class="css-1536zln otp-input"
+              [(ngModel)]="emailOtp"
+            />
+            </div>
+            <div class="toggle-group">
+              <label>
+                <input
+                  type="checkbox"
+                  [(ngModel)]="isHostRequestEnabled"
+                  (change)="toggleHostRequest($event)"
+                />
+                Enable Host Request
+              </label>
             </div>
             <input type="password" placeholder="Create your password" class="css-1536zln password-input"
               [(ngModel)]="password">

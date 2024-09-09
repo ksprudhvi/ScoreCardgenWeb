@@ -21,16 +21,16 @@ export class EventOrderingComponent implements OnInit {
   successMessage !:any;
   errorMessage !:any;
   profileData: any;
-  validation:any;
+  HostAccess:any;
   constructor(private activatedRoute: ActivatedRoute,private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loading=true;
     this.profileData=localStorage.getItem('UserProfile')
     // this.validation=true
-    if (localStorage.getItem('validation')=="true")
+    if (localStorage.getItem('HostAccess')=="true")
     {
-      this.validation=true;
+      this.HostAccess=true;
     }
     this.activatedRoute.queryParams.subscribe(params => {
       this.eventId = params['eventId'];

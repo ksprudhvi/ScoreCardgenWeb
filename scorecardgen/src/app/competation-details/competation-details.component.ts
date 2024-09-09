@@ -29,7 +29,7 @@ export class CompetationDetailsComponent implements OnInit {
   isLive = true;
   isCompleted = false;
   profileData: any ;
-  validation: any ;
+  HostAccess: any ;
   constructor(private router: Router,private authService: AuthService ,private authGuard: AuthGuard,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -47,7 +47,7 @@ export class CompetationDetailsComponent implements OnInit {
 
    const url = 'https://competationhoster.azurewebsites.net/getEvent/';
    this.profileData=localStorage.getItem('UserProfile')
-   this.validation=localStorage.getItem('validation')
+   this.HostAccess=localStorage.getItem('HostAccess')
     // Define the HTTP headers
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -190,8 +190,8 @@ export class CompetationDetailsComponent implements OnInit {
   }
   NavigateToAccessTokens():void{
    
-    this.validation=localStorage.getItem('validation')
-    if (this.validation=="true") 
+    this.HostAccess=localStorage.getItem('HostAccess')
+    if (this.HostAccess=="true") 
     {
        const navigationExtras: NavigationExtras = {
       queryParams: { eventId:this.eventId },

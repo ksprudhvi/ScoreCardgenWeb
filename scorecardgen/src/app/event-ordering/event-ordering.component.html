@@ -52,20 +52,20 @@
             }
         </style>
         <h2 class="ui center aligned header">Configure Event Performances Order</h2>
-        <button *ngIf="validation" class="save-button" (click)="emailEventSchedule()">Trigger Email</button>
+        <button *ngIf="HostAccess" class="save-button" (click)="emailEventSchedule()">Trigger Email</button>
         <div class="css-1j5hrwi">
             <div *ngFor="let category of eventOrder?.categoryOrder">
                 <h2>{{ category.category }}</h2>
                 <div cdkDropListGroup>
                     <div cdkDropList [cdkDropListData]="category.performances" class="category-list" (cdkDropListDropped)="drop($event, category)">
                         <div *ngFor="let performance of category.performances" cdkDrag class="performance-item">
-                            <button *ngIf="validation" class="delete-button" (click)="deletePerformance(category, performance)">X</button>
+                            <button *ngIf="HostAccess" class="delete-button" (click)="deletePerformance(category, performance)">X</button>
                             <p>{{ performance.teamName }} - Order: {{ performance.order }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <button *ngIf="validation" class="save-button" (click)="saveOrder()">Save</button>
+            <button *ngIf="HostAccess" class="save-button" (click)="saveOrder()">Save</button>
         </div>
     </div>
 </body>

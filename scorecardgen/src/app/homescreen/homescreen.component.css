@@ -156,3 +156,22 @@
 .carousel-dots .active {
   background: #ffffff;
 }
+
+.discovery-tab-content {
+  display: flex;
+  justify-content: center; /* Center-aligns items horizontally */
+  align-items: center; /* Center-aligns items vertically */
+  flex-direction: column; /* Stacks children vertically */
+  width: 100%; /* Ensures full width container */
+  height: 100%; /* Ensures full height container */
+}
+
+.card-list-wrapper {
+  display: flex;
+  justify-content: center; /* Center-aligns the card list horizontally */
+  align-items: center; /* Center-aligns the card list vertically */
+  width: 100%; /* Full width */
+}
+.card-list-item {
+  margin: 1px; /* Adds a 1px margin around each item */
+}

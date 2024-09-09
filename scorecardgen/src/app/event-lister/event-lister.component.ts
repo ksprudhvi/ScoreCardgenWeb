@@ -23,10 +23,11 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-competation-deatils-updater',
   standalone: true,
   imports: [FormsModule, CommonModule,ImageUploaderComponent,ImageCropperModule],
-  templateUrl: './competation-deatils-updater.component.html',
-  styleUrl: './competation-deatils-updater.component.css'
+  templateUrl: './event-lister.component.html',
+  styleUrl: './event-lister.component.css'
 })
-export class CompetationDeatilsUpdaterComponent  implements OnInit{
+
+export class EventListerComponent  implements OnInit{
   selectedFiles?: FileList;
   currentFile?: File;
   progress = 0;
@@ -82,9 +83,12 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   ];
  
   updateDirectionUrl(event: any) {
-   
-    this.directionUrl = event.target.innerText.trim(); 
- 
+    // Update directionUrl with the new value from the input event
+    this.directionUrl = event.target.innerText.trim(); // Trim to remove leading/trailing whitespace
+    // Here you can implement the logic to save directionUrl to your backend or local storage
+    // For example, you can make an HTTP request to your backend API to save the updated directionUrl
+    // Replace the comment below with your actual saving logic
+    // this.saveDirectionUrl(this.directionUrl);
   }
   addNewCondition() {
     this.conditions.push(' Add new condition');
@@ -98,8 +102,9 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   saveEventParentCreateChilds(): void{
     const selectedCategories = this.options.filter((option, index) => this.selectedOptions[index]);
     console.log('Selected Options:', selectedCategories);
-  }
 
+  }
+  
   saveData(): void {
     this.loading=true;
     const selectedCategories = this.options.filter((option, index) => this.selectedOptions[index]);
@@ -107,20 +112,31 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     interface EventElement extends HTMLElement {
       innerText: string;
     }
+    
     const eventTitleList: EventElement[] = [
       document.querySelector('[data-ref="edp_event_title_desktop"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_title_mobile"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_title_tablet"]') as EventElement,
     ];
-
+    const eventCategoryList: EventElement[] = [
+      document.querySelector('[data-ref="edp_event_category_mobile"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_category_tablet"]') as EventElement,
+    ];
     const eventDateStringList: EventElement[] = [
       document.querySelector('[data-ref="edp_event_datestring_desktop"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_datestring_mobile"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_datestring_tablet"]') as EventElement,
     ];
     const eventVenueList: EventElement[] = [
       document.querySelector('[data-ref="edp_event_venue_desktop"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_venue_mobile"]') as EventElement,
+      document.querySelector('[data-ref="edp_event_venue_tablet"]') as EventElement,
     ];
     const eventPriceList: EventElement[] = [
       document.querySelector('[data-ref="edp_price_string_desktop"]') as EventElement
     ];
     const data = {
+
       EventId:this.eventId,
       eventImageUrl:this.eventImageUrl,
       eventTitle: eventTitleList.find(
@@ -314,4 +330,3 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
 function saveDataandNavigateToTeamsInfo() {
   throw new Error('Function not implemented.');
 }
-

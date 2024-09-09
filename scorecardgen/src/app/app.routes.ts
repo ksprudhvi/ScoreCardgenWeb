@@ -17,6 +17,8 @@ import { ScorecardNavigatorComponent } from './scorecard-navigator/scorecard-nav
 import { LeadBordScreenComponent } from './lead-bord-screen/lead-bord-screen.component';
 import { EventOrderingComponent } from './event-ordering/event-ordering.component';
 import { AuthGuard } from './auth.guard';
+import { EventListerComponent } from './event-lister/event-lister.component';
+import { HostControllerComponent } from './host-controller/host-controller.component';
 
 
 
@@ -37,5 +39,8 @@ export const routes: Routes = [
     { path: 'getAccessTokens', component: GetAccessTokensComponent },
     { path: 'viewLeadBord', component: LeadBordScreenComponent },
     { path: 'eventOrderConfig', component: EventOrderingComponent},
+    { path: 'eventLister', component: EventListerComponent},
+    { path: 'hostController', component: HostControllerComponent},
+
 
 ];

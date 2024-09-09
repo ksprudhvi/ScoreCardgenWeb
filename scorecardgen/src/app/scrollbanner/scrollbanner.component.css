@@ -31,60 +31,73 @@
   .carousel-item {
     flex: 0 0 auto;
     width: 100%;
-    max-width: 100%;
-  }
-  
-  .image-container {
-    width: 100%;
-    height:350px;
-  }
-  
-  .carousel-prev, .carousel-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    border: none;
-    padding: 10px;
-    z-index: 10;
-    background: none; /* Remove background */
-  }
-  
-  .carousel-prev {
-    left: 10px;
-    color: white; /* Make the arrow white */
-  }
-  
-  .carousel-next {
-    right: 10px;
-    color: white; /* Make the arrow white */
-  }
-  
-  /* Additional styling to make sure the SVG icons are white */
-  .carousel-prev svg path, .carousel-next svg path {
-    fill: white; /* Ensure the SVG paths are white */
-  }
-  
-  .carousel-dots {
-    position: absolute;
-    bottom: 10px;
-    left: 100%;
-    align-items: center;
-    transform: translateX(-50%);
     display: flex;
-  }
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+}
+
+.image-container {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio of the image */
+    overflow: hidden; /* Hide any overflowed content */
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+}
+
+.image-container img {
+    width: 100%; /* Scale image to fill container */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Cover the container while preserving aspect ratio */
+}
   
-  .carousel-dots span {
-    background: rgba(253, 253, 253, 0.5);
-    border-radius: 50%;
-    width: 10px;
-    height: 10px;
-    margin: 0 5px;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .carousel-dots .active {
-    background: #ffffff;
-  }
-  
+.carousel-prev, .carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  border: none;
+  padding: 10px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  border-radius: 50%; /* Rounded corners for buttons */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; /* Ensure text color is white */
+}
+
+.carousel-prev {
+  left: 10px;
+}
+
+.carousel-next {
+  right: 10px;
+}
+
+/* Additional styling to make sure the SVG icons are white */
+.carousel-prev svg path, .carousel-next svg path {
+  fill: white; /* Ensure the SVG paths are white */
+  width: 16px; /* Adjust width of the SVG */
+  height: 16px; /* Adjust height of the SVG */
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px; /* Space between dots */
+}
+
+.carousel-dots span {
+  background: rgba(255, 255, 255, 0.7); /* Slightly more opaque for better visibility */
+  border-radius: 50%;
+  width: 12px; /* Slightly larger dots */
+  height: 12px; /* Slightly larger dots */
+  cursor: pointer;
+}
+
+.carousel-dots .active {
+  background: #ffffff; /* White color for the active dot */
+}

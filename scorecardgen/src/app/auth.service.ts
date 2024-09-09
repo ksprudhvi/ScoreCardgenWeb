@@ -19,9 +19,12 @@ export class AuthService {
 
     return this.http.post<any>(this.apiUrl, { Email, Password }).pipe(
       map(response => {
-        response['UserName']="ksprudhviofficial@gmail.com"
+        response['UserName']=Email
         localStorage.setItem('UserProfile', JSON.stringify(response));
-        localStorage.setItem('validation','true');
+        localStorage.setItem('validation',response['validation']);
+        localStorage.setItem('HostAccess',response['HostAccess']);
+        localStorage.setItem('HostId',response['HostId']);
+        localStorage.setItem('OwnerAccess',response['OwnerAccess']);
         localStorage.setItem('UserName',Email);
         console.log('UserProfile:', response);
         this.isAuthenticated = true;

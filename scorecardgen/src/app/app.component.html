@@ -1,7 +1,8 @@
-<main class="main"> 
+<main class="main">
     <style data-emotion-css="h3tx67">
         .css-h3tx67 {
-            min-height: 73.25px; /* Set a minimum height based on the tallest element */
+            min-height: 73.25px;
+            /* Set a minimum height based on the tallest element */
             background-color: #000000;
             -webkit-transition: all 0.1s ease-in-out;
             transition: all 0.1s ease-in-out;
@@ -17,16 +18,17 @@
             position: fixed;
             top: 0;
             z-index: 120;
-            align-items: center; /* Center children vertically if needed */
+            align-items: center;
+            /* Center children vertically if needed */
         }
-    
+
         @media only screen and (max-width:768px) {
             .css-h3tx67 {
-                min-height: 73.25px; /* Adjust the minimum height for smaller screens */
+                min-height: 73.25px;
+                /* Adjust the minimum height for smaller screens */
             }
         }
     </style>
-    
     <div id="navbar" class="css-h3tx67">
         <style data-emotion-css="1ue2wdh">
             .css-1ue2wdh {
@@ -49,7 +51,7 @@
         </style>
         <div class="css-1ue2wdh">
             <style data-emotion-css="1hvkuzz">
-                @media only screen and (min-width:400px) {
+                @media only screen and (min-width:538px) {
                     .css-1hvkuzz {
                         display: none;
                     }
@@ -76,7 +78,9 @@
                         }
                     }
                 </style>
-                <button class=" css-d6c411" data-ref="hamburger_icon"><svg width="24" height="24" viewBox="0 0 24 24"
+
+                
+                <button class=" css-d6c411"   (click)="toggleMenu()" data-ref="hamburger_icon"><svg width="24" height="24" viewBox="0 0 24 24"
                         fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M3.5 5.5C2.94772 5.5 2.5 5.94772 2.5 6.5C2.5 7.05228 2.94772 7.5 3.5 7.5H12.5C13.0523 7.5 13.5 7.05228 13.5 6.5C13.5 5.94772 13.0523 5.5 12.5 5.5H3.5Z"
@@ -87,8 +91,8 @@
                         <path
                             d="M3.5 16.5C2.94772 16.5 2.5 16.9477 2.5 17.5C2.5 18.0523 2.94772 18.5 3.5 18.5H15.5C16.0523 18.5 16.5 18.0523 16.5 17.5C16.5 16.9477 16.0523 16.5 15.5 16.5H3.5Z"
                             fill="white"></path>
-                    </svg></button>
-
+                    </svg>
+                </button>
             </div>
             <style data-emotion-css="dxn6w6">
                 .css-dxn6w6 {
@@ -127,14 +131,15 @@
                     height: 60px;
                 }
 
-                @media only screen and (max-width:768px) {
+                @media only screen and (max-width:568px) {
                     .css-h3bzby {
                         height: 56px;
                     }
                 }
             </style>
             <div id="discovery-tab-list" class="css-h3bzby">
-            <div class="css-dxn6w6"><a class="css-1rjpcfj-home-logo active" data-ref="home_logo" href="/"></a></div></div>
+                <div class="css-dxn6w6"><a class="css-1rjpcfj-home-logo active" data-ref="home_logo" href="/"></a></div>
+            </div>
             <div id="discovery-tab-list" class="css-h3bzby"><a class="" href="">
                     <style data-emotion-css="wr8v86">
                         .css-wr8v86 {
@@ -165,13 +170,13 @@
                             border: 1px solid white;
                         }
 
-                        @media screen and (max-width:768px) {
+                        @media screen and (max-width:537px) {
                             .css-wr8v86 {
                                 display: none;
                             }
                         }
                     </style>
-                   
+
                     <div class="css-wr8v86"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg" class="css-1pawhck">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -204,140 +209,99 @@
                 }
             }
         </style>
-        <div class="css-60qizj">
-            <div id="discovery-tab-list" class="css-h3bzby">
-                <a class="" target="_blank" href="/update">
-                    <style data-emotion-css="auqo8n">
+        <div id="discovery-tab-list" class="css-h3bzby">
+            <a class="" target="_blank">
+                <style data-emotion-css="auqo8n">
+                    .css-auqo8n {
+                        display: -webkit-box;
+                        display: -webkit-flex;
+                        display: -ms-flexbox;
+                        display: flex;
+                        -webkit-align-items: center;
+                        -webkit-box-align: center;
+                        -ms-flex-align: center;
+                        align-items: center;
+                        padding: 7px 12px;
+                        height: 38px;
+                        margin-left: 15px;
+                        background: transparent;
+                        border-radius: 100px;
+                        color: white;
+                        font-weight: 600;
+                        font-size: 13px;
+                        line-height: 150%;
+                        cursor: pointer;
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        -webkit-transition: box-shadow .3s;
+                        transition: box-shadow .3s;
+                    }
+
+                    .css-auqo8n:hover {
+                        border: 1px solid white;
+                    }
+
+                    @media screen and (max-width:537px) {
                         .css-auqo8n {
-                            display: -webkit-box;
-                            display: -webkit-flex;
-                            display: -ms-flexbox;
-                            display: flex;
-                            -webkit-align-items: center;
-                            -webkit-box-align: center;
-                            -ms-flex-align: center;
-                            align-items: center;
-                            padding: 7px 12px;
-                            height: 38px;
-                            margin-left: 15px;
-                            background: transparent;
-                            border-radius: 100px;
-                            color: white;
-                            font-weight: 600;
-                            font-size: 13px;
-                            line-height: 150%;
-                            cursor: pointer;
-                            border: 1px solid rgba(255, 255, 255, 0.2);
-                            -webkit-transition: box-shadow .3s;
-                            transition: box-shadow .3s;
+                            display: none;
                         }
-
-                        .css-auqo8n:hover {
-                            border: 1px solid white;
-                        }
-
-                        @media screen and (max-width:1024px) {
-                            .css-auqo8n {
-                                display: none;
-                            }
-                        }
-                    </style>
-                    <div class="css-auqo8n">
-                        <div style="width:max-content">List your event</div>
-                    </div>
-                </a></div>
-            <style data-emotion-css="1vumjy2">
-                .css-1vumjy2 {
-                    display: -webkit-box;
-                    display: -webkit-flex;
-                    display: -ms-flexbox;
-                    display: flex;
-                    -webkit-align-items: center;
-                    -webkit-box-align: center;
-                    -ms-flex-align: center;
-                    align-items: center;
-                    padding: 7px 12px;
-                    height: 38px;
-                    margin-left: 15px;
-                    background: transparent;
-                    border-radius: 100px;
-                    color: white;
-                    font-weight: 600;
-                    font-size: 13px;
-                    line-height: 150%;
-                    cursor: pointer;
-                    border: 1px solid rgba(255, 255, 255, 0.2);
-                    -webkit-transition: box-shadow .3s;
-                    transition: box-shadow .3s;
-                    padding: 7px;
-                }
-
-                .css-1vumjy2:hover {
-                    border: 1px solid white;
-                }
-
-                @media screen and (max-width:576px) {
-                    .css-1vumjy2 {
-                        display: none;
                     }
-                }
-            </style>
-            <a class="css-1vumjy2" data-ref="search_icon_header" href="/search"><svg width="24" height="24"
-                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M15.438 16.1451C14.1188 17.3001 12.3911 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5C18 12.3911 17.3001 14.1188 16.1451 15.438L20.8536 20.1464C21.0488 20.3417 21.0488 20.6583 20.8536 20.8536C20.6583 21.0488 20.3417 21.0488 20.1464 20.8536L15.438 16.1451ZM17 10.5C17 14.0899 14.0899 17 10.5 17C6.91015 17 4 14.0899 4 10.5C4 6.91015 6.91015 4 10.5 4C14.0899 4 17 6.91015 17 10.5Z"
-                        fill="white"></path>
-                </svg></a>
-            <style data-emotion-css="1dknsd1">
-                .css-1dknsd1 {
-                    display: -webkit-box;
-                    display: -webkit-flex;
-                    display: -ms-flexbox;
-                    display: flex;
-                    -webkit-align-items: center;
-                    -webkit-box-align: center;
-                    -ms-flex-align: center;
-                    align-items: center;
-                    height: 38px;
-                    width: 40px;
-                    margin-right: 15px;
-                    background: transparent;
-                    border-radius: 100px;
-                    color: white;
-                    font-weight: 600;
-                    font-size: 13px;
-                    line-height: 150%;
-                    cursor: pointer;
-                    border: 1px solid rgba(255, 255, 255, 0.2);
-                    -webkit-transition: box-shadow 0.3s;
-                    transition: box-shadow 0.3s;
-                    -webkit-box-pack: center;
-                    -webkit-justify-content: center;
-                    -ms-flex-pack: center;
-                    justify-content: center;
-                    display: -webkit-box;
-                    display: -webkit-flex;
-                    display: -ms-flexbox;
-                    display: flex;
-                }
-
-                .css-1dknsd1:hover {
-                    border: 1px solid white;
-                }
-
-                @media screen and (max-width:768px) {
-                    .css-1dknsd1 {
-                        display: none;
-                    }
-                }
-            </style>
-            <a rel="nofollow" href="/login" class="css-1dknsd1"><svg width="15" height="15" viewBox="0 0 18 20"
-                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M6.26464 4.801C6.26464 3.20871 7.55544 1.91791 9.14772 1.91791C10.74 1.91791 12.0308 3.20872 12.0308 4.801C12.0308 6.39329 10.74 7.68409 9.14772 7.68409C7.55544 7.68409 6.26464 6.39329 6.26464 4.801ZM9.14772 0.5C6.77234 0.5 4.84673 2.42563 4.84673 4.801C4.84673 7.17637 6.77234 9.102 9.14772 9.102C11.5231 9.102 13.4487 7.17638 13.4487 4.801C13.4487 2.42562 11.5231 0.5 9.14772 0.5ZM2.10541 16.3333C2.10541 13.7077 4.33249 11.4652 7.0681 11.4652H11.3218C14.0653 11.4652 16.2845 13.6209 16.2845 16.3333V17.1405C16.2089 17.6863 15.7974 18.0821 15.292 18.0821H3.00342C2.51666 18.0821 2.10541 17.7108 2.10541 17.1841V16.3333ZM7.0681 10.0473C3.5649 10.0473 0.6875 12.9092 0.6875 16.3333V17.1841C0.6875 18.5479 1.78868 19.5 3.00342 19.5H15.292C16.6665 19.5 17.5717 18.4003 17.6981 17.2624C17.701 17.2364 17.7024 17.2102 17.7024 17.1841V16.3333C17.7024 12.8069 14.8172 10.0473 11.3218 10.0473H7.0681Z"
-                        fill="white"></path>
-                </svg></a>
+                </style>
+                <div class="css-auqo8n" (click)="NavigateToListEvent()">
+                    <div style="width:max-content">List your event</div>
+                </div>
+            </a>
         </div>
+        <style data-emotion-css="1dknsd1">
+            .css-1dknsd1 {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-align-items: center;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                height: 38px;
+                width: 40px;
+                margin-right: 15px;
+                background: transparent;
+                border-radius: 100px;
+                color: white;
+                font-weight: 600;
+                font-size: 13px;
+                line-height: 150%;
+                cursor: pointer;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                -webkit-transition: box-shadow 0.3s;
+                transition: box-shadow 0.3s;
+                -webkit-box-pack: center;
+                -webkit-justify-content: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+            }
+
+            .css-1dknsd1:hover {
+                border: 1px solid white;
+            }
+        </style>
+        <a rel="nofollow" href="/login" class="css-1dknsd1"><svg width="15" height="15" viewBox="0 0 18 20" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M6.26464 4.801C6.26464 3.20871 7.55544 1.91791 9.14772 1.91791C10.74 1.91791 12.0308 3.20872 12.0308 4.801C12.0308 6.39329 10.74 7.68409 9.14772 7.68409C7.55544 7.68409 6.26464 6.39329 6.26464 4.801ZM9.14772 0.5C6.77234 0.5 4.84673 2.42563 4.84673 4.801C4.84673 7.17637 6.77234 9.102 9.14772 9.102C11.5231 9.102 13.4487 7.17638 13.4487 4.801C13.4487 2.42562 11.5231 0.5 9.14772 0.5ZM2.10541 16.3333C2.10541 13.7077 4.33249 11.4652 7.0681 11.4652H11.3218C14.0653 11.4652 16.2845 13.6209 16.2845 16.3333V17.1405C16.2089 17.6863 15.7974 18.0821 15.292 18.0821H3.00342C2.51666 18.0821 2.10541 17.7108 2.10541 17.1841V16.3333ZM7.0681 10.0473C3.5649 10.0473 0.6875 12.9092 0.6875 16.3333V17.1841C0.6875 18.5479 1.78868 19.5 3.00342 19.5H15.292C16.6665 19.5 17.5717 18.4003 17.6981 17.2624C17.701 17.2364 17.7024 17.2102 17.7024 17.1841V16.3333C17.7024 12.8069 14.8172 10.0473 11.3218 10.0473H7.0681Z"
+                    fill="white"></path>
+            </svg></a>
     </div>
+    <div class="side-menu" *ngIf="menuOpen">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
 </main>
-<router-outlet/>
+<router-outlet />
