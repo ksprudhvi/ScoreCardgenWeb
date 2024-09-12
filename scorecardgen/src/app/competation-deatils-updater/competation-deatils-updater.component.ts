@@ -175,6 +175,8 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     this.router.navigate(['addTeam'], navigationExtras);
     //this.router.navigate(['addTeam']); // Replace with your desired rout
   }
+
+  
   ngOnInit(): void {
     this.imageInfos = this.uploadService.getFiles();
   }

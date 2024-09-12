@@ -1,32 +1,27 @@
+// Corrected Angular Component (TypeScript)
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router'; // Corrected import for Router
 import { of } from 'rxjs';
 
 @Component({
   selector: 'app-scrollbanner',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './scrollbanner.component.html',
   styleUrls: ['./scrollbanner.component.css']
 })
-export class ScrollbannerComponent implements OnDestroy {
- 
-  myFunction = () => {
-    // Long-running asynchronous operation
-    console.log('Function started');
-    this.startAutoScroll();
-    console.log('executed Immediately started');
+export class ScrollbannerComponent implements OnInit, AfterViewInit, OnDestroy {
+  getBannersUrl = 'https://competationhoster.azurewebsites.net/getBanners';
+  loading: boolean = false;
+  successMessage: string = '';
+  errorMessage: string = '';
+  banners: any[] | undefined;
+  currentIndex = 0;
+  intervalId: any;
 
-    // ...
-    return 'Result';
-  };
-
-  // Use Observable for asynchronous function execution
-  ngOnInit(): void {
-   
-
-  }
   items = [
     {
       link: '/vijay-prakash-sep21-2024/event',
@@ -48,36 +43,70 @@ export class ScrollbannerComponent implements OnDestroy {
     }
   ];
 
-  currentIndex = 0;
-  intervalId: any;
+  constructor(private router: Router, private http: HttpClient) {}
 
-  
+  ngOnInit(): void {
+    // Load banners on initialization
+    this.loadBanners();
+  }
+
+  ngAfterViewInit(): void {
+    // Implement any logic that needs to run after the view is initialized
+   // this.startAutoScroll(); // Start auto-scroll on view initialization
+  }
 
   ngOnDestroy(): void {
+    // Clear the interval to prevent memory leaks when the component is destroyed
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
   }
 
+  // Load existing banners
+  loadBanners(): void {
+    this.http.get<any[]>(this.getBannersUrl).subscribe({
+      next: (response) => {
+        this.banners = response; // Expecting response to be an array of banners with { BannerId, imageUrl }
+      },
+      error: (error) => {
+        console.error('Error loading banners:', error);
+        this.errorMessage = 'Failed to load banners';
+      }
+    });
+  }
+
+  // Starts the automatic scrolling of banner items
   startAutoScroll(): void {
     this.intervalId = setInterval(() => {
       this.nextSlide();
     }, 3000); // Change slide every 3 seconds
   }
 
+  // Move to the previous slide
   prevSlide(): void {
     this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
   }
 
+  // Move to the next slide
   nextSlide(): void {
     this.currentIndex = (this.currentIndex + 1) % this.items.length;
-    if (this.currentIndex === 0) { // Reset to the first slide after reaching the end
+    if (this.currentIndex === 0) {
+      // Reset to the first slide after reaching the end
       clearInterval(this.intervalId);
       this.intervalId = setInterval(() => this.nextSlide(), 3000);
     }
   }
 
+  // Go to a specific slide
   goToSlide(index: number): void {
     this.currentIndex = index;
   }
+
+  // Example function demonstrating an asynchronous operation
+  myFunction = () => {
+    console.log('Function started');
+    this.startAutoScroll();
+    console.log('Executed immediately after startAutoScroll');
+    return 'Result';
+  };
 }

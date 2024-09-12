@@ -19,6 +19,7 @@ import { EventOrderingComponent } from './event-ordering/event-ordering.componen
 import { AuthGuard } from './auth.guard';
 import { EventListerComponent } from './event-lister/event-lister.component';
 import { HostControllerComponent } from './host-controller/host-controller.component';
+import { ScoreCardConfigComponent } from './score-card-config/score-card-config.component';
 
 
 
@@ -41,6 +42,8 @@ export const routes: Routes = [
     { path: 'eventOrderConfig', component: EventOrderingComponent},
     { path: 'eventLister', component: EventListerComponent},
     { path: 'hostController', component: HostControllerComponent},
+    { path: 'ScoreCardConfig', component: ScoreCardConfigComponent},
+
 
 
 ];

@@ -20,7 +20,7 @@ html, body {
 /* Container for side menu */
 .side-menu {
   position: flex;
-  top: 90.25px;
+  margin-top: 73.25px;
   width: 100%; /* Fixed width for the navigation bar */
   height: 100%;
   background-color: white; /* Set the background to white */

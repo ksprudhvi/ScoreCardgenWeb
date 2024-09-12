@@ -188,6 +188,15 @@ export class CompetationDetailsComponent implements OnInit {
 
 
   }
+
+  saveandNavifatetoScoreCard(): void {
+    const navigationExtras: NavigationExtras = {
+      queryParams: { eventId:this.eventId },
+      state: { someOtherData: 'value' } // Optionally pass additional data
+    };
+    this.router.navigate(['ScoreCardConfig'], navigationExtras);
+    //this.router.navigate(['addTeam']); // Replace with your desired rout
+  }
   NavigateToAccessTokens():void{
    
     this.HostAccess=localStorage.getItem('HostAccess')

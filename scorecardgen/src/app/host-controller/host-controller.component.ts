@@ -2,11 +2,25 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ImageUploaderComponent } from '../image-uploader/image-uploader.component';
+import { HttpEvent, HttpEventType, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { FileUploadService } from '../services/file-upload.service';
+
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { AddTeaminfoComponent } from '../add-teaminfo/add-teaminfo.component';
+import { Router } from '@angular/router';
+import { NavigationExtras } from '@angular/router';
+import { v4 as uuidv4 } from 'uuid';
+
+import { Injectable } from '@angular/core';
+import { response } from 'express';
+
 
 @Component({
   selector: 'app-host-controller',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,ImageUploaderComponent,ImageCropperModule],
   templateUrl: './host-controller.component.html',
   styleUrl: './host-controller.component.css'
 })
@@ -15,17 +29,209 @@ export class HostControllerComponent implements OnInit {
   successMessage: string = '';
   errorMessage: string = '';
   hostRequests: any[] = [];
+  imageUrl!: string | ArrayBuffer | null;
+  selectedFiles?: FileList;
+  currentFile?: File;
+  progress = 0;
+  message = '';
+  preview = '';
+  eventId:string='';
+  eventImageUrl: string ='';
+  responseData!: any;
+  error: any;
+  imageInfos?: Observable<any>;
+
   fetchUrl = 'https://competationhoster.azurewebsites.net/approveHostAccess';
   createAccessUrl = 'https://competationhoster.azurewebsites.net/CreateHostAccess';
+  removeBannerUrl='https://competationhoster.azurewebsites.net/removeBanner';
+  getBannersUrl='https://competationhoster.azurewebsites.net/getBanners';
 
-  constructor(private http: HttpClient) {}
+  constructor(private uploadService: FileUploadService,private router: Router,private http: HttpClient) {
+    this.eventId = uuidv4();
+    console.log(this.eventId);
+    
+  }
 
   ngOnInit(): void {
     this.loading = true;
     this.fetchHostRequests();
-   
+    this.imageInfos = this.uploadService.getFiles();
+   // this.loadBanners();
+  }
+  loadBanners(): void {
+    // Replace with your API endpoint to fetch banner images
+    this.http.get<any[]>(this.getBannersUrl).subscribe({
+      next: (response) => {
+        this.banners = response; // Expecting response to be an array of banners with { BannerId, imageUrl }
+      },
+      error: (error) => {
+        console.error('Error loading banners:', error);
+        this.errorMessage = 'Failed to load banners';
+      }
+    });
+  }
+  banners = [
+    {
+      BannerId: '/vijay-prakash-sep21-2024/event',
+      srcset: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_2000/c_crop%2Fg_custom%2Fv1722576066%2Fkoqrpml3gtaxnli4mj1l.jpg',
+      imageUrl: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_560/c_crop%2Fg_custom%2Fv1722576066%2Fkoqrpml3gtaxnli4mj1l.jpg',
+      alt: 'Event 1'
+    },
+    {
+      BannerId: '/chandan-shetty-live-in-bangalore-nov24-2024/event',
+      srcset: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_2000/c_crop%2Fg_custom%2Fv1722587665%2Ffea1lja4xhsassmhm8k3.jpg',
+      imageUrl: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_560/c_crop%2Fg_custom%2Fv1722587665%2Ffea1lja4xhsassmhm8k3.jpg',
+      alt: 'Event 2'
+    },
+    {
+      BannerId: '/jollywood-best-amusement-park-resorts-in-bangalore/event',
+      srcset: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_2000/c_crop%2Fg_custom%2Fv1718807157%2Fpz08ykl20gmefdtfr8mv.jpg',
+      imageUrl: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_560/c_crop%2Fg_custom%2Fv1718807157%2Fpz08ykl20gmefdtfr8mv.jpg',
+      alt: 'Event 3'
+    }
+  ];
+  previewStatus: boolean = false;
+  imageUploder: boolean = true;
+
+  showPreview() {
+    this.previewStatus = true;
+    this.imageUploder= false;
+  }
+  removeBanner(bannerId: any): void {
+    this.http.post(this.removeBannerUrl, { BannerId: bannerId }).subscribe({
+      next: () => {
+        this.successMessage = 'Banner removed successfully';
+        this.banners = this.banners.filter(banner => banner.BannerId !== bannerId); // Remove the banner from the list
+      },
+      error: (error) => {
+        console.error('Error removing banner:', error);
+        this.errorMessage = 'Failed to remove banner';
+      }
+    });
+  }
+  showUploader() {
+    this.previewStatus = false;
+    this.imageUploder= true;
   }
 
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.imageUrl = reader.result;
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+    this.showPreview()
+    this.currentFile = event.target.files[0];
+    this.uploadFileLatest(file,this.eventId)
+  }
+
+
+  uploadFileLatest(file: File, eventId: string) {
+    
+
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    formData.append('EventId', "eventId");
+    formData.append('EventType', "Banner");
+
+    this.http.post('https://competationhoster.azurewebsites.net/upload', formData, {
+      reportProgress: true,
+      observe: 'events',
+      responseType: 'json'
+    }).subscribe(
+      (event: any) => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            if (event.total) {
+              this.progress = Math.round((100 * event.loaded) / event.total);
+            }
+            break;
+          case HttpEventType.Response:
+            this.progress = 100; // Set progress to 100%
+            if (event instanceof HttpResponse) {
+              console.log('Response:', event.body);
+              const response=event.body
+              this.eventImageUrl=response.ImageUrl;
+              this.message = 'File uploaded successfully';
+            }
+            break;
+        }
+      },
+      (error) => {
+        console.error('Error uploading file:', error);
+        this.message = 'Failed to upload file.';
+      }
+    );
+  }
+
+  imageCropped(event: any): void {
+    // Handle the cropped image data here
+    console.log('Cropped Image Data:', event.base64);
+    // You can save the cropped image data or perform other actions
+  }
+  
+  selectFile(event: any): void {
+    this.message = '';
+    this.preview = '';
+    this.progress = 0;
+    this.selectedFiles = event.target.files;
+
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+
+      if (file) {
+        this.preview = '';
+        this.currentFile = file;
+        const reader = new FileReader();
+          this.previewStatus = true;
+          this.imageUploder= false;
+        reader.onload = (e: any) => {
+          console.log(e.target.result);
+          this.preview = e.target.result;
+        };
+        
+        reader.readAsDataURL(this.currentFile);
+      }
+    }
+   
+  }
+  upload(file: File | undefined): void {
+    this.progress = 0;
+  
+    if (file) {
+      this.currentFile = file;
+  
+      this.uploadService.upload(this.currentFile).subscribe( (response) => {
+        console.log('POST request successful:', response);
+        this.responseData = response; // Assign response to a variable to use in template
+      },
+      (error) => {
+        console.info('Error making POST request:', error);
+        this.error = error.message || 'An error occurred'; // Set error message
+      }
+    );
+    } else {
+      console.error('No file selected');
+    }
+  }
+  uploadFile(file: File) {
+    this.progress = 0;
+    this.uploadService.upload(file).subscribe(
+      (response) => {
+        console.log('POST request successful:', response);
+        this.responseData = response; // Assign response to a variable to use in template
+      },
+      (error) => {
+        console.info('Error making POST request:', error);
+        this.error = error.message || 'An error occurred'; // Set error message
+      }
+    );
+  }
   // Fetch host requests from the server
   fetchHostRequests() {
     this.http.post<any[]>(this.fetchUrl, {}).subscribe(

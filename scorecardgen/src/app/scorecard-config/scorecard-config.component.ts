@@ -20,21 +20,26 @@ export class ScorecardConfigComponent {
   judgeId: any;
   TeamsInfo!: any;
   scoreCardId!:any;
-  ScoreCard: { creativity:number  , formation: number ,technique : number,difficulty :number,sync:number ,total:number,comments: String} = {
-    creativity: 0,
-    formation: 0,
-    technique: 0,
-    difficulty: 0,
-    sync: 0,
-    total:0,
-    comments :''
-  };
+  ScoreCard: { [key: string]: number | string } = {};
   loading!:Boolean ;
   successMessage !:any;
   errorMessage !:any;
   options: string[] = ['Tap', 'Hip-Hop', 'Jazz'];
   category: any;
+  
+  EventData!: any;
+  ScorecardMeta: any;
   constructor(private activatedRoute: ActivatedRoute,private http: HttpClient) {}
+  private initializeScoreCard(): void {
+    // Set default score properties to 0 and include additional fields
+    this.ScorecardMeta.forEach((item: { name: string | number; }) => {
+      this.ScoreCard[item.name] = 0; // Initialize score fields dynamically
+    });
+
+    // Adding additional fields like total and comments
+    this.ScoreCard['total'] = 0; // Total score, initially set to 0
+    this.ScoreCard['comments'] = ''; // Comments field, initially empty
+  }
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
       this.eventId = params['eventId'];
@@ -49,6 +54,29 @@ export class ScorecardConfigComponent {
        console.error('eventId parameter not found in query string.');
      }
    });
+   const url = 'https://competationhoster.azurewebsites.net/getEvent/';
+     // Define the HTTP headers
+     const headers = new HttpHeaders({
+       'Content-Type': 'application/json'
+     });
+     const datat ={
+       EventId:this.eventId
+     }
+     const jsonData = JSON.stringify(datat);
+     // Make the POST request with the provided data
+     this.http.post<any>(url, jsonData, { headers }).subscribe(
+       (response) => {
+         console.log('POST request successful:', response);
+         this.EventData = response;
+         this.ScorecardMeta=response.scorecardMeta;
+         console.log(this.ScorecardMeta)
+        // this.initializeScoreCard();
+       // Assign response to a variable to use in template
+       },
+       (error) => {
+         console.info('Error making POST request:', error);
+       }
+     );
 
    const data ={
     EventId:this.eventId
@@ -94,7 +122,7 @@ export class ScorecardConfigComponent {
       (responseDta) => {
         console.log('POST request successful:', responseDta);
        this.ScoreCard = responseDta[0].scorecard; 
-       this.ScoreCard.comments=responseDta[0].comments;
+       this.ScoreCard['comments']=responseDta[0].comments;
        this.scoreCardId=responseDta[0].id//
        this.loading=false;
        this.successMessage = 'Fetched Scorecard Info Succesfully '; 
@@ -159,7 +187,7 @@ export class ScorecardConfigComponent {
   getResult() {
     // Process the recognized text
     console.log(this.results);
-    this.ScoreCard.comments=this.ScoreCard.comments+this.results;
+    this.ScoreCard['comments']=this.ScoreCard['comments']+this.results;
   }
 
   submitScorecard():void{
@@ -172,22 +200,33 @@ export class ScorecardConfigComponent {
       'Content-Type': 'application/json'
     });
     console.log('score card ',this.ScoreCard);
-    const scorecard = {
-      creativity: parseInt(this.ScoreCard.creativity.toString(), 10),
-      formation: parseInt(this.ScoreCard.formation.toString(), 10),
-      technique: parseInt(this.ScoreCard.technique.toString(), 10),
-      difficulty: parseInt(this.ScoreCard.difficulty.toString(), 10),
-      sync: parseInt(this.ScoreCard.sync.toString(), 10),
-      total: parseInt(this.ScoreCard.creativity.toString(), 10)+parseInt(this.ScoreCard.formation.toString(), 10)+parseInt(this.ScoreCard.technique.toString(), 10)+parseInt(this.ScoreCard.difficulty.toString(), 10)+parseInt(this.ScoreCard.sync.toString(), 10),
-    };
-    const data ={
-      EventId:this.eventId,
-      id:this.scoreCardId,
-      scorecard:scorecard,
-      comment: this.ScoreCard.comments  //   TeamName:
-    }
-    console.log('data',data)
-    const jsonData = JSON.stringify(data);
+    const scorecard: { [key: string]: number } = {};
+let total = 0;
+
+// Calculate individual scores and total dynamically
+this.ScorecardMeta.forEach((item: { name: string | number; }) => {
+  const score = parseInt((this.ScoreCard[item.name] || 0).toString(), 10);
+  scorecard[item.name] = score;
+  total += score;
+});
+
+// Add the total score to the scorecard
+scorecard['total'] = total;
+
+// Construct the data object
+const data = {
+  EventId: this.eventId,
+  id: this.scoreCardId,
+  scorecard: scorecard,
+  comment: this.ScoreCard['comments'] // TeamName: can be added here if needed
+};
+
+// Log the data object
+console.log('data', data);
+
+// Convert to JSON
+const jsonData = JSON.stringify(data);
+
     this.loading=true;
     // Make the POST request with the provided data
     this.http.post<any>(url, jsonData, { headers }).subscribe(

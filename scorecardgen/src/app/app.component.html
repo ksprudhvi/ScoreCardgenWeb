@@ -79,9 +79,9 @@
                     }
                 </style>
 
-                
-                <button class=" css-d6c411"   (click)="toggleMenu()" data-ref="hamburger_icon"><svg width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                <button class=" css-d6c411" (click)="toggleMenu()" data-ref="hamburger_icon"><svg width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M3.5 5.5C2.94772 5.5 2.5 5.94772 2.5 6.5C2.5 7.05228 2.94772 7.5 3.5 7.5H12.5C13.0523 7.5 13.5 7.05228 13.5 6.5C13.5 5.94772 13.0523 5.5 12.5 5.5H3.5Z"
                             fill="white"></path>
@@ -250,7 +250,48 @@
                     <div style="width:max-content">List your event</div>
                 </div>
             </a>
+            <a class="" target="_blank">
+                <style data-emotion-css="auqo8n">
+                    .css-auqo8n {
+                        display: -webkit-box;
+                        display: -webkit-flex;
+                        display: -ms-flexbox;
+                        display: flex;
+                        -webkit-align-items: center;
+                        -webkit-box-align: center;
+                        -ms-flex-align: center;
+                        align-items: center;
+                        padding: 7px 12px;
+                        height: 38px;
+                        margin-left: 15px;
+                        background: transparent;
+                        border-radius: 100px;
+                        color: white;
+                        font-weight: 600;
+                        font-size: 13px;
+                        line-height: 150%;
+                        cursor: pointer;
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        -webkit-transition: box-shadow .3s;
+                        transition: box-shadow .3s;
+                    }
+
+                    .css-auqo8n:hover {
+                        border: 1px solid white;
+                    }
+
+                    @media screen and (max-width:537px) {
+                        .css-auqo8n {
+                            display: none;
+                        }
+                    }
+                </style>
+                <div class="css-auqo8n" (click)="NavigateToHostContoller()">
+                    <div style="width:max-content">Control Pannel</div>
+                </div>
+            </a>
         </div>
+
         <style data-emotion-css="1dknsd1">
             .css-1dknsd1 {
                 display: -webkit-box;
@@ -297,11 +338,19 @@
     </div>
     <div class="side-menu" *ngIf="menuOpen">
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Contact</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a>
+                    <div (click)="NavigateToListEvent()">
+                        <div>List your event</div>
+                    </div>
+                </a></li>
+            <li><a><div (click)="NavigateToHostContoller()">
+                <div>Control Pannel</div>
+            </div></a></li>
+            <li><a href="mailto:s3productionsllc@outlook.com">Contact Us</a></li>
         </ul>
-      </div>
+    </div>
+    
 </main>
+
 <router-outlet />
