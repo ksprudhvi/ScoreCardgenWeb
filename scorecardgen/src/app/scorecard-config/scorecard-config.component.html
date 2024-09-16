@@ -6,7 +6,7 @@
         <div *ngIf="loading" class="loading-overlay">
             <div class="loading-spinner"></div>
           </div>
-          
+
           <div *ngIf="successMessage" class="notification success">{{ successMessage }}</div>
           <div *ngIf="errorMessage" class="notification error">{{ errorMessage }}</div>
         <div class="ui text container" style="padding-bottom: 110px;">
@@ -34,7 +34,7 @@
                   </div>
                 </div>
               </div>
-              
+
             <div class="ui small fluid ordered one steps">
                 <a class="active pending step">
                     <div class="content">
@@ -72,18 +72,19 @@
                                             [(ngModel)]="ScoreCard[item.name]"
                                             [min]="0"
                                             [max]="item.maxScore"
+                                            (input)="validateScore(item)"
                                             required
                                           />
                                         </div>
                                       </div>
                                     </div>
                                   </div>
-                                  
+
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="ui segment">
                     <div class="ui basic segment ui grid">
                         <div class="row">
@@ -98,7 +99,7 @@
                                                     style="width: 100%;"></textarea>
                                             </div>
                                         </div>
-                                
+
                                         <!-- Icon Container -->
                                         <div class="column icons-container">
                                             <img src="/assets/icons/start-speaking.svg" alt="Start Speaking" (click)="startListening()">
@@ -106,12 +107,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
             </form>
             <!-- Button to add new team -->
             <style data-emotion-css="5m1des">

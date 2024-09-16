@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import {CoreConfigService} from "../core-config.service";
 
 @Component({
   selector: 'app-lead-bord-screen',
@@ -17,7 +18,7 @@ export class LeadBordScreenComponent {
   loading!:Boolean ;
   successMessage !:any;
   errorMessage !:any;
-  constructor(private activatedRoute: ActivatedRoute,private http: HttpClient) {}
+  constructor(private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -30,7 +31,7 @@ export class LeadBordScreenComponent {
         EventId:this.eventId
        }
        const jsonData = JSON.stringify(data);
-  const url = 'https://competationhoster.azurewebsites.net/getleaderboard';
+  const url = this.configService.getBaseUrl()+'/getleaderboard';
 
     // Define the HTTP headers
     const headers = new HttpHeaders({
@@ -49,7 +50,7 @@ export class LeadBordScreenComponent {
         //this.error = error.message || 'An error occurred'; // Set error message
       }
     );
-     
+
      } else {
        // Handle the case where 'eventId' is not present
        console.error('eventId parameter not found in query string.');

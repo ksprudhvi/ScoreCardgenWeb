@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import {CoreConfigService} from "../core-config.service";
 interface ScoringParameter {
   name: string;
   maxScore: number;
@@ -15,10 +16,11 @@ interface ScoringParameter {
   templateUrl: './score-card-config.component.html',
   styleUrl: './score-card-config.component.css'
 })
-export class ScoreCardConfigComponent {
+export class ScorecardConfigurationComponent {
   scoringParameters: ScoringParameter[] = [];
   newParameter: ScoringParameter = { name: '', maxScore: 0, description: '' };
- 
+  constructor(private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
+
   eventId: any;
   error: any;
   loading!:Boolean ;
@@ -38,7 +40,7 @@ export class ScoreCardConfigComponent {
         console.error('eventId parameter not found in query string.');
       }
     });
-    const url = 'https://competationhoster.azurewebsites.net/getEvent/';
+    const url = this.configService.getBaseUrl()+'getEvent/';
      // Define the HTTP headers
      const headers = new HttpHeaders({
        'Content-Type': 'application/json'
@@ -61,7 +63,6 @@ export class ScoreCardConfigComponent {
 
   }
 
-  constructor(private activatedRoute: ActivatedRoute,private http: HttpClient) {}
   // Add a new scoring parameter to the list
   addScoringParameter(): void {
     if (this.newParameter.name && this.newParameter.maxScore) {
@@ -79,7 +80,7 @@ export class ScoreCardConfigComponent {
   saveScoringParameters() {
 
       this.EventData['scorecardMeta']=this.scoringParameters;
-      const url = 'https://competationhoster.azurewebsites.net/Updatecompetition';
+      const url = this.configService.getBaseUrl()+'Updatecompetition';
     // Define the HTTP headers
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -93,18 +94,18 @@ export class ScoreCardConfigComponent {
         console.log('POST request successful:', responseDta);
        //this.ScoreCard = responseDta.scorecard;
        this.loading=false;
-       this.successMessage = 'ScoreCard Details Saved'; 
+       this.successMessage = 'ScoreCard Details Saved';
        setTimeout(() => this.successMessage=(null), 2000);
         // Assign response to a variable to use in template
      },
      (error) => {
       this.loading=false;
        console.info('Error making POST request:', error);
-       this.errorMessage = 'Error Occured  '; 
+       this.errorMessage = 'Error Occured  ';
        setTimeout(() => this.errorMessage=(null), 2000);
      }
     );
-  
+
 }
 
 

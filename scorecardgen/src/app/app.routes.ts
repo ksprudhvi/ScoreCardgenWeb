@@ -11,15 +11,14 @@ import { JudgesInfoComponent } from './judges-info/judges-info.component';
 import { SpeechtotextComponent } from './speechtotext/speechtotext.component';
 import { TextMainComponent } from './text-main/text-main.component';
 import { ScorecardConfigComponent } from './scorecard-config/scorecard-config.component';
-import { LoadEventTitleCardComponent } from './load-event-title-card/load-event-title-card.component';
+
 import { GetAccessTokensComponent } from './get-access-tokens/get-access-tokens.component';
 import { ScorecardNavigatorComponent } from './scorecard-navigator/scorecard-navigator.component';
 import { LeadBordScreenComponent } from './lead-bord-screen/lead-bord-screen.component';
 import { EventOrderingComponent } from './event-ordering/event-ordering.component';
 import { AuthGuard } from './auth.guard';
-import { EventListerComponent } from './event-lister/event-lister.component';
 import { HostControllerComponent } from './host-controller/host-controller.component';
-import { ScoreCardConfigComponent } from './score-card-config/score-card-config.component';
+import {ConfigScorecardComponent} from "./config-scorecard/config-scorecard.component";
 
 
 
@@ -31,7 +30,6 @@ export const routes: Routes = [
     { path: 'upload', component: ImageUploaderComponent },
     { path: 'update', component: CompetationDeatilsUpdaterComponent },
     { path: 'addTeam', component: AddTeaminfoComponent },
-    { path: 'loadEvent', component: LoadEventTitleCardComponent },
     { path: 'login', component: LoginPageComponent },
     { path: 'confJudges', component: JudgesInfoComponent },
     { path: 'speak', component: TextMainComponent },
@@ -40,10 +38,8 @@ export const routes: Routes = [
     { path: 'getAccessTokens', component: GetAccessTokensComponent },
     { path: 'viewLeadBord', component: LeadBordScreenComponent },
     { path: 'eventOrderConfig', component: EventOrderingComponent},
-    { path: 'eventLister', component: EventListerComponent},
     { path: 'hostController', component: HostControllerComponent},
-    { path: 'ScoreCardConfig', component: ScoreCardConfigComponent},
-
+    { path: 'ScoreCardConfig', component: ConfigScorecardComponent},
 
 
 ];

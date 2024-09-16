@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
 import { AuthGuard } from '../auth.guard';
+import {CoreConfigService} from "../core-config.service";
 
 @Component({
   selector: 'app-competation-details',
@@ -30,7 +31,7 @@ export class CompetationDetailsComponent implements OnInit {
   isCompleted = false;
   profileData: any ;
   HostAccess: any ;
-  constructor(private router: Router,private authService: AuthService ,private authGuard: AuthGuard,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
+  constructor(private router: Router,private authService: AuthService ,private authGuard: AuthGuard,private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -45,7 +46,7 @@ export class CompetationDetailsComponent implements OnInit {
      }
    });
 
-   const url = 'https://competationhoster.azurewebsites.net/getEvent/';
+   const url = this.configService.getBaseUrl()+'/getEvent/';
    this.profileData=localStorage.getItem('UserProfile')
    this.HostAccess=localStorage.getItem('HostAccess')
     // Define the HTTP headers
@@ -91,14 +92,14 @@ export class CompetationDetailsComponent implements OnInit {
     );
 
   }
-  
+
 
   toggleLive() {
     this.loading=true;
     this.isLive = !this.isLive;
     if(this.isLive==true){
       this.EventData['status']="Live";
-      const url = 'https://competationhoster.azurewebsites.net/Updatecompetition';
+      const url = this.configService.getBaseUrl()+'/Updatecompetition';
     // Define the HTTP headers
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -112,14 +113,14 @@ export class CompetationDetailsComponent implements OnInit {
         console.log('POST request successful:', responseDta);
        //this.ScoreCard = responseDta.scorecard;
        this.loading=false;
-       this.successMessage = 'Market Live Succesfully '; 
+       this.successMessage = 'Market Live Succesfully ';
        setTimeout(() => this.successMessage=(null), 2000);
         // Assign response to a variable to use in template
      },
      (error) => {
       this.loading=false;
        console.info('Error making POST request:', error);
-       this.errorMessage = 'Error Occured  '; 
+       this.errorMessage = 'Error Occured  ';
        setTimeout(() => this.errorMessage=(null), 2000);
      }
     );
@@ -131,7 +132,7 @@ export class CompetationDetailsComponent implements OnInit {
     this.isCompleted = !this.isCompleted;
     if(this.isCompleted==true){
       this.EventData['status']="Completed";
-      const url = 'https://competationhoster.azurewebsites.net/Updatecompetition';
+      const url = this.configService.getBaseUrl()+'/Updatecompetition';
     // Define the HTTP headers
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -145,14 +146,14 @@ export class CompetationDetailsComponent implements OnInit {
         console.log('POST request successful:', responseDta);
        //this.ScoreCard = responseDta.scorecard;
        this.loading=false;
-       this.successMessage = 'Market Completed Succesfully '; 
+       this.successMessage = 'Market Completed Succesfully ';
        setTimeout(() => this.successMessage=(null), 2000);
         // Assign response to a variable to use in template
      },
      (error) => {
       this.loading=false;
        console.info('Error making POST request:', error);
-       this.errorMessage = 'Error Occured  '; 
+       this.errorMessage = 'Error Occured  ';
        setTimeout(() => this.errorMessage=(null), 2000);
      }
     );
@@ -160,7 +161,7 @@ export class CompetationDetailsComponent implements OnInit {
     }
   }
   emailScoreCards() {
-    const url = 'https://competationhoster.azurewebsites.net/send-scorecard';
+    const url = this.configService.getBaseUrl()+'/send-scorecard';
     // Define the HTTP headers
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -175,13 +176,13 @@ export class CompetationDetailsComponent implements OnInit {
       (responseDta) => {
         console.log('POST request successful:', responseDta);
        //this.ScoreCard = responseDta.scorecard;this.loading=false;
-       this.successMessage = 'Sent Event Schedule Email  Succesfully '; 
+       this.successMessage = 'Sent Event Schedule Email  Succesfully ';
        setTimeout(() => this.successMessage=(null), 2000);
         // Assign response to a variable to use in template
      },
      (error) => {
        console.info('Error making POST request:', error);
-       this.errorMessage = 'Error Occured  '; 
+       this.errorMessage = 'Error Occured  ';
        setTimeout(() => this.errorMessage=(null), 2000);
      }
     );
@@ -198,9 +199,9 @@ export class CompetationDetailsComponent implements OnInit {
     //this.router.navigate(['addTeam']); // Replace with your desired rout
   }
   NavigateToAccessTokens():void{
-   
+
     this.HostAccess=localStorage.getItem('HostAccess')
-    if (this.HostAccess=="true") 
+    if (this.HostAccess=="true")
     {
        const navigationExtras: NavigationExtras = {
       queryParams: { eventId:this.eventId },
@@ -252,7 +253,7 @@ export class CompetationDetailsComponent implements OnInit {
 
   }
   isOpen = false;
- 
+
   openPopup() {
     this.isOpen = true;
   }

@@ -3,6 +3,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FileUploadService } from '../services/file-upload.service';
 import { CommonModule } from '@angular/common';
+import {CoreConfigService} from "../core-config.service";
 
 @Component({
   selector: 'app-image-uploader',
@@ -23,7 +24,7 @@ export class ImageUploaderComponent implements OnInit {
 
   imageInfos?: Observable<any>;
 
-  constructor(private uploadService: FileUploadService) {}
+  constructor(private uploadService: FileUploadService,private configService: CoreConfigService) {}
 
   ngOnInit(): void {
     this.imageInfos = this.uploadService.getFiles();

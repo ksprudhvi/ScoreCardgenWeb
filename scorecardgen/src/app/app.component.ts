@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationExtras, Router, RouterStateSnapshot } from '@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {CoreConfigService} from "./core-config.service";
 
 
 
@@ -25,11 +26,11 @@ export class AppComponent {
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
-  constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
+  constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
  NavigateToListEvent ():void{
-   
+
     this.HostAccess=localStorage.getItem('HostAccess')
-    if (this.HostAccess=="true") 
+    if (this.HostAccess=="true")
     {
      // Construct the URL manually
      const url = this.router.createUrlTree(['/update']).toString();
@@ -47,9 +48,9 @@ export class AppComponent {
 
   }
 NavigateToHostContoller ():void{
-   
+
     this.OwnerAccess=localStorage.getItem('OwnerAccess')
-    if (this.OwnerAccess=="true") 
+    if (this.OwnerAccess=="true")
     {
      // Construct the URL manually
      const url = this.router.createUrlTree(['/hostController']).toString();

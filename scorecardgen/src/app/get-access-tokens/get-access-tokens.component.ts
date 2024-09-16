@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationExtras, Router } from '@angular/router';
+import {CoreConfigService} from "../core-config.service";
 
 @Component({
   selector: 'app-get-access-tokens',
@@ -24,7 +25,7 @@ export class GetAccessTokensComponent {
   loading!:Boolean ;
   successMessage !:any;
   errorMessage !:any;
-  constructor(private router: Router ,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
+  constructor(private router: Router ,private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
       this.eventId = params['eventId'];
@@ -38,7 +39,7 @@ export class GetAccessTokensComponent {
      }
    });
   this.loading=true;
-   const url = 'https://competationhoster.azurewebsites.net/getAccessTokens';
+   const url = this.configService.getBaseUrl()+'/getAccessTokens';
 
     // Define the HTTP headers
     const headers = new HttpHeaders({
@@ -64,6 +65,6 @@ export class GetAccessTokensComponent {
     );
     console.log(this.responseData);
   }
-  
+
 
 }

@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router'; // Corrected import for Router
+import {ActivatedRoute, Router} from '@angular/router'; // Corrected import for Router
 import { of } from 'rxjs';
+import {CoreConfigService} from "../core-config.service";
 
 @Component({
   selector: 'app-scrollbanner',
@@ -14,7 +15,9 @@ import { of } from 'rxjs';
   styleUrls: ['./scrollbanner.component.css']
 })
 export class ScrollbannerComponent implements OnInit, AfterViewInit, OnDestroy {
-  getBannersUrl = 'https://competationhoster.azurewebsites.net/getBanners';
+  constructor(private router: Router ,private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
+
+  getBannersUrl = this.configService.getBaseUrl()+'getBanners';
   loading: boolean = false;
   successMessage: string = '';
   errorMessage: string = '';
@@ -43,7 +46,6 @@ export class ScrollbannerComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   ];
 
-  constructor(private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
     // Load banners on initialization
@@ -52,7 +54,7 @@ export class ScrollbannerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     // Implement any logic that needs to run after the view is initialized
-   // this.startAutoScroll(); // Start auto-scroll on view initialization
+    // this.startAutoScroll(); // Start auto-scroll on view initialization
   }
 
   ngOnDestroy(): void {

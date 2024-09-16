@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import {CoreConfigService} from "./core-config.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://competationhoster.azurewebsites.net/authLoginDetails';
+  private apiUrl = this.configService.getBaseUrl()+'/authLoginDetails';
   private isAuthenticated = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private configService: CoreConfigService) {}
 
   login(Email: string, Password: string): Observable<boolean> {
     const headers = new HttpHeaders({

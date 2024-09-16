@@ -6,6 +6,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import { tap } from 'rxjs/operators';
+import {CoreConfigService} from "../core-config.service";
 
 
 @Component({
@@ -22,7 +23,7 @@ export class AddTeaminfoComponent {
   successMessage !:any;
   errorMessage !:any;
   Judegs: any;
-  constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
+  constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
   eventId:string=''
   testName: any;
   ngOnInit() {
@@ -38,15 +39,16 @@ export class AddTeaminfoComponent {
         console.error('eventId parameter not found in query string.');
       }
     });
+    const baseUrl = this.configService.getBaseUrl();
         // Here, you can save jsonData using your preferred method (e.g., sending it to a server, storing it locally)
-        const urlForteamsJudges = `https://competationhoster.azurewebsites.net/getTeamsJudges/${this.eventId}`;
+   const urlForteamsJudges = baseUrl+'getTeamsJudges/${this.eventId}';
     this.http.get<any>(urlForteamsJudges).subscribe(
       (data) => {
         // Assign the received data to eventMetaData
         this.teams=data[0].teamsInfo;
 
         this.Judegs= data[0].JudegsInfo;
-      
+
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -58,9 +60,9 @@ export class AddTeaminfoComponent {
 
 
   }
-  
+
   teamdiv: boolean = false;
- 
+
   teams: { teamName: { id: string, name: string },teamRepresentativeEmail:{name:string,email:string} ,DirectorName: { id: string, name: string ,email:string}, coachName: { id: string, name: string ,email:string}, teamMembers: { id: string, name: string }[], }[] = [];
   addTeam(): void {
     this.teams.push({ teamName: { id: uuidv4(), name: '' },teamRepresentativeEmail:{name:'',email:''},DirectorName: { id: uuidv4(), name: '',email:'' }, coachName: { id: uuidv4(), name: '' ,email:''}, teamMembers: [] });
@@ -82,14 +84,14 @@ export class AddTeaminfoComponent {
     console.log(teamData);
     // Convert teams data to a serializable format (JSON)
     const jsonData = JSON.stringify(teamData);
-  
+
     localStorage.setItem('teamsData', jsonData);
     // Option 2: Send data to server using an HTTP request (server-side storage)
     // This would require additional logic for sending the data to your backend API.
     console.log(jsonData); // Optional: Log the saved data
 
     // Here, you can save jsonData using your preferred method (e.g., sending it to a server, storing it locally)
-    const url = 'https://competationhoster.azurewebsites.net/updateTeams';
+    const url = this.configService.getBaseUrl()+'/updateTeams';
 
     // Define the HTTP headers
     const headers = new HttpHeaders({
@@ -111,12 +113,12 @@ export class AddTeaminfoComponent {
       },
       (error) => {
         console.info('Error making POST request:', error);
-        this.errorMessage = 'An error occurred .Please Try again'; 
+        this.errorMessage = 'An error occurred .Please Try again';
         setTimeout(() => this.errorMessage=(null), 2000);// Set error message
       }
     );
     console.log(this.responseData);
-     
+
 
   }
   isTeamFormValid(): boolean {
@@ -133,7 +135,7 @@ export class AddTeaminfoComponent {
 
   confEventOrder():void{
 
-    const url = 'https://competationhoster.azurewebsites.net/confEventOrder';
+    const url = this.configService.getBaseUrl()+'/confEventOrder';
 
     // Define the HTTP headers
     const headers = new HttpHeaders({
@@ -158,7 +160,7 @@ export class AddTeaminfoComponent {
       },
       (error) => {
         console.info('Error making POST request:', error);
-        this.errorMessage = 'An error occurred .Please Try again'; 
+        this.errorMessage = 'An error occurred .Please Try again';
         setTimeout(() => this.errorMessage=(null), 2000);// Set error message
       }
     );
@@ -176,5 +178,5 @@ export class AddTeaminfoComponent {
     //this.router.navigate(['addTeam']); // Replace with your desired rout
   }
 }
-  
-  
+
+

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthGuard } from '../auth.guard';
+import {CoreConfigService} from "../core-config.service";
 
 @Component({
   selector: 'app-login-page',
@@ -39,7 +40,7 @@ export class LoginPageComponent {
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private http: HttpClient, // Inject HttpClient
-    private authGuard: AuthGuard 
+    private authGuard: AuthGuard ,private configService: CoreConfigService
   ) {}
 
   ngOnInit() {
@@ -110,7 +111,7 @@ export class LoginPageComponent {
 
   sendOtp() {
     this.loading = true;
-    const apiUrl = 'https://competationhoster.azurewebsites.net/SentOtp';
+    const apiUrl = this.configService.getBaseUrl()+'/SentOtp';
 
     const data = {
       Email: this.email
@@ -138,7 +139,7 @@ export class LoginPageComponent {
       Email: this.email,
       OTP_CODE: this.emailOtp,
     };
-    const validationUrl = 'https://competationhoster.azurewebsites.net/OtpVerification';
+    const validationUrl = this.configService.getBaseUrl()+'/OtpVerification';
     this.http.post<any>(validationUrl, requestBody).subscribe(
       (response) => {
         if (response?.validation === 'false') {
@@ -153,7 +154,7 @@ export class LoginPageComponent {
 
     // Create account
     this.loading = true;
-    const apiUrl = 'https://competationhoster.azurewebsites.net/createLoginDetails';
+    const apiUrl = this.configService.getBaseUrl()+'/createLoginDetails';
     const data = {
       Email: this.email,
       Password: this.password,

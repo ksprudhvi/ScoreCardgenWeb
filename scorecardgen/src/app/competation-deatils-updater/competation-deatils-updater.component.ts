@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { response } from 'express';
 import { FormsModule } from '@angular/forms';
-
+import {CoreConfigService} from "../core-config.service";
 @Injectable({
   providedIn: 'root'
 })
@@ -54,14 +54,14 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   successMessage !:any;
   errorMessage !:any;
 
-  constructor(private uploadService: FileUploadService,private router: Router,private http: HttpClient) {
+  constructor(private uploadService: FileUploadService,private router: Router,private http: HttpClient,private configService: CoreConfigService) {
 
     this.eventId = uuidv4();
         console.log(this.eventId);
   }
   onCategoryChange(category: string): void {
     console.log('Selected category:', category);
-    this.selectedCategory=category 
+    this.selectedCategory=category
    }
   conditions: string[] = [
     'Children below 5 years can enter for free.',
@@ -80,11 +80,11 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
      'Personal food, beverages, and bottled water are not allowed - except for diabetics and infants.' ,
     'The parking ticket is valid for one day; the vehicle parked is at the owner’s risk.'
   ];
- 
+
   updateDirectionUrl(event: any) {
-   
-    this.directionUrl = event.target.innerText.trim(); 
- 
+
+    this.directionUrl = event.target.innerText.trim();
+
   }
   addNewCondition() {
     this.conditions.push(' Add new condition');
@@ -140,7 +140,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     // Convert data to JSON
     const jsonData = JSON.stringify(data);
     // Here, you can save jsonData using your preferred method (e.g., sending it to a server, storing it locally)
-    const url = 'https://competationhoster.azurewebsites.net/competition';
+    const url = this.configService.getBaseUrl()+'/competition';
 
     // Define the HTTP headers
     const headers = new HttpHeaders({
@@ -151,7 +151,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     this.http.post(url, jsonData, { headers }).subscribe(
       (response) => {
         console.log('POST request successful:', response);
-        this.responseData = response; 
+        this.responseData = response;
         this.loading=false
         this.successMessage="Event Details Saved Succesfully";
         setTimeout(() => this.successMessage=(null), 2000);
@@ -159,12 +159,12 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
       },
       (error) => {
         console.info('Error making POST request:', error);
-        this.errorMessage = 'An error occurred .Please Try again'; 
+        this.errorMessage = 'An error occurred .Please Try again';
         setTimeout(() => this.errorMessage=(null), 2000);// Set error message
       }
     );
     console.log(this.responseData);
-  } 
+  }
 
   saveandNavifatetoTeamsInfo(): void {
     this.saveData();
@@ -176,7 +176,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     //this.router.navigate(['addTeam']); // Replace with your desired rout
   }
 
-  
+
   ngOnInit(): void {
     this.imageInfos = this.uploadService.getFiles();
   }
@@ -187,7 +187,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     this.previewStatus = true;
     this.imageUploder= false;
   }
-  
+
   showUploader() {
     this.previewStatus = false;
     this.imageUploder= true;
@@ -211,13 +211,14 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
 
 
   uploadFileLatest(file: File, eventId: string) {
-    
+
 
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('EventId', eventId);
+    formData.append('EventType', "Event");
 
-    this.http.post('https://competationhoster.azurewebsites.net/upload', formData, {
+    this.http.post(this.configService.getBaseUrl()+'/upload', formData, {
       reportProgress: true,
       observe: 'events',
       responseType: 'json'
@@ -252,7 +253,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     console.log('Cropped Image Data:', event.base64);
     // You can save the cropped image data or perform other actions
   }
-  
+
   selectFile(event: any): void {
     this.message = '';
     this.preview = '';
@@ -272,18 +273,18 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
           console.log(e.target.result);
           this.preview = e.target.result;
         };
-        
+
         reader.readAsDataURL(this.currentFile);
       }
     }
-   
+
   }
   upload(file: File | undefined): void {
     this.progress = 0;
-  
+
     if (file) {
       this.currentFile = file;
-  
+
       this.uploadService.upload(this.currentFile).subscribe( (response) => {
         console.log('POST request successful:', response);
         this.responseData = response; // Assign response to a variable to use in template
@@ -310,7 +311,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
       }
     );
   }
-  
+
 
 }
 function saveDataandNavigateToTeamsInfo() {

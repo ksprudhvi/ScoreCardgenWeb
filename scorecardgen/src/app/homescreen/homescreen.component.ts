@@ -5,7 +5,10 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoadingService } from '../loading.service';
-import { ScrollbannerComponent } from '../scrollbanner/scrollbanner.component';// Adjust path as needed
+import { ScrollbannerComponent } from '../scrollbanner/scrollbanner.component';
+import {CoreConfigService} from "../core-config.service";
+
+// Adjust path as needed
 
 
 @Injectable({
@@ -24,12 +27,12 @@ export class HomescreenComponent implements OnInit {
   loading!:Boolean ;
   successMessage !:any;
   errorMessage !:any;
-  constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient,public loadingService: LoadingService ) {}
+  constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient,public loadingService: LoadingService ,private configService: CoreConfigService) {}
 
   ngOnInit(): void {
     //this.startAutoScroll();
     this.loading=true;
-    this.http.get<any>('https://competationhoster.azurewebsites.net/allcompe').subscribe(
+    this.http.get<any>(this.configService.getBaseUrl()+'allcompe').subscribe(
       (data) => {
         // Assign the received data to eventMetaData
         this.eventMetaData = data;
@@ -44,7 +47,7 @@ export class HomescreenComponent implements OnInit {
     );
 
   }
- 
+
   navigateToDetails(eventId:string){
       const navigationExtras: NavigationExtras = {
         queryParams: { eventId:eventId },
@@ -52,7 +55,7 @@ export class HomescreenComponent implements OnInit {
       };
       this.router.navigate(['details'], navigationExtras);
       //this.router.navigate(['addTeam']); // Replace with your desired rout
-    
+
   }
 
 }

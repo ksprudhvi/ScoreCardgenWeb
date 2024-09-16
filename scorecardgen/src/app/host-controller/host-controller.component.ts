@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Injectable } from '@angular/core';
 import { response } from 'express';
 
+import {CoreConfigService} from "../core-config.service";
 
 @Component({
   selector: 'app-host-controller',
@@ -29,6 +30,8 @@ export class HostControllerComponent implements OnInit {
   successMessage: string = '';
   errorMessage: string = '';
   hostRequests: any[] = [];
+  fetchUrl = this.configService.getBaseUrl()+'/approveHostAccess';
+  createAccessUrl = this.configService.getBaseUrl()+'/CreateHostAccess';
   imageUrl!: string | ArrayBuffer | null;
   selectedFiles?: FileList;
   currentFile?: File;
@@ -41,22 +44,22 @@ export class HostControllerComponent implements OnInit {
   error: any;
   imageInfos?: Observable<any>;
 
-  fetchUrl = 'https://competationhoster.azurewebsites.net/approveHostAccess';
-  createAccessUrl = 'https://competationhoster.azurewebsites.net/CreateHostAccess';
-  removeBannerUrl='https://competationhoster.azurewebsites.net/removeBanner';
-  getBannersUrl='https://competationhoster.azurewebsites.net/getBanners';
+  removeBannerUrl=this.configService.getBaseUrl()+'removeBanner';
+  getBannersUrl=this.configService.getBaseUrl()+'getBanners';
+   banners!: any[];
 
-  constructor(private uploadService: FileUploadService,private router: Router,private http: HttpClient) {
+  constructor(private uploadService: FileUploadService,private router: Router,private http: HttpClient,private configService: CoreConfigService) {
     this.eventId = uuidv4();
     console.log(this.eventId);
-    
+
   }
 
   ngOnInit(): void {
     this.loading = true;
     this.fetchHostRequests();
+
     this.imageInfos = this.uploadService.getFiles();
-   // this.loadBanners();
+    this.loadBanners();
   }
   loadBanners(): void {
     // Replace with your API endpoint to fetch banner images
@@ -70,26 +73,7 @@ export class HostControllerComponent implements OnInit {
       }
     });
   }
-  banners = [
-    {
-      BannerId: '/vijay-prakash-sep21-2024/event',
-      srcset: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_2000/c_crop%2Fg_custom%2Fv1722576066%2Fkoqrpml3gtaxnli4mj1l.jpg',
-      imageUrl: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_560/c_crop%2Fg_custom%2Fv1722576066%2Fkoqrpml3gtaxnli4mj1l.jpg',
-      alt: 'Event 1'
-    },
-    {
-      BannerId: '/chandan-shetty-live-in-bangalore-nov24-2024/event',
-      srcset: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_2000/c_crop%2Fg_custom%2Fv1722587665%2Ffea1lja4xhsassmhm8k3.jpg',
-      imageUrl: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_560/c_crop%2Fg_custom%2Fv1722587665%2Ffea1lja4xhsassmhm8k3.jpg',
-      alt: 'Event 2'
-    },
-    {
-      BannerId: '/jollywood-best-amusement-park-resorts-in-bangalore/event',
-      srcset: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_2000/c_crop%2Fg_custom%2Fv1718807157%2Fpz08ykl20gmefdtfr8mv.jpg',
-      imageUrl: 'https://res.cloudinary.com/dwzmsvp7f/image/upload/q_75,f_auto,w_560/c_crop%2Fg_custom%2Fv1718807157%2Fpz08ykl20gmefdtfr8mv.jpg',
-      alt: 'Event 3'
-    }
-  ];
+
   previewStatus: boolean = false;
   imageUploder: boolean = true;
 
@@ -132,14 +116,14 @@ export class HostControllerComponent implements OnInit {
 
 
   uploadFileLatest(file: File, eventId: string) {
-    
+
 
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('EventId', "eventId");
     formData.append('EventType', "Banner");
 
-    this.http.post('https://competationhoster.azurewebsites.net/upload', formData, {
+    this.http.post(this.configService.getBaseUrl()+'upload', formData, {
       reportProgress: true,
       observe: 'events',
       responseType: 'json'
@@ -174,7 +158,7 @@ export class HostControllerComponent implements OnInit {
     console.log('Cropped Image Data:', event.base64);
     // You can save the cropped image data or perform other actions
   }
-  
+
   selectFile(event: any): void {
     this.message = '';
     this.preview = '';
@@ -194,18 +178,18 @@ export class HostControllerComponent implements OnInit {
           console.log(e.target.result);
           this.preview = e.target.result;
         };
-        
+
         reader.readAsDataURL(this.currentFile);
       }
     }
-   
+
   }
   upload(file: File | undefined): void {
     this.progress = 0;
-  
+
     if (file) {
       this.currentFile = file;
-  
+
       this.uploadService.upload(this.currentFile).subscribe( (response) => {
         console.log('POST request successful:', response);
         this.responseData = response; // Assign response to a variable to use in template

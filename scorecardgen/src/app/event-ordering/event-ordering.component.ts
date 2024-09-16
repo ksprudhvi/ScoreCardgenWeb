@@ -6,6 +6,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {CoreConfigService} from "../core-config.service";
+
 
 @Component({
   selector: 'app-event-ordering',
@@ -22,7 +24,7 @@ export class EventOrderingComponent implements OnInit {
   errorMessage !:any;
   profileData: any;
   HostAccess:any;
-  constructor(private activatedRoute: ActivatedRoute,private http: HttpClient) {}
+  constructor(private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
 
   ngOnInit(): void {
     this.loading=true;
@@ -42,7 +44,7 @@ export class EventOrderingComponent implements OnInit {
         EventId:this.eventId
        }
        const jsonData = JSON.stringify(data);
-  const url = 'https://competationhoster.azurewebsites.net/getEventOrder';
+  const url = this.configService.getBaseUrl()+'/getEventOrder';
 
     // Define the HTTP headers
     const headers = new HttpHeaders({
@@ -53,17 +55,17 @@ export class EventOrderingComponent implements OnInit {
     this.http.post<any>(url, jsonData, { headers }).subscribe(
       (response) => {
         this.loading=false;
-        
+
         console.log('POST request successful:', response);
         this.eventOrder = response;
       },
       (error) => {
         console.info('Error making POST request:', error);
-        this.errorMessage = 'An error occurred .Please Try again'; 
+        this.errorMessage = 'An error occurred .Please Try again';
         setTimeout(() => this.errorMessage=(null), 2000);// Set error message
       }
     );
-     
+
      } else {
        // Handle the case where 'eventId' is not present
        console.error('eventId parameter not found in query string.');
@@ -87,7 +89,7 @@ export class EventOrderingComponent implements OnInit {
     if (index > -1) {
       category.performances.splice(index, 1);
     }
-  
+
     // Update the order property of each remaining performance
     category.performances.forEach((perf: { order: any; }, idx: number) => {
       perf.order = idx + 1;
@@ -96,7 +98,7 @@ export class EventOrderingComponent implements OnInit {
 saveOrder() {
   console.log(JSON.stringify(this.eventOrder, null, 2));
 
-    const url = 'https://competationhoster.azurewebsites.net/updateEventOrder';
+    const url = this.configService.getBaseUrl()+'/updateEventOrder';
     // Define the HTTP headers
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -110,7 +112,7 @@ saveOrder() {
       (responseDta) => {
         console.log('POST request successful:', responseDta);
        //this.ScoreCard = responseDta.scorecard;this.loading=false;
-       this.successMessage = 'Saved Event Schedule Info Succesfully '; 
+       this.successMessage = 'Saved Event Schedule Info Succesfully ';
        this.loading=false;
        setTimeout(() => this.successMessage=(null), 2000);
         // Assign response to a variable to use in template
@@ -118,7 +120,7 @@ saveOrder() {
      (error) => {
        this.loading=false;
        console.info('Error making POST request:', error);
-       this.errorMessage = 'Error Occured  '; 
+       this.errorMessage = 'Error Occured  ';
        setTimeout(() => this.errorMessage=(null), 2000);
      }
     );
@@ -127,8 +129,8 @@ saveOrder() {
   }
 
   emailEventSchedule() {
-  
-      const url = 'https://competationhoster.azurewebsites.net/sendEventSchedule';
+
+      const url = this.configService.getBaseUrl()+'/sendEventSchedule';
       // Define the HTTP headers
       const headers = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -143,17 +145,17 @@ saveOrder() {
         (responseDta) => {
           console.log('POST request successful:', responseDta);
          //this.ScoreCard = responseDta.scorecard;this.loading=false;
-         this.successMessage = 'Sent Event Schedule Email  Succesfully '; 
+         this.successMessage = 'Sent Event Schedule Email  Succesfully ';
          setTimeout(() => this.successMessage=(null), 2000);
           // Assign response to a variable to use in template
        },
        (error) => {
          console.info('Error making POST request:', error);
-         this.errorMessage = 'Error Occured  '; 
+         this.errorMessage = 'Error Occured  ';
          setTimeout(() => this.errorMessage=(null), 2000);
        }
       );
-  
-  
+
+
     }
 }

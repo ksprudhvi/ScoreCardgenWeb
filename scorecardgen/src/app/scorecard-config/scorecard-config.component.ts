@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from 'express';
+import {CoreConfigService} from "../core-config.service";
 
 @Component({
   selector: 'app-scorecard-config',
@@ -26,10 +27,9 @@ export class ScorecardConfigComponent {
   errorMessage !:any;
   options: string[] = ['Tap', 'Hip-Hop', 'Jazz'];
   category: any;
-  
+
   EventData!: any;
   ScorecardMeta: any;
-  constructor(private activatedRoute: ActivatedRoute,private http: HttpClient) {}
   private initializeScoreCard(): void {
     // Set default score properties to 0 and include additional fields
     this.ScorecardMeta.forEach((item: { name: string | number; }) => {
@@ -40,6 +40,7 @@ export class ScorecardConfigComponent {
     this.ScoreCard['total'] = 0; // Total score, initially set to 0
     this.ScoreCard['comments'] = ''; // Comments field, initially empty
   }
+  constructor(private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
       this.eventId = params['eventId'];
@@ -54,7 +55,7 @@ export class ScorecardConfigComponent {
        console.error('eventId parameter not found in query string.');
      }
    });
-   const url = 'https://competationhoster.azurewebsites.net/getEvent/';
+   const url = this.configService.getBaseUrl()+'getEvent/';
      // Define the HTTP headers
      const headers = new HttpHeaders({
        'Content-Type': 'application/json'
@@ -68,9 +69,8 @@ export class ScorecardConfigComponent {
        (response) => {
          console.log('POST request successful:', response);
          this.EventData = response;
-         this.ScorecardMeta=response.scorecardMeta;
-         console.log(this.ScorecardMeta)
-        // this.initializeScoreCard();
+
+         console.log(this.ScorecardMeta)// this.initializeScoreCard();
        // Assign response to a variable to use in template
        },
        (error) => {
@@ -81,7 +81,7 @@ export class ScorecardConfigComponent {
    const data ={
     EventId:this.eventId
    }
-  
+
   const urlForteamsJudges = `https://competationhoster.azurewebsites.net/getTeamsJudges/${this.eventId}`;
   this.http.get<any>(urlForteamsJudges).subscribe(
     (data) => {
@@ -93,7 +93,7 @@ export class ScorecardConfigComponent {
     (error) => {
       console.error('Error fetching data:', error);
     }
-  ); 
+  );
   }
   onChange():void {
     if(this.TeamId!=null && this.category!=null)
@@ -102,7 +102,7 @@ export class ScorecardConfigComponent {
     }
   }
   onTeamChange(): void {
-    const url = 'https://competationhoster.azurewebsites.net/getScorecard';
+    const url = this.configService.getBaseUrl()+'/getScorecard';
     console.log('started Team Change get ')
     // Define the HTTP headers
     const headers = new HttpHeaders({
@@ -121,18 +121,25 @@ export class ScorecardConfigComponent {
     this.http.post<any>(url, jsonData, { headers }).subscribe(
       (responseDta) => {
         console.log('POST request successful:', responseDta);
-       this.ScoreCard = responseDta[0].scorecard; 
+        const selectedCategory = this.EventData.scorecardMeta.find((item: any) => item.category === this.category);
+
+        if (selectedCategory) {
+          this.ScorecardMeta = selectedCategory.parameters; // Access the parameters of the selected category
+        } else {
+          console.error('Selected category not found');
+        }
+        this.ScoreCard = responseDta[0].scorecard;
        this.ScoreCard['comments']=responseDta[0].comments;
        this.scoreCardId=responseDta[0].id//
        this.loading=false;
-       this.successMessage = 'Fetched Scorecard Info Succesfully '; 
+       this.successMessage = 'Fetched Scorecard Info Succesfully ';
         setTimeout(() => this.successMessage=(null), 2000);
          // Assign response to a variable to use in template
       },
       (error) => {
         this.loading=false;
         console.info('Error making POST request:', error);
-        this.errorMessage = 'Error Occured  '; 
+        this.errorMessage = 'Error Occured  ';
         setTimeout(() => this.errorMessage=(null), 2000);
 
         this.error = error.message || 'An error occurred'; // Set error message
@@ -140,9 +147,21 @@ export class ScorecardConfigComponent {
     );
 
   }
+  validateScore(item: any): void {
+    const currentValue = this.ScoreCard[item.name];
+
+    // Ensure the value doesn't exceed maxScore
+    if (currentValue > item.maxScore) {
+      this.ScoreCard[item.name] = item.maxScore;  // Set it to maxScore if exceeded
+    } else { // @ts-ignore
+      if (currentValue < 0) {
+            this.ScoreCard[item.name] = 0;  // Ensure minimum value is 0
+          }
+    }
+  }
 
 
-  
+
   commentsObject:any;
   results: string ='';
 
@@ -155,7 +174,7 @@ export class ScorecardConfigComponent {
       vSearch.interimresults = false;
       vSearch.lang = 'en-US';
       vSearch.start();
-  
+
       // Event listener for when speech recognition results are available
       vSearch.onresult = (e:any) => {
         this.commentsObject=e.results;
@@ -181,7 +200,7 @@ export class ScorecardConfigComponent {
       alert('Your browser does not support voice recognition!');
     }
   }
-  
+
   stopListening() {
   }
   getResult() {
@@ -193,7 +212,7 @@ export class ScorecardConfigComponent {
   submitScorecard():void{
     console.log("score card {}",this.ScoreCard)
 
-    const url = 'https://competationhoster.azurewebsites.net/update_scores';
+    const url = this.configService.getBaseUrl()+'/update_scores';
 
     // Define the HTTP headers
     const headers = new HttpHeaders({
@@ -233,7 +252,7 @@ const jsonData = JSON.stringify(data);
       (responseDta) => {
         console.log('POST request successful:', responseDta);
        //this.ScoreCard = responseDta.scorecard;this.loading=false;
-       this.successMessage = 'Saved Scorecard Info Succesfully '; 
+       this.successMessage = 'Saved Scorecard Info Succesfully ';
        this.loading=false;
        setTimeout(() => this.successMessage=(null), 2000);
         // Assign response to a variable to use in template
@@ -241,7 +260,7 @@ const jsonData = JSON.stringify(data);
      (error) => {
        this.loading=false;
        console.info('Error making POST request:', error);
-       this.errorMessage = 'Error Occured  '; 
+       this.errorMessage = 'Error Occured  ';
        setTimeout(() => this.errorMessage=(null), 2000);
 
        this.error = error.message || 'An error occurred'; // Set error message

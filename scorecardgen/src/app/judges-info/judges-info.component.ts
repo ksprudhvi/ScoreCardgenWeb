@@ -4,17 +4,18 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
+import {CoreConfigService} from "../core-config.service";
 
 @Component({
   selector: 'app-judges-info',
   standalone: true,
-  imports: [FormsModule,CommonModule],  
+  imports: [FormsModule,CommonModule],
   templateUrl: './judges-info.component.html',
   styleUrl: './judges-info.component.css'
 })
 export class JudgesInfoComponent {
   teams: any;
-  constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
+  constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
   eventId:string=''
   testName: any;
   responseData!: any;
@@ -46,7 +47,7 @@ export class JudgesInfoComponent {
         this.teams=data[0].teamsInfo;
         if(data[0]['JudegsInfo']!=null)
         this.judges= data[0].JudegsInfo;
-      
+
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -69,7 +70,7 @@ export class JudgesInfoComponent {
   }
   this.loading=true;
    const jsonData = JSON.stringify(judgesData);
-  const url = 'https://competationhoster.azurewebsites.net/updateJudges';
+  const url = this.configService.getBaseUrl()+'/updateJudges';
 
     // Define the HTTP headers
     const headers = new HttpHeaders({
@@ -82,21 +83,21 @@ export class JudgesInfoComponent {
         console.log('POST request successful:', response);
         this.loading=false;
         this.responseData = response;
-        this.successMessage = 'Saved Judges Info Succesfully '; 
+        this.successMessage = 'Saved Judges Info Succesfully ';
         setTimeout(() => this.successMessage=(null), 2000);
          // Assign response to a variable to use in template
       },
       (error) => {
         this.loading=false;
         console.info('Error making POST request:', error);
-        this.errorMessage = 'Saved Judges Info Succesfully '; 
+        this.errorMessage = 'Saved Judges Info Succesfully ';
         setTimeout(() => this.errorMessage=(null), 2000);
 
         this.error = error.message || 'An error occurred'; // Set error message
       }
     );
        console.log(this.responseData);
-  
+
       console.log(jsonData);
       this.router.navigate(['']); // Replace with your desired rout
 

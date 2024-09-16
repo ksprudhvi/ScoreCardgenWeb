@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {CoreConfigService} from "../core-config.service";
 @Component({
   selector: 'app-scorecard-navigator',
   standalone: true,
@@ -12,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ScorecardNavigatorComponent {
   eventId: any;
-  constructor(private router: Router ,private activatedRoute: ActivatedRoute,private http: HttpClient) {}
+  constructor(private router: Router ,private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
   error!: any;
   TeamsInfo!: any;
   JudegsInfo!: any;
@@ -56,12 +57,12 @@ export class ScorecardNavigatorComponent {
        console.error('Error fetching data:', error);
      }
    );
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
   }
 
   ValidateAccessTokens():void{
@@ -71,7 +72,7 @@ export class ScorecardNavigatorComponent {
       TokenId:this.TokenId
   }
    const jsonData = JSON.stringify(judgesData);
-  const url = 'https://competationhoster.azurewebsites.net/validateJudgeAccessToken';
+  const url = this.configService.getBaseUrl()+'/validateJudgeAccessToken';
 
     // Define the HTTP headers
     const headers = new HttpHeaders({
@@ -91,9 +92,9 @@ export class ScorecardNavigatorComponent {
         this.hasValidated=false
         this.error = error.message || 'An error occurred'; // Set error message
       }
-    );  
+    );
       console.log(jsonData);
-    
+
 
   }
   NavigateToScoreCards(): void {
