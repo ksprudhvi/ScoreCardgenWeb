@@ -93,23 +93,6 @@
   overflow: auto;
 }
 
-.card-list {
-  display: flex;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 500px)); /* Adjust minmax value as needed */
-  gap: 10px; /* Space between items */
-  padding: 0;
-  margin: 0;
-  width: 100vw; /* Full width of the viewport */
-  overflow: hidden; /* Prevents overflow if necessary */
-}
-
-.card-list > li {
-  background-color: #f8f8f8; /* Optional: background color for cards */
-  border: 1px solid #ddd; /* Optional: border for cards */
-  padding: 10px; /* Optional: padding for card content */
-  transition: transform 0.5s ease-in-out; /* Retain the transition */
-}
-
 
 
 
@@ -238,3 +221,32 @@
   flex-direction: column;
   min-height: 100vh;
 }
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.card-list-item {
+  transition: transform 0.5s ease-in-out; /* Retain the transition */
+  display: flex; /* Use flexbox to align content */
+  flex-direction: column; /* Stack items vertically */
+  height: auto; /* Fixed height; adjust as needed */
+  overflow: hidden; /* Prevent content from overflowing */
+}
+
+.card-list-item img {
+  max-width: 100%; /* Ensure images fit within the card */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.card-list-item .css-1gd5o6a {
+  flex-grow: 1; /* Allow this section to take up available space */
+  overflow: hidden; /* Prevent overflow in this section */
+}
+
+.go-out-container {
+  width: 100%; /* Ensure container takes full width */
+}
+
+

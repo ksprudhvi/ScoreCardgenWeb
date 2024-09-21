@@ -8,8 +8,6 @@
         <style data-emotion-css="1j5hrwi">
             .css-1j5hrwi {
                 position: relative;
-              width: 100%;
-              height: 100%;
             }
         </style>
         <div *ngIf="loading" class="loading-overlay">
@@ -29,70 +27,67 @@
             </style>
             <div class="go-out-container">
                 <div class="discovery-tab-content">
-                    <div >
-                            <ul class="card-list">
-                                <div>
-                                    <li class="card-list-item" *ngFor="let event of eventMetaData; let i = index">
-                                        <style data-emotion-css="clv2ol">
-                                            .css-clv2ol {
-                                                width: 100%;
-                                                background: white;
-                                                position: relative;
-                                                overflow: visible;
-                                                white-space: normal;
-                                                border-radius: 6px;
-                                                border: 1px solid #f0f1f2;
-                                                background: white;
-                                                margin: 2px;
-                                            }
+                    <div class="card-list-wrapper card-grid time-wrapper">
+                      <style data-emotion-css="clv2ol">
+                        .css-clv2ol {
+                          width: 100%;
+                          background: white;
+                          position: relative;
+                          overflow: visible;
+                          white-space: normal;
+                          border-radius: 6px;
+                          border: 1px solid #f0f1f2;
+                          background: white;
+                          margin: 2px;
+                        }
 
-                                            .css-clv2ol>a {
+                        .css-clv2ol>a {
 
-                                                width: 100%;
-                                                height: 100%;
-                                                -webkit-text-decoration: none;
-                                                text-decoration: none;
-                                                color: inherit;
-                                            }
+                          width: 100%;
+                          height: 100%;
+                          -webkit-text-decoration: none;
+                          text-decoration: none;
+                          color: inherit;
+                        }
 
-                                            .css-clv2ol a:hover {
-                                                color: initial;
-                                            }
+                        .css-clv2ol a:hover {
+                          color: initial;
+                        }
 
-                                            .css-clv2ol:hover {
-                                                border: 1px solid white;
-                                                box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 10px 0px;
-                                            }
+                        .css-clv2ol:hover {
+                          border: 1px solid white;
+                          box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 10px 0px;
+                        }
 
-                                            .status-indicator {
-                                                font-size: 11px;
-                                                position: absolute;
-                                                top: calc(16px / 2);
-                                                right: calc(16px / 2);
-                                                color: #fff;
-                                                text-transform: uppercase;
-                                                border-radius: 6px;
-                                                font-weight: 700;
-                                                padding: calc(12px / 2) calc(16px / 2);
-                                                background-color: green;
-                                            }
+                        .status-indicator {
+                          font-size: 11px;
+                          position: absolute;
+                          top: calc(16px / 2);
+                          right: calc(16px / 2);
+                          color: #fff;
+                          text-transform: uppercase;
+                          border-radius: 6px;
+                          font-weight: 700;
+                          padding: calc(12px / 2) calc(16px / 2);
+                          background-color: green;
+                        }
 
-                                            .status-live {
-                                                background-color: green;
-                                            }
+                        .status-live {
+                          background-color: green;
+                        }
 
-                                            .status-scheduled {
-                                                background-color: orange;
-                                            }
+                        .status-scheduled {
+                          background-color: orange;
+                        }
 
-                                            .status-completed {
-                                                background-color: red;
-                                            }
-                                        </style>
-                                        <div data-ref="event_card" role="region" class="css-clv2ol">
-
-                                            <a class="" (click)="navigateToDetails(event.EventId)">
-
+                        .status-completed {
+                          background-color: red;
+                        }
+                      </style>
+                      <ul class="card-list">
+                        <li class="card-list-item" *ngFor="let event of eventMetaData; let i = index">
+                          <div data-ref="event_card" role="region" class="css-clv2ol">
+                            <a (click)="navigateToDetails(event.EventId)">
                                                 <style data-emotion-css="pb8e9y">
                                                     .css-pb8e9y {
                                                         display: block;
@@ -375,7 +370,7 @@
                                             </a>
                                         </div>
                                     </li>
-                                </div>
+
                             </ul>
                     </div>
                 </div>
