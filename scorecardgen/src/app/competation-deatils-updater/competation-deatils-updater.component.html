@@ -55,31 +55,46 @@
                                                                 stroke-linecap="square"></path>
                                                         </svg>
                                                     </div>
-                                                    <div *ngFor="let option of options; let i = index">
-                                                        <input type="checkbox" [id]="'option' + i"
-                                                            [(ngModel)]="selectedOptions[i]" />
-                                                        <label [for]="'option' + i">{{ option }}</label>
-                                                    </div>
-                                                    <div>
-                                                        <input type="checkbox" id="enterText"
-                                                            [(ngModel)]="isTextChecked" />
-                                                        <label for="enterText">Enter Text</label>
-                                                        <input type="text" *ngIf="isTextChecked"
-                                                            [(ngModel)]="enteredText"
-                                                            placeholder="Enter your text here" />
-                                                    </div>
-                                                    <!--<select [(ngModel)]="selectedCategory"
-                                                       >
-                                                        <option value="" disabled selected>Select category</option>
-                                                        <option value="Ballet">Ballet</option>
-                                                        <option value="Tap">Tap</option>
-                                                        <option value="Jazz">Jazz</option>
-                                                        <option value="Contemporary">Contemporary</option>
-                                                        <option value="Modern">Modern</option>
-                                                        <option value="Hip hop">Hip hop</option>
-                                                        <option value="Musical theater">Musical theater</option>
-                                                    </select>
-                                                 -->
+<!--                                                    <div *ngFor="let option of options; let i = index">-->
+<!--                                                        <input type="checkbox" [id]="'option' + i"-->
+<!--                                                            [(ngModel)]="selectedOptions[i]" />-->
+<!--                                                        <label [for]="'option' + i">{{ option }}</label>-->
+<!--                                                    </div>-->
+<!--                                                    <div>-->
+<!--                                                        <input type="checkbox" id="enterText"-->
+<!--                                                            [(ngModel)]="isTextChecked" />-->
+<!--                                                        <label for="enterText">Enter Text</label>-->
+<!--                                                        <input type="text" *ngIf="isTextChecked"-->
+<!--                                                            [(ngModel)]="enteredText"-->
+<!--                                                            placeholder="Enter your text here" />-->
+<!--                                                    </div>-->
+
+                                                  <div *ngFor="let text of categoryList; let i = index; trackBy: trackByIndex">
+                                                    <input type="text" [(ngModel)]="categoryList[i]" placeholder="Enter text {{i + 1}}" />
+                                                    <button (click)="removeTextField(i)">Remove</button>
+                                                  </div>
+
+                                                  <button (click)="addTextField()">Add Text Field</button>
+
+                                                  <div>
+                                                    <p>Entered Text List:</p>
+                                                    <ul>
+                                                      <li *ngFor="let text of categoryList">{{ text }}</li>
+                                                    </ul>
+                                                  </div>
+
+                                                  <!--<select [(ngModel)]="selectedCategory"
+                                                     >
+                                                      <option value="" disabled selected>Select category</option>
+                                                      <option value="Ballet">Ballet</option>
+                                                      <option value="Tap">Tap</option>
+                                                      <option value="Jazz">Jazz</option>
+                                                      <option value="Contemporary">Contemporary</option>
+                                                      <option value="Modern">Modern</option>
+                                                      <option value="Hip hop">Hip hop</option>
+                                                      <option value="Musical theater">Musical theater</option>
+                                                  </select>
+                                               -->
                                                 </div>
                                             </div>
                                         </div>
@@ -225,69 +240,50 @@
                                             display: block;
                                         }
                                     </style>
-                                    <section id="section-venue" class="venue-wrapper">
-                                        <section class="text text-left custom-widget-title css-1rmq8t0">
-                                            <span>Venue</span>
-                                        </section>
-                                        <section class="text text-align-left custom-widget-title"
-                                            data-ref="DirectionDetails" contenteditable="true">
-                                            <h3>AT & T Stadium</h3>
-                                            <p>1 AT&T Way, Arlington, TX 76011, United States</p>
-                                        </section><br />
-                                        <section class="text text-align-left custom-widget-title"
-                                            data-ref="DirectionUrl" contenteditable="true"
-                                            (input)="updateDirectionUrl($event)">
-                                            <p>{{directionUrl}}</p>
-                                        </section>
-                                        <br />
-                                        <style data-emotion-css="1gl7gat">
-                                            .css-1gl7gat {
-                                                display: block;
-                                                text-align: center;
-                                                border-radius: 3px;
-                                                border: solid 1px #dddfe2;
-                                                padding: 0.08em;
-                                                max-width: 130px;
-                                                margin-top: 8px;
-                                            }
-                                        </style><a class="css-1gl7gat" [href]="directionUrl" target="_blank">
-                                            <style data-emotion-css="159jbjj">
-                                                .css-159jbjj {
-                                                    font-size: 12px;
-                                                    font-weight: bold;
-                                                    -webkit-letter-spacing: 0.6px;
-                                                    -moz-letter-spacing: 0.6px;
-                                                    -ms-letter-spacing: 0.6px;
-                                                    letter-spacing: 0.6px;
-                                                    color: #000000;
-                                                }
-                                            </style><span class="css-159jbjj">GET DIRECTIONS</span>
-                                        </a>
+                                  <section id="section-venue" class="venue-wrapper">
+                                    <section class="text text-left custom-widget-title css-1rmq8t0">
+                                      <span>Venue</span>
                                     </section>
+                                    <section class="text text-align-left custom-widget-title" contenteditable="true" #venueName>
+                                      <h3>AT & T Stadium</h3>
+                                      <p>1 AT&T Way, Arlington, TX 76011, United States</p>
+                                    </section>
+                                    <br />
+                                    <section class="text text-align-left custom-widget-title" contenteditable="true" #directionUrl contenteditable="true" (input)="updateDirectionUrl($event)">
+                                      <p>{{directionUrl}}</p>
+                                    </section>
+                                    <br />
+                                    <a class="css-1gl7gat" [href]="directionUrl" target="_blank">
+                                      <span class="css-159jbjj">GET DIRECTIONS</span>
+                                    </a>
+
                                     <section class="text text-left css-1rmq8t0">
-                                        <p>
-                                        <p><strong>Competition
-                                                Duration: </strong></p>
-                                        <p data-ref="durationdetails" contenteditable="true">9.00 AM to 5.30 PM</p>
-                                        <br /><br />
-                                        <p><strong>Competition Highlights :</strong></p><br />
-                                        <ul data-ref="CompetitionHighlights" contenteditable="true">
-                                            <li *ngFor="let Highlight of CompetitionHighlights">{{ Highlight }}</li>
+                                      <p><strong>Competition Duration: </strong></p>
+                                      <p contenteditable="true" #competitionDuration>9.00 AM to 5.30 PM</p>
+                                      <br /><br />
+                                      <p><strong>Competition Highlights :</strong></p><br />
+                                      <ul contenteditable="true" #competitionHighlights>
+                                        <li *ngFor="let highlight of CompetitionHighlights">{{ highlight }}</li>
+                                      </ul>
+                                      <button (click)="addCompetitionHighlights()">Add</button><br />
+
+                                      <p><strong>Competition Terms & Conditions:</strong></p><br />
+                                      <div class="css-1azmw3s">
+                                        <ul contenteditable="true" #competitionConditions>
+                                          <li *ngFor="let condition of conditions">{{ condition }}</li>
                                         </ul>
-                                        <button (click)="addCompetitionHighlights()">Add</button><br />
-                                        <p><strong>Competition Terms &amp; Conditions:</strong></p><br />
-                                        <div class="css-1azmw3s" data-ref="termsandcond">
-                                            <ul data-ref="CompetitionConditions" contenteditable="true">
-                                                <li *ngFor="let condition of conditions">{{ condition }}</li>
-                                            </ul>
-                                            <button (click)="addNewCondition()">Add Condition</button>
-                                        </div><br />
-                                        <br />
-                                        <p><strong>For Entry:</strong></p><br />
-                                        <ul data-ref="entryRule" contenteditable="true">
-                                            <li *ngFor="let rule of forEntryRules">{{ rule }}</li>
-                                        </ul><button (click)="addforEntryRules()">Add</button><br /><br />
+                                        <button (click)="addNewCondition()">Add Condition</button>
+                                      </div><br />
+
+                                      <p><strong>For Entry:</strong></p><br />
+                                      <ul contenteditable="true" #forEntryRulesdata>
+                                        <li *ngFor="let rule of forEntryRules">{{ rule }}</li>
+                                      </ul>
+                                      <button (click)="addforEntryRules()">Add</button><br /><br />
                                     </section>
+                                    <button (click)="saveadout(venueName, directionUrl, competitionDuration, competitionHighlights, competitionConditions, forEntryRulesdata)">Save About Section</button>
+                                  </section>
+
 
                                 </div>
                             </div>

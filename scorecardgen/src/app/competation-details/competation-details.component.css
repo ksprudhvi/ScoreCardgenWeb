@@ -14,7 +14,7 @@
     display: flex;
     gap: 30px;
   }
-  
+
   .toggle-switch {
     width: 60px;
     height: 30px;
@@ -27,7 +27,7 @@
     justify-content: center;
     transition: background-color 0.3s;
   }
-  
+
   .toggle-switch .toggle-handle {
     width: 25px;
     height: 25px;
@@ -37,11 +37,11 @@
     left: 3px;
     transition: left 0.3s;
   }
-  
+
   .toggle-switch.active .toggle-handle {
     left: 32px;
   }
-  
+
   .toggle-switch.active {
     background-color: green;
   }
@@ -92,15 +92,20 @@
 .error {
   background-color: #f44336; /* Red */
 }
+.there-you-go{
+{
 
-  
+  padding-top: 100px;
+  overflow-y: auto;
+}
+
+
   .toggle-switch.orange.active {
     background-color: orange;
   }
-  
+
   .toggle-label {
     font-size: 12px;
     color: rgb(3, 0, 0);
     margin-left: 70px;
   }
-  

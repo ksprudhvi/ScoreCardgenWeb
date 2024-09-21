@@ -20,6 +20,8 @@ export class CompetationDetailsComponent implements OnInit {
   directionUrl:string='https://maps.app.goo.gl/4f42zLjafaXB6pg89'
 
   EventData !:any;
+  EventDataTemp !:any;
+
   responseData!: Object;
   error!: any;
   TeamsInfo!: any;
@@ -27,10 +29,28 @@ export class CompetationDetailsComponent implements OnInit {
   loading!:Boolean ;
   successMessage !:any;
   errorMessage !:any;
-  isLive = true;
+  isLive = false;
   isCompleted = false;
   profileData: any ;
   HostAccess: any ;
+  conditions: string[] = [
+    'Children below 5 years can enter for free.',
+    'Outside food and beverages are not allowed.',
+    'Entry tickets are non-refundable.',
+    'The management reserves the right to admission.'
+  ];
+  CompetitionHighlights: string[] = [
+    'Competition Opening ceremony at 09:45 am.',
+    'Shopping at abcd '
+  ];
+  forEntryRules: string[] = [
+    'Each ticket admits one person only.' ,
+    'Children below 33" height will not be charged.' ,
+    'The ticket is valid for the day of reservation. ' ,
+    'Personal food, beverages, and bottled water are not allowed - except for diabetics and infants.' ,
+    'The parking ticket is valid for one day; the vehicle parked is at the owner’s risk.'
+  ];
+   EventAboutSec!: any;
   constructor(private router: Router,private authService: AuthService ,private authGuard: AuthGuard,private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
 
   ngOnInit(): void {
@@ -62,11 +82,15 @@ export class CompetationDetailsComponent implements OnInit {
       (response) => {
         console.log('POST request successful:', response);
         this.EventData = response;
-        if(this.EventData['status']="Live"){
+        this.EventAboutSec=this.EventData.EventAboutSec
+        //this.EventDataTemp = { ...response };
+        this.EventDataTemp = JSON.parse(JSON.stringify(response)); // Deep copy using JSON
+
+        if(this.EventData['status'] == "Live"){
           this.isLive=true;
           this.isCompleted=false;
         }
-        if(this.EventData['status']="Completed"){
+        if(this.EventData['status']=="Completed"){
           this.isLive=false;
           this.isCompleted=true;
         } // Assign response to a variable to use in template
@@ -93,6 +117,49 @@ export class CompetationDetailsComponent implements OnInit {
 
   }
 
+  addNewCondition() {
+    this.EventAboutSec.competitionConditions.push(' Add new condition');
+  }
+  addforEntryRules() {
+    this.EventAboutSec.forEntryRules.push('Add new Entry Rule');
+  }
+  addCompetitionHighlights() {
+    this.EventAboutSec.competitionHighlights.push(' Add new Highlight');
+  }
+  updateDirectionUrl(event: any) {
+    this.EventAboutSec.directionUrl = event.target.innerText.trim();
+  }
+
+  saveadout() {
+
+    const datatemp={
+      EventAboutSec: this.EventAboutSec,
+      EventId:this.eventId
+    }
+   // console.log(JSON.stringify(data)); // This will log the JSON data to the console.
+    const url = this.configService.getBaseUrl()+'/updateAbout';
+    // Define the HTTP headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    //Call API or service to save the data
+    this.http.post(url, this.EventData, { headers }).subscribe(
+      (response) => {
+        console.log('POST request successful:', response);
+        this.responseData = response;
+        this.loading=false
+        this.successMessage="Event Details Saved Succesfully";
+        setTimeout(() => this.successMessage=(null), 2000);
+        // Assign response to a variable to use in template
+      },
+      (error) => {
+        console.info('Error making POST request:', error);
+        this.errorMessage = 'An error occurred .Please Try again';
+        setTimeout(() => this.errorMessage=(null), 2000);// Set error message
+      }
+    );
+    // You can also send this JSON to your backend or handle it as needed.
+  }
 
   toggleLive() {
     this.loading=true;
@@ -128,9 +195,9 @@ export class CompetationDetailsComponent implements OnInit {
 }
 
   toggleCompleted() {
-    this.loading=true;
-    this.isCompleted = !this.isCompleted;
-    if(this.isCompleted==true){
+    this.loading=false;
+    this.isCompleted = this.isCompleted;
+    if(this.isCompleted){
       this.EventData['status']="Completed";
       const url = this.configService.getBaseUrl()+'/Updatecompetition';
     // Define the HTTP headers
@@ -186,6 +253,72 @@ export class CompetationDetailsComponent implements OnInit {
        setTimeout(() => this.errorMessage=(null), 2000);
      }
     );
+
+
+  }
+  addTextField() {
+    this.EventData.eventCategory = [...this.EventData.eventCategory, '']; // Use spread operator to avoid direct mutation
+  }
+
+  // Function to remove a text field
+  removeTextField(index: number) {
+    this.EventData.eventCategory.splice(index, 1); // Remove the field at the specified index
+  }
+
+  // Track by index to ensure Angular properly tracks each input field
+  trackByIndex(index: number, item: string) {
+    return index;
+  }
+  saveEventData() {
+    console.log(this.responseData);
+    // Logic to handle saving the updated event data
+    console.log('Event Data Saved:', this.EventData);
+    const url = this.configService.getBaseUrl()+'/competition';
+
+    // Define the HTTP headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    // Call API or service to save the data
+    this.http.post(url, this.EventData, { headers }).subscribe(
+      (response) => {
+        console.log('POST request successful:', response);
+        this.responseData = response;
+        this.loading=false
+        this.successMessage="Event Details Saved Succesfully";
+        setTimeout(() => this.successMessage=(null), 2000);
+        // Assign response to a variable to use in template
+      },
+      (error) => {
+        console.info('Error making POST request:', error);
+        this.errorMessage = 'An error occurred .Please Try again';
+        setTimeout(() => this.errorMessage=(null), 2000);// Set error message
+      }
+    );
+    if (JSON.stringify(this.EventData.eventCategory) !== JSON.stringify(this.EventDataTemp.eventCategory)) {
+      const url = this.configService.getBaseUrl()+'/configEventOrder';
+      // Define the HTTP headers
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json'
+      });
+      // Call API or service to save the data
+      this.http.post(url, this.EventData, { headers }).subscribe(
+        (response) => {
+          console.log('POST request successful:', response);
+          this.responseData = response;
+          this.loading=false
+          this.successMessage="Event Details Saved Succesfully";
+          setTimeout(() => this.successMessage=(null), 2000);
+          // Assign response to a variable to use in template
+        },
+        (error) => {
+          console.info('Error making POST request:', error);
+          this.errorMessage = 'An error occurred .Please Try again';
+          setTimeout(() => this.errorMessage=(null), 2000);// Set error message
+        }
+      );
+
+    }
 
 
   }

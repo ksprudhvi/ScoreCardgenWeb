@@ -140,8 +140,11 @@ export class LoginPageComponent {
       OTP_CODE: this.emailOtp,
     };
     const validationUrl = this.configService.getBaseUrl()+'/OtpVerification';
+    this.loading=true;
+
     this.http.post<any>(validationUrl, requestBody).subscribe(
       (response) => {
+
         if (response?.validation === 'false') {
           this.errorMessage = 'Invalid OTP. Please try again.';
           return;
@@ -153,7 +156,6 @@ export class LoginPageComponent {
     }
 
     // Create account
-    this.loading = true;
     const apiUrl = this.configService.getBaseUrl()+'/createLoginDetails';
     const data = {
       Email: this.email,

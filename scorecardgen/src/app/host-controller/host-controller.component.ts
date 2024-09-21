@@ -120,7 +120,7 @@ export class HostControllerComponent implements OnInit {
 
     const formData: FormData = new FormData();
     formData.append('file', file);
-    formData.append('EventId', "eventId");
+    formData.append('EventId', this.eventId);
     formData.append('EventType', "Banner");
 
     this.http.post(this.configService.getBaseUrl()+'upload', formData, {

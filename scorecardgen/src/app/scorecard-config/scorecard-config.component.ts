@@ -69,7 +69,7 @@ export class ScorecardConfigComponent {
        (response) => {
          console.log('POST request successful:', response);
          this.EventData = response;
-
+          this.options=this.EventData.eventCategory;
          console.log(this.ScorecardMeta)// this.initializeScoreCard();
        // Assign response to a variable to use in template
        },
@@ -122,6 +122,7 @@ export class ScorecardConfigComponent {
       (responseDta) => {
         console.log('POST request successful:', responseDta);
         const selectedCategory = this.EventData.scorecardMeta.find((item: any) => item.category === this.category);
+        this.loading=false;
 
         if (selectedCategory) {
           this.ScorecardMeta = selectedCategory.parameters; // Access the parameters of the selected category
@@ -220,13 +221,13 @@ export class ScorecardConfigComponent {
     });
     console.log('score card ',this.ScoreCard);
     const scorecard: { [key: string]: number } = {};
-let total = 0;
+    let total = 0;
 
 // Calculate individual scores and total dynamically
-this.ScorecardMeta.forEach((item: { name: string | number; }) => {
-  const score = parseInt((this.ScoreCard[item.name] || 0).toString(), 10);
-  scorecard[item.name] = score;
-  total += score;
+   this.ScorecardMeta.forEach((item: { name: string | number; }) => {
+   const score = parseInt((this.ScoreCard[item.name] || 0).toString(), 10);
+   scorecard[item.name] = score;
+   total += score;
 });
 
 // Add the total score to the scorecard

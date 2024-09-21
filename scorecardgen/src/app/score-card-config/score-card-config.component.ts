@@ -50,11 +50,15 @@ export class ScorecardConfigurationComponent {
      }
      const jsonData = JSON.stringify(data);
      // Make the POST request with the provided data
-     this.http.post(url, jsonData, { headers }).subscribe(
+     this.http.post<any>(url, jsonData, { headers }).subscribe(
        (response) => {
          console.log('POST request successful:', response);
          this.EventData = response;
+         this.scoringParameters=this.EventData["scorecardMeta"];
+         console.log(this.scoringParameters);
        // Assign response to a variable to use in template
+        // this.scoringParameters = this.EventData?.scorecardMeta || {};
+
        },
        (error) => {
          console.info('Error making POST request:', error);

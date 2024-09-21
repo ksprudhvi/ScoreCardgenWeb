@@ -69,9 +69,10 @@ export class ConfigScorecardComponent {
         console.log('POST request successful:', response);
         this.EventData = response;
         this.categoryList=response.eventCategory;
+        this.scoringParameters=this.EventData["scorecardMeta"];
+        console.log(this.scoringParameters);
         // Assign response to a variable to use in template
-        this.scoringParameters = this.categoryList.map((entry: any) => ({ category: entry,parameters:[] }));
-        this.newParameters = this.categoryList.map(() => ({ name: '', maxScore: 0, description: '' }));
+       this.newParameters = this.categoryList.map(() => ({ name: '', maxScore: 0, description: '' }));
 
       },
       (error) => {

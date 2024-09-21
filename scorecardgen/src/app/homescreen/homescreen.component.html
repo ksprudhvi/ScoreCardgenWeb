@@ -8,6 +8,8 @@
         <style data-emotion-css="1j5hrwi">
             .css-1j5hrwi {
                 position: relative;
+              width: 100%;
+              height: 100%;
             }
         </style>
         <div *ngIf="loading" class="loading-overlay">
@@ -27,7 +29,7 @@
             </style>
             <div class="go-out-container">
                 <div class="discovery-tab-content">
-                    <div class="card-list-wrapper card-grid time-wrapper">
+                    <div >
                             <ul class="card-list">
                                 <div>
                                     <li class="card-list-item" *ngFor="let event of eventMetaData; let i = index">
@@ -45,7 +47,7 @@
                                             }
 
                                             .css-clv2ol>a {
-                                            
+
                                                 width: 100%;
                                                 height: 100%;
                                                 -webkit-text-decoration: none;
@@ -191,8 +193,10 @@
                                                             'status-scheduled': event.status === 'Scheduled',
                                                             'status-completed': event.status === 'Completed'
                                                         }"> {{ event.status }}</span>
-                                                    <span class="card-genre css-mrmzh"
-                                                        style="background-color:#31c0f0">{{event.eventCategory}}</span>
+                                                  <span class="card-genre css-mrmzh" style="background-color:#31c0f0">
+  {{ (event.eventCategory.join(', ').length > 15) ? (event.eventCategory.join(', ').slice(0, 15) + '...') : event.eventCategory.join(', ') }}
+</span>
+
 
                                                 </div>
                                                 <style data-emotion-css="1gd5o6a">

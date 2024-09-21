@@ -26,7 +26,7 @@ export class ScorecardNavigatorComponent {
   hasValidated = false;
   dropdown1Options: string[] = ['Select Option 1', 'Option 1', 'Option 2'];
   dropdown2Options: string[] = ['Select Option 2', 'Option 3', 'Option 4'];
-  options: string[] = ['Tap', 'Hip-Hop', 'Jazz'];
+  selectedCategories: string[] = ['Tap', 'Hip-Hop', 'Jazz'];
   loading!:Boolean ;
   successMessage !:any;
   errorMessage !:any;
@@ -43,6 +43,28 @@ export class ScorecardNavigatorComponent {
        console.error('eventId parameter not found in query string.');
      }
    });
+    const url = this.configService.getBaseUrl()+'/getEvent/';
+
+    // Define the HTTP headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    const data ={
+      EventId:this.eventId
+    }
+    const jsonData = JSON.stringify(data);
+    // Make the POST request with the provided data
+    this.http.post<any>(url, jsonData, { headers }).subscribe(
+      (response) => {
+        console.log('POST request successful:', response);
+        this.selectedCategories = response["eventCategory"];
+       // Assign response to a variable to use in template
+      },
+      (error) => {
+        console.info('Error making POST request:', error);
+        this.error = error.message || 'An error occurred'; // Set error message
+      }
+    );
 
    const urlForteamsJudges = `https://competationhoster.azurewebsites.net/getTeamsJudges/${this.eventId}`;
    this.http.get<any>(urlForteamsJudges).subscribe(
@@ -97,6 +119,11 @@ export class ScorecardNavigatorComponent {
 
 
   }
+
+  onChangeJudge() {
+    this.hasValidated = false;
+    this.TokenId='' // Reset validation on dropdown change
+  }
   NavigateToScoreCards(): void {
     console.log("judge id {} ", this.Judgeid);
     const navigationExtras: NavigationExtras = {
@@ -113,4 +140,7 @@ export class ScorecardNavigatorComponent {
     window.open(fullUrl, '_blank');
 }
 
+isValidated(){
+  return this.hasValidated;
+}
 }

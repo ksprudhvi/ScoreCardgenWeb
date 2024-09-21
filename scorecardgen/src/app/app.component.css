@@ -1,7 +1,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    overflow-y: auto; 
+    overflow-y: scroll;
   }
 
   .css-1rjpcfj-home-logo {
@@ -9,7 +9,7 @@ html, body {
     display: block;
     -webkit-text-decoration: none;
     text-decoration: none;
-    background: transparent url(/assets/icons/theJudgesHub.jpeg) center 45% / contain no-repeat;
+    background: transparent url(/assets/icons/LogoNavigator.png) center 45% / contain no-repeat;
     width: 151.25px;
     height: 73.25px;
     -webkit-user-select: none;

@@ -53,6 +53,15 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   loading!:Boolean ;
   successMessage !:any;
   errorMessage !:any;
+  categoryList: string[] = [''];
+   EventAboutSec!: {
+    venue: string;
+    competitionDuration: string;
+    forEntryRules: string[];
+    directionUrl: string;
+    competitionConditions: string[];
+    competitionHighlights: string[]
+  };
 
   constructor(private uploadService: FileUploadService,private router: Router,private http: HttpClient,private configService: CoreConfigService) {
 
@@ -63,6 +72,20 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     console.log('Selected category:', category);
     this.selectedCategory=category
    }
+
+  addTextField() {
+    this.categoryList = [...this.categoryList, '']; // Use spread operator to avoid direct mutation
+  }
+
+  // Function to remove a text field
+  removeTextField(index: number) {
+    this.categoryList.splice(index, 1); // Remove the field at the specified index
+  }
+
+  // Track by index to ensure Angular properly tracks each input field
+  trackByIndex(index: number, item: string) {
+    return index;
+  }
   conditions: string[] = [
     'Children below 5 years can enter for free.',
     'Outside food and beverages are not allowed.',
@@ -82,9 +105,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   ];
 
   updateDirectionUrl(event: any) {
-
     this.directionUrl = event.target.innerText.trim();
-
   }
   addNewCondition() {
     this.conditions.push(' Add new condition');
@@ -95,6 +116,23 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   addCompetitionHighlights() {
     this.CompetitionHighlights.push(' Add new Highlight');
   }
+
+  saveadout(venueName: HTMLElement, directionUrl: HTMLElement, competitionDuration: HTMLElement, competitionHighlights: HTMLElement, competitionConditions: HTMLElement, forEntryRules: HTMLElement) {
+    const data = {
+      venue: venueName.innerText.trim(),
+      directionUrl: directionUrl.innerText.trim(),
+      competitionDuration: competitionDuration.innerText.trim(),
+      competitionHighlights: this.CompetitionHighlights,
+      competitionConditions:this.conditions,
+      forEntryRules:this.forEntryRules ,
+    };
+
+    this.EventAboutSec=data;
+    console.log((data)); // This will log the JSON data to the console.
+
+    // You can also send this JSON to your backend or handle it as needed.
+  }
+
   saveEventParentCreateChilds(): void{
     const selectedCategories = this.options.filter((option, index) => this.selectedOptions[index]);
     console.log('Selected Options:', selectedCategories);
@@ -102,7 +140,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
 
   saveData(): void {
     this.loading=true;
-    const selectedCategories = this.options.filter((option, index) => this.selectedOptions[index]);
+    const selectedCategories = this.categoryList;
     console.log('Selected Options:', selectedCategories);
     interface EventElement extends HTMLElement {
       innerText: string;
@@ -122,6 +160,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     ];
     const data = {
       EventId:this.eventId,
+      EventAboutSec:this.EventAboutSec,
       eventImageUrl:this.eventImageUrl,
       eventTitle: eventTitleList.find(
         (element) => element.innerText.trim() !== 'Enter Your Event Title'

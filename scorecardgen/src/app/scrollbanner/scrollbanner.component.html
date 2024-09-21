@@ -1,4 +1,4 @@
-<div class="carousel-container">
+<div class="carousel-container" *ngIf="items && items.length > 0">
     <section class="banner-carousel">
         <div class="carousel">
             <a href="#" class="carousel-prev" (click)="prevSlide()">
@@ -8,11 +8,11 @@
                             fill="#0c172f"></path>
                     </svg></span>
             </a>
-            <a [href]="items[currentIndex].link">
+            <a >
                 <div class="image-container">
                     <picture>
-                        <source [attr.srcset]="items[currentIndex].srcset">
-                        <img [attr.src]="items[currentIndex].src" [alt]="items[currentIndex].alt">
+                        <source [src]="items[currentIndex].imageUrl">
+                        <img [src]="items[currentIndex].imageUrl" >
                     </picture>
                 </div>
             </a>

@@ -18,7 +18,7 @@
                 <div class="modal-action">
                         <div>
                             <div>
-                                <select [(ngModel)]="Judgeid" class="large-dropdown">
+                                <select [(ngModel)]="Judgeid" class="large-dropdown" (change)="onChangeJudge()">
                                     <option value="{{ judge.id }}" *ngFor="let judge of JudegsInfo">{{ judge.name }}</option>
                                 </select>
                             </div>
@@ -93,7 +93,7 @@
                             <p> </p>
                             <a (click)="ValidateAccessTokens()" class="css-10lu0qa">Validate Access Tokens</a>
                         </div>
-                        <a *ngIf="hasValidated"  (click)="NavigateToScoreCards()" class="css-10lu0qa">Go to Score Card</a>
+                        <a *ngIf="isValidated()"  (click)="NavigateToScoreCards()" class="css-10lu0qa">Go to Score Card</a>
                     
                 </div>
             </div>
