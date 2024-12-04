@@ -39,7 +39,7 @@ export class JudgesInfoComponent {
       }
     });
 
-    const urlForteamsJudges = `https://competationhoster.azurewebsites.net/getTeamsJudges/${this.eventId}`;
+    const urlForteamsJudges = `https://unteventmanbackend.azurewebsites.net/getTeamsJudges/${this.eventId}`;
     this.http.get<any>(urlForteamsJudges).subscribe(
       (data) => {
         // Assign the received data to eventMetaData
@@ -70,7 +70,7 @@ export class JudgesInfoComponent {
   }
   this.loading=true;
    const jsonData = JSON.stringify(judgesData);
-  const url = this.configService.getBaseUrl()+'/updateJudges';
+  const url = this.configService.getBaseUrl()+'updateJudges';
 
     // Define the HTTP headers
     const headers = new HttpHeaders({

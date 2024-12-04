@@ -41,7 +41,7 @@ export class AddTeaminfoComponent {
     });
     const baseUrl = this.configService.getBaseUrl();
         // Here, you can save jsonData using your preferred method (e.g., sending it to a server, storing it locally)
-   const urlForteamsJudges = baseUrl+'getTeamsJudges/${this.eventId}';
+   const urlForteamsJudges = `https://unteventmanbackend.azurewebsites.net/getTeamsJudges/${this.eventId}`;;
     this.http.get<any>(urlForteamsJudges).subscribe(
       (data) => {
         // Assign the received data to eventMetaData

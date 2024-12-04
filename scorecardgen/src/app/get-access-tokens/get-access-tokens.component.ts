@@ -39,7 +39,7 @@ export class GetAccessTokensComponent {
      }
    });
   this.loading=true;
-   const url = this.configService.getBaseUrl()+'/getAccessTokens';
+   const url = this.configService.getBaseUrl()+'getAccessTokens';
 
     // Define the HTTP headers
     const headers = new HttpHeaders({

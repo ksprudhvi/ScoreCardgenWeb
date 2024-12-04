@@ -18,13 +18,18 @@ import {CoreConfigService} from "./core-config.service";
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'scorecardgen';
+  title = 'UNT Cultural Event Manager';
   HostAccess: any ;
   OwnerAccess: string | null | undefined;
   menuOpen = false;
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+  NavigateToLogin() :void{
+    const currentUrl = this.router.url;
+    this.router.navigate(['/login'], { queryParams: { returnUrl: currentUrl } });
+
   }
   constructor(private router: Router,private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
  NavigateToListEvent ():void{

@@ -51,6 +51,7 @@ export class CompetationDetailsComponent implements OnInit {
     'The parking ticket is valid for one day; the vehicle parked is at the owner’s risk.'
   ];
    EventAboutSec!: any;
+   ScorecardMeta: any;
   constructor(private router: Router,private authService: AuthService ,private authGuard: AuthGuard,private activatedRoute: ActivatedRoute,private http: HttpClient,private configService: CoreConfigService) {}
 
   ngOnInit(): void {
@@ -83,6 +84,7 @@ export class CompetationDetailsComponent implements OnInit {
         console.log('POST request successful:', response);
         this.EventData = response;
         this.EventAboutSec=this.EventData.EventAboutSec
+        
         //this.EventDataTemp = { ...response };
         this.EventDataTemp = JSON.parse(JSON.stringify(response)); // Deep copy using JSON
 
@@ -101,7 +103,7 @@ export class CompetationDetailsComponent implements OnInit {
       }
     );
     console.log(this.responseData);
-    const urlForteamsJudges = `https://competationhoster.azurewebsites.net/getTeamsJudges/${this.eventId}`;
+    const urlForteamsJudges = `https://unteventmanbackend.azurewebsites.net/getTeamsJudges/${this.eventId}`;
     this.http.get<any>(urlForteamsJudges).subscribe(
       (data) => {
         // Assign the received data to eventMetaData
@@ -137,7 +139,7 @@ export class CompetationDetailsComponent implements OnInit {
       EventId:this.eventId
     }
    // console.log(JSON.stringify(data)); // This will log the JSON data to the console.
-    const url = this.configService.getBaseUrl()+'/updateAbout';
+    const url = this.configService.getBaseUrl()+'/Updatecompetition';
     // Define the HTTP headers
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -195,8 +197,8 @@ export class CompetationDetailsComponent implements OnInit {
 }
 
   toggleCompleted() {
-    this.loading=false;
-    this.isCompleted = this.isCompleted;
+    this.loading=true;
+    this.isCompleted = !this.isCompleted;
     if(this.isCompleted){
       this.EventData['status']="Completed";
       const url = this.configService.getBaseUrl()+'/Updatecompetition';
@@ -257,7 +259,30 @@ export class CompetationDetailsComponent implements OnInit {
 
   }
   addTextField() {
-    this.EventData.eventCategory = [...this.EventData.eventCategory, '']; // Use spread operator to avoid direct mutation
+    this.EventData.eventCategory = [...this.EventData.eventCategory, '']; 
+    // Use spread operator to avoid direct mutation
+    if (this.EventData.eventCategory) {
+      const newCategoryIndex = this.EventData.eventCategory.length - 1;
+      const newCategory = this.EventData.eventCategory[newCategoryIndex];
+
+      // Check if the new category already exists in scorecardMeta
+      const categoryExists = this.EventData.scorecardMeta.some((meta: { category: any; }) => meta.category === newCategory);
+      if (!categoryExists && newCategory) {
+          // Add a new skeleton for the new category
+          this.EventData.scorecardMeta.push({
+              category: newCategory,
+              parameters: [
+                  {
+                      description: '',
+                      maxScore: 0,
+                      name: ''
+                  }
+              ]
+          });
+      }
+  }
+
+  console.log('Updated scorecardMeta:', this.EventData.scorecardMeta);
   }
 
   // Function to remove a text field
@@ -273,6 +298,7 @@ export class CompetationDetailsComponent implements OnInit {
     console.log(this.responseData);
     // Logic to handle saving the updated event data
     console.log('Event Data Saved:', this.EventData);
+ 
     const url = this.configService.getBaseUrl()+'/competition';
 
     // Define the HTTP headers
@@ -295,30 +321,30 @@ export class CompetationDetailsComponent implements OnInit {
         setTimeout(() => this.errorMessage=(null), 2000);// Set error message
       }
     );
-    if (JSON.stringify(this.EventData.eventCategory) !== JSON.stringify(this.EventDataTemp.eventCategory)) {
-      const url = this.configService.getBaseUrl()+'/configEventOrder';
-      // Define the HTTP headers
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json'
-      });
-      // Call API or service to save the data
-      this.http.post(url, this.EventData, { headers }).subscribe(
-        (response) => {
-          console.log('POST request successful:', response);
-          this.responseData = response;
-          this.loading=false
-          this.successMessage="Event Details Saved Succesfully";
-          setTimeout(() => this.successMessage=(null), 2000);
-          // Assign response to a variable to use in template
-        },
-        (error) => {
-          console.info('Error making POST request:', error);
-          this.errorMessage = 'An error occurred .Please Try again';
-          setTimeout(() => this.errorMessage=(null), 2000);// Set error message
-        }
-      );
+    // if (JSON.stringify(this.EventData.eventCategory) !== JSON.stringify(this.EventDataTemp.eventCategory)) {
+    //   const url = this.configService.getBaseUrl()+'/configEventOrder';
+    //   // Define the HTTP headers
+    //   const headers = new HttpHeaders({
+    //     'Content-Type': 'application/json'
+    //   });
+    //   // Call API or service to save the data
+    //   this.http.post(url, this.EventData, { headers }).subscribe(
+    //     (response) => {
+    //       console.log('POST request successful:', response);
+    //       this.responseData = response;
+    //       this.loading=false
+    //       this.successMessage="Event Details Saved Succesfully";
+    //       setTimeout(() => this.successMessage=(null), 2000);
+    //       // Assign response to a variable to use in template
+    //     },
+    //     (error) => {
+    //       console.info('Error making POST request:', error);
+    //       this.errorMessage = 'An error occurred .Please Try again';
+    //       setTimeout(() => this.errorMessage=(null), 2000);// Set error message
+    //     }
+    //   );
 
-    }
+    // }
 
 
   }

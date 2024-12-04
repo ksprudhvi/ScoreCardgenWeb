@@ -54,14 +54,22 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
   successMessage !:any;
   errorMessage !:any;
   categoryList: string[] = [''];
-   EventAboutSec!: {
+   EventAboutSec: {
     venue: string;
     competitionDuration: string;
     forEntryRules: string[];
     directionUrl: string;
     competitionConditions: string[];
     competitionHighlights: string[]
+  }= {
+    venue: '',
+    competitionDuration: '',
+    forEntryRules: [],
+    directionUrl: '',
+    competitionConditions: [],
+    competitionHighlights: []
   };
+  scorecardMeta: { category: string; parameters: { description: string; maxScore: number; name: string; }[]; }[] | undefined;
 
   constructor(private uploadService: FileUploadService,private router: Router,private http: HttpClient,private configService: CoreConfigService) {
 
@@ -142,39 +150,26 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
     this.loading=true;
     const selectedCategories = this.categoryList;
     console.log('Selected Options:', selectedCategories);
-    interface EventElement extends HTMLElement {
-      innerText: string;
-    }
-    const eventTitleList: EventElement[] = [
-      document.querySelector('[data-ref="edp_event_title_desktop"]') as EventElement,
-    ];
-
-    const eventDateStringList: EventElement[] = [
-      document.querySelector('[data-ref="edp_event_datestring_desktop"]') as EventElement,
-    ];
-    const eventVenueList: EventElement[] = [
-      document.querySelector('[data-ref="edp_event_venue_desktop"]') as EventElement,
-    ];
-    const eventPriceList: EventElement[] = [
-      document.querySelector('[data-ref="edp_price_string_desktop"]') as EventElement
-    ];
+    this.scorecardMeta = selectedCategories.map((category) => ({
+      category: category,
+      parameters: [
+          {
+              description: '',
+              maxScore: 0,
+              name: ''
+          }
+      ]
+  }));
     const data = {
       EventId:this.eventId,
       EventAboutSec:this.EventAboutSec,
       eventImageUrl:this.eventImageUrl,
-      eventTitle: eventTitleList.find(
-        (element) => element.innerText.trim() !== 'Enter Your Event Title'
-      )?.innerText.trim(),
+      eventTitle: this.eventTitle,
       eventCategory:selectedCategories,
-      eventDateString: eventDateStringList.find(
-        (element) => element.innerText.trim() !== 'Enter Date and Time'
-      )?.innerText.trim(),
-      eventVenue:eventVenueList.find(
-        (element) => element.innerText.trim() !== 'Enter Title Venue'
-      )?.innerText.trim() ,
-      eventPriceString: eventPriceList.find(
-        (element) => element.innerText.trim()!== 'Enter Price Info'
-      )?.innerText.trim() ,
+      scorecardMeta:this.scorecardMeta,
+      eventDateString: this.eventDateString,
+      eventVenue:this.eventTitleVenue,
+      eventPriceString: this.eventPriceString,
     };
     // Convert data to JSON
     const jsonData = JSON.stringify(data);
@@ -197,6 +192,7 @@ export class CompetationDeatilsUpdaterComponent  implements OnInit{
         // Assign response to a variable to use in template
       },
       (error) => {
+        this.loading=false;
         console.info('Error making POST request:', error);
         this.errorMessage = 'An error occurred .Please Try again';
         setTimeout(() => this.errorMessage=(null), 2000);// Set error message

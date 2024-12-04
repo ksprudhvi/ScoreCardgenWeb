@@ -896,14 +896,16 @@
                                   </div>
                                 </div>
                               </div>
-                              <button class="css-15yjbxw" (click)="saveEventData()">Save Event</button>
-                            </div>
+                              <button 
+                              *ngIf="HostAccess === 'true'" 
+                              class="css-15yjbxw" 
+                              (click)="saveEventData()">Save Event</button>                            </div>
                           </div>
 
                           <div class="css-qxlnel">
                                 <div class="css-1qfo63q">
                                     Teams Information
-                                    <img src="/assets/icons/add-profile.svg" alt="+" srcset="" class="css-1pd9njl" (click)="updateTeam()">
+                                    <img  *ngIf="HostAccess === 'true'"  src="/assets/icons/add-profile.svg" alt="+" srcset="" class="css-1pd9njl" (click)="updateTeam()">
                                   </div>
 
                                 <div class="css-12527f7"></div>
@@ -919,7 +921,7 @@
                             <div class="css-qxlnel" >
                                 <div class="css-1qfo63q">
                                     Judges Information
-                                    <img src="/assets/icons/add-profile.svg" alt="+" srcset="" class="css-1pd9njl" (click)="updateJudges()">
+                                    <img  *ngIf="HostAccess === 'true'"  src="/assets/icons/add-profile.svg" alt="+" srcset="" class="css-1pd9njl" (click)="updateJudges()">
                                   </div>
                                 <div class="css-12527f7"></div>
                                 <div class="css-1qo6c03">

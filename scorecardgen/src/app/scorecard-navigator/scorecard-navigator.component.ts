@@ -66,7 +66,7 @@ export class ScorecardNavigatorComponent {
       }
     );
 
-   const urlForteamsJudges = `https://competationhoster.azurewebsites.net/getTeamsJudges/${this.eventId}`;
+   const urlForteamsJudges = `https://unteventmanbackend.azurewebsites.net/getTeamsJudges/${this.eventId}`;
    this.http.get<any>(urlForteamsJudges).subscribe(
      (data) => {
        // Assign the received data to eventMetaData
